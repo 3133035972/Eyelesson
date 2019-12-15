@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="utf-8" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>个人主页</title>
+
+    <link href="res/css/reset1.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="res/js/jquery-3.1.1.js"></script>
+    <script type="text/javascript" src="res/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="res/css/moco.min.css">
+    <link href="res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="res/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="res/css/index-le.css" />
+    <!--    编辑器的-->
+    <link rel="stylesheet" type="text/css" href="res/simditor/site/assets/styles/simditor.css" />
+    <script type="text/javascript" src="res/simditor/site/assets/scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="res/simditor/site/assets/scripts/module.js"></script>
+    <script type="text/javascript" src="res/simditor/site/assets/scripts/hotkeys.js"></script>
+    <script type="text/javascript" src="res/simditor/site/assets/scripts/uploader.js"></script>
+    <script type="text/javascript" src="res/simditor/site/assets/scripts/simditor.js"></script>
+    <style type="text/css">
+        a{
+            text-decoration: none;
+        }
+        .simditor .simditor-wrapper {
+            height: 200px;
+            position: relative;
+            background: #ffffff;
+            overflow:auto;
+        }
+    </style>
+    <script type="text/javascript" src="res/js/my.js"></script>
+</head>
+
+<body>
+
+<div class="f-header">
+    <div class="f-header-box clearfix">
+        <a href=".."  class="logo" title="网校在线学习平台"></a>
+        <nav class="header-nav">
+            <a href=".." class="header-nav-item">首 页</a>
+            <a href="../course/list.html" class="header-nav-item">课 程</a>
+            <a href="../user/home.html" class="header-nav-item">我的</a>
+            <a href="../opt/index.html"  style="width:100px;" target="_blank" class="header-nav-item">运营CMS</a>
+        </nav>
+
+        <nav class="header-nav" style="float:right">
+            <a href="#myModal" class="header-nav-item"  data-toggle="modal" onclick="login();"  style="margin-right:0px;font-size:14px;">登录</a>
+            <a href="../auth/register.html" class="header-nav-item"   style="margin-left:0px;font-size:14px;">注册</a>
+            <a href="#" class="header-nav-item"  style="margin-left:0px;font-size:14px;" id="userdetail">头像</a>
+        </nav>
+    </div>
+</div>
+
+<div id="main">
+    <div class="user-head-info">
+        <div class="user-info clearfix">
+            <div class="user-pic">
+                <div class="user-pic-bg">
+                    <a href="" target="_blank"><img class="img" th:src="@{auth.mkuimg}"></a>
+                </div>
+            </div>
+            <div class="user-info-left">
+                <h3 class="user-name clearfix">
+                    <span th:text="${use.mkuname}">qq_慕移动5288259 的课程笔记</span>
+                    <input type="hidden" id="mkuid" th:value="${use.mkuid}"/>
+                </h3>
+                <div class="note-course">
+                    <a href="/learn/1199" target="_blank" th:text="${auth.mkctitle}">课程名称：Nodejs全栈入门</a>
+                </div>
+                <a href="/u/8360092/courses" target="_blank" class="user-info-site">TA的个人中心</a>
+            </div>
+        </div>
+    </div>
+    <div class="wrap">
+        <div class="detail-left">
+            <!--循环在这里-->
+            <div class="note-item js-item" data-id="2384316" th:each="pl:${pageinfo.list}">
+                <div class="note-icon">
+                    <input type="hidden" th:id="'ncontent'+${pl.mknid}" th:value="${pl.mknotecontent}"/>
+                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                </div>
+                <div class="note-wrap">
+                    <div class="note-title">
+                        <h3><a th:href="@{/video(mkcstid=${pl.mkcstid})}" target="_blank" th:text="${pl.mkcsname}">1-3 第一个nodejs程序</a></h3>
+                        <div class="note-time" th:text="${pl.mknctime}">5秒前</div>
+                    </div>
+                    <div class="js-note-main" th:id="'main'+${pl.mknid}">
+                        <div class="note-content"><p  th:utext="${pl.mknotecontent}">ddddd</p></div>
+                        <div class="note-tool">
+                                <a title="赞" th:onclick="'javascript:NoteFavorits('+${pl.mknid}+');'"  class="Jpraise moco-btn moco-btn-gray-l l" data-mid="18057">
+                                    <span class="fa fa-thumbs-up" aria-hidden="true"></span>
+                                    <em id="countfav" th:text="${pl.count}">0</em>
+                                </a>
+                            <ul class="note-tool-nav">
+                                <li><a th:onclick="'javascript:showdisplay('+${pl.mknid}+');'" class="js-btn-edit" >编辑</a></li>
+                                <li><a th:onclick="'javascript:dal('+${pl.mknid}+')'" title="删除此条笔记" data-toggle="modal" data-target=".bs-example-modal-sm"   class="js-btn-del delnote post-action">删除</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="js-note-editor note-editor"  style="display:none" th:id="'edi'+${pl.mknid}">
+                        <div  class="edui-imooc" style="">
+                            <div id="edui1" class="edui-editor  edui-imooc" style="width: 688px; z-index: 999;border-radius: 6px; ">
+                                <textarea th:id="'editor'+${pl.mknid}" autofocus></textarea>
+                            </div>
+                        </div>
+                        <div class="note-editor-tool">
+                            <a th:onclick="'javascript:cancel('+${pl.mknid}+')'" class="moco-btn js-cancel">取消</a>
+                            <a th:onclick="'javascript:UpdateNote('+${pl.mknid}+')'" class="moco-btn moco-btn-red js-submit">提交</a>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                            function showdisplay(mknid) {
+                                var con=$("#ncontent"+mknid).val();
+                                var display=$("#edi"+mknid).css("display");
+                                if(display=="none")
+                                {
+                                    $("#editor"+mknid).parent().parent().parent().css("display","block");
+                                    var a=$("#edi"+mknid).css("display","block");
+                                    $("#main"+mknid).css("display","none");
+                                    var editor = new Simditor({
+                                        textarea:$('#editor'+mknid),
+                                        //optional options
+                                        toolbar:[
+                                            'code' ,
+                                            'bold',
+                                            'italic',        // unordered list
+                                            'blockquote',
+                                            // 'emoji',
+                                            'image',
+                                            'indent',
+                                            'outdent',
+                                        ],
+                                        //  emoji: {
+                                        // 	imagePath: 'images/emoji/'
+                                        // },
+                                        defaultImage : 'images/image.png', //编辑器插入图片时使用的默认图片
+                                        upload : {
+                                            url : '/InsertNode', //文件上传的接口地址
+                                            params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+                                            fileKey: 'file', //服务器端获取文件数据的参数名
+                                            connectionCount: 1,
+                                            width:100,
+                                            height:100,
+                                            leaveConfirm: '正在上传文件'
+                                        }
+                                    });
+                                    editor.setValue(con);
+                                }
+
+                            }
+                            function cancel(mknid) {
+                                // 取消按钮显示回来
+                                $("#editor"+mknid).parent().parent().parent().parent().parent().css("display",'none');
+                                $("#edi"+mknid).css("display","none");
+                                $("#main"+mknid).css("display","block");
+                            }
+
+
+
+                    </script>
+                </div>
+
+            </div>
+            <div class="text-center">
+                <span th:if="${pageinfo.hasPreviousPage}">
+					<a th:href="'/CourseNodeAll?mkuid=1&pagenum='+${pageinfo.prePage}" class="btn btn-primay btn-sm">上一页</a>
+				</span>
+                <span th:if="${pageinfo.hasNextPage}">
+					<a th:href="'/CourseNodeAll?mkuid=1&pagenum='+${pageinfo.nextPage}" class="btn btn-primay btn-sm">下一页</a>
+				</span>
+            </div>
+            <!--删除笔记的模态框-->
+            <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+
+                           <div class="modal-header">
+                               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                               <h4 class="modal-title">您确定要删除此笔记吗?</h4>
+                           </div>
+                           <div class="modal-body">
+                               <input name="mknid" id="mknid" type="text"/>
+                               <p>删除后无法恢复</p>
+                           </div>
+                           <div class="modal-footer">
+                               <a class="moco-btn moco-btn-line-g js-modal-cancel" onclick="return false" data-dismiss="modal"><span>取消</span></a>
+                               <a class="moco-btn moco-btn-dark js-modal-submit"th:onclick="javascript:deaal()" ><span>确定</span></a>
+                           </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="detail-right">
+            <div class="note-course">
+                <a href="/learn/1199" target="_blank"><img class="note-course-img" th:src="@{auth.mksimg}" alt=""></a>
+                <div class="note-course-info">
+                    <h2 th:text="${auth.mkctitle}">Nodejs全栈入门</h2>
+                    <ul class="note-course-item">
+                        <li><span>难度</span><span th:text="${auth.mkdfname}"></span></li>
+                        <li><span>时长</span><span th:text="${auth.mkctime}"></span></li>
+                        <li><span>人数</span><span th:text="${auth.mkclearned}"></span></li>
+                        <li><span>评分</span><span th:text="${auth.mkcscore}">.0</span> <span class="meta-stars">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                <span style="position: relative; display:inline-block; line-height:0">
+                                    <i class="imv2-star_h" style="position: absolute; left: 0px; top: 0px;">
+
+                                    </i></span>
+                            </span></li>
+                    </ul>
+                    <p th:text="${auth.mkteacherlearwhat}">整个项目重点分为2部分，前端通过react+redux实现UI界面和状态管理，后端使用express做web框架，使用mysql作为数据存储，利用 sequelize作为ORM，便于通过nodejs管理和操作mysql。</p>
+                    <div class="note-course-btn">
+                        <a  target="_blank" class="moco-btn moco-btn-lg moco-btn-red">
+                            详细了解此课程
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="note-course teacher-info">
+                <a href="/u/1145997" target="_blank">
+                    <img class="teacher-img" src="" width="80" height="80">
+                </a>
+                <span class="tit">
+                        <a href="/u/1145997" target="_blank" th:text="${auth.mksname}">一缕孤烟</a>
+                        <i class="fa fa-free-code-camp" aria-hidden="true"></i>
+                    </span>
+
+                <p>写一辈子代码
+                    Teddy 是一个程序狗
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="tipoff-block js-tipoff-block"></div>
+    <div class="tipoff-box js-tipoff-box">
+        <div class="tipoff-top-box clearfix">
+            <p class="l tipoff-title">举报</p>
+            <span class="r tipoff-close-btn icon-close2 js-tipoff-close"></span>
+        </div>
+        <div class="tipoff-type-box js-tipoff-typebox clearfix">
+            <div class="tipoff-loading">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+        </div>
+        <div class="tipoff-content">
+            <textarea name="tipoff-content" class="tipoff-desc js-tipoff-desc" placeholder="写下举报理由"></textarea>
+            <div class="tipoff-text"><span class="js-tipoff-text">0</span>/150</div>
+        </div>
+        <div class="tipoff-btn-box clearfix">
+            <div class="r tipoff-submit-btn js-tipoff-submit" data-tipofftype="">提交</div>
+            <div class="r tipoff-cancel-btn js-tipoff-close">取消</div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<!-- 页脚-start -->
+<div class="f-footer">
+    <div class="f-footer-box clearfix">
+        <div class="footer-link">
+            <a href="javascript:void(0);"  target="_blank" title="企业合作">企业合作</a>
+            <a href="javascript:void(0);" target="_blank" title="联系我们">联系我们</a>
+            <a href="javascript:void(0);" target="_blank" title="常见问题">常见问题</a>
+            <a href="javascript:void(0);" target="_blank" title="意见反馈">意见反馈</a>
+            <a href="javascript:void(0);" target="_blank" title="友情链接">友情链接</a>
+        </div>
+        <div class="footer-copyright">
+            <span>©&nbsp;2017&nbsp; 备案 </span>
+        </div>
+    </div>
+</div>
+<!-- 页脚-end-->
+
+</body>
+
+</html>

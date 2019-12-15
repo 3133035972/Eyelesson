@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="utf-8" xmlns:th="http://www.w3.org/1999/xhtml">
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<title>在线网校学习平台</title>
+		<link rel="stylesheet" type="text/css" href="res/font-awesome/css/font-awesome.min.css">
+		<link href="res/css/moco.min.css" rel="stylesheet" type="text/css">
+		<link href="res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+		<link href="res/css/reset.css" rel="stylesheet" type="text/css"/>
+		<script type="text/javascript" src="res/js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="res/js/bootstrap.min.js"></script>
+		
+		<!--[if lt IE 9]>
+		  <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		  <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		
+		<link rel="icon" type="image/png" href="res/i/ico.png" sizes="16x16">
+		<script type="text/javascript">
+		CONETXT_PATH = '';
+		</script>
+		<script type="text/javascript" src="res/js/my.js"></script>
+	</head>
+	<body>
+		<!-- 头部-start -->
+		<div th:replace="head::head"></div>
+		
+
+		<div class="f-main clearfix">
+			<div class="main-course-left">
+				<!--这里开始-->
+					<div class="course-info">
+						<div class="course-title" th:text="${commentlist.mkctitle}">带您完成神秘的涟漪按钮效果-入门篇</div>
+						
+						<div class="course-meta">
+							<a th:href="@{/video(mkcstid=${commentlist.mkcstid})}" class="learn-btn" th:if="${commentlist.containsKey('mkprid')==true}" >继续学习</a>
+
+							<a th:href="@{/video(mkcstid=${commentlist.mkcstid})}" class="learn-btn" th:if="${commentlist.containsKey('mkprid')==false}" >开始学习</a>
+
+							<div class="static-item" th:if="${commentlist.containsKey('mkprid')}" >
+								<div class="meta">上次学到</div>
+								<div class="meta-value"  th:text="${commentlist.mkcsname}">1-1 感受神秘的涟漪效果之美感受神秘的涟漪效果之美</div>
+							</div>
+							<div class="static-item"  >
+								<div class="meta">学习人数</div>
+								<div class="meta-value" th:text="${commentlist.mkclearned}">1452</div>
+							</div>
+							<div class="static-item">
+								<div class="meta">难度级别</div>
+								<div class="meta-value" th:text="${commentlist.mkdfname}">中级</div>
+							</div>
+							<div class="static-item" style="border:none;">
+								<div class="meta">课程时长</div>
+								<div class="meta-value" th:text="${commentlist.mkctime}">1小时25分</div>
+							</div>
+							<!-- thyemelf 和js传递值-->
+							<a th:onclick="'javascript:Collection('+${commentlist.mkcsid}+');'"   style="float: right;margin-top:5px;" title="收藏">
+								<i id="star" class="fa fa-star-o fa-3x" aria-hidden="true" ></i>
+							</a>
+						</div>
+						
+						<div class="course-brief" th:text="${commentlist.mkcontent}">
+								简介：安卓声音录制与播放功能实现，包括录制到文件、播放文件，可以实现类似于微信的语音消息发送与播放，还包括录制到字节流，从字节流播放，可以实现视频直播/实时对讲功能中的声音录制和播放。 Android大牛齐聚之地，这里总有人为你答疑解惑！慕课网Android讨论群 556384357
+						</div>
+						
+						<div class="course-menu">
+							<a  href="/learn_show"><span class="menu-item">章节</span></a>
+							<a  href="/comment_show"><span class="menu-item  cur">评论</span></a>
+							<a  href="/ask_show"><span class="menu-item">问答</span></a>
+						</div>
+				</div>
+
+				<!-- 评论-start -->
+				<div th:each="list : ${pageinfo.list}">
+						<div class="comment clearfix">
+							<div class="comment-header">
+								<img class="lecturer-uimg" src="res/i/header.jpg" th:text="${list.mkuimg}">
+							</div>
+							<div class="comment-main">
+								<div class="user-name" th:text="${list.mkuname}">我是张三</div>
+								<div class="comment-content" th:text="${list.mkcmcontent}" >这门课真实用！一个列表嵌套好多种布局的时候，用recyclerview控件优雅实现，效率果然提高不少，老板肯定又会夸我，啊哈哈！！！</div>
+								<div class="comment-footer" th:text="${list.mkcmcreatetime}">时间：2016-12-05</div>
+							</div>
+						</div>
+				</div>
+				<!--分页-->
+				<div class="text-center">
+					<span th:if="${pageinfo.hasPreviousPage}">
+						<button th:href="'/comment_show?uid=1&pagenum='+${pageinfo.prePage}" class="btn btn-primay btn-sm">上一页</button>
+					</span>
+					<span th:if="${pageinfo.hasNextPage}">
+						<button th:href="'/comment_show?uid=1&pagenum='+${pageinfo.nextPage}" class="btn btn-primay btn-sm">下一页</button>
+					</span>
+				</div>
+				<!-- 评论-end -->
+			</div>
+			<!--			讲师内容部分-->
+			<div class="main-course-right" th:if="${mkuid==null}" >
+				<div class="lecturer-item" style="width: 100%;">
+					<img class="lecturer-uimg" src="res/i/header.jpg" th:if="${mksid!=null}" th:text="${mksid.mksimg}">
+					<span class="lecturer-name"  th:if="${mksid!=null}"  th:text="${mksid.mksname}" >王阳明</span>
+					<span class="lecturer-title" th:if="${mksid!=null}" th:text="${mksid.mkschool}">中华大学</span>
+					<span class="lecturer-p" th:if="${mksid!=null}" th:text="${mksid.mkskill}" >中华大学高级讲师，擅长写代码</span>
+					<a th:onclick="'javascript:follow('+${mksid.mksid}+');'" ><span class="follow-btn" id="follow">关注</span></a>
+				</div>
+
+			<!--推荐课程-->
+				<div class="js-commend-box"  >
+					<div class="mb40 recom-course-list-box">
+						<h4>推荐课程</h4>
+						<ul class="js-recom-course moco-aside-course clearfix" th:each="type:${type}">
+							<li>
+								<div class="aside-course-img">
+									<img src="" th:src="@{type.mkcimg}">
+									<p class="aside-course-type">实战</p>
+								</div>
+								<div class="aside-course-content">
+									<a href="//coding.imooc.com/class/71.html" class="aside-course-name" target="_blank" th:text="${type.mkctitle}">算法与数据结构--综合提升篇（c++版）
+									</a>
+									<p class="aside-course-price" >
+										<span style="font-weight: bold" >￥<span th:text="${type.mkcmoney}"></span></span>
+									</p>
+									<div class="aside-course-dot">
+										<i>&nbsp;</i>
+									</div>
+									<p class="aside-course-grade" th:text="${type.mkdfname}">中级</p>
+									<div class="aside-course-dot"><i>&nbsp;</i></div>
+									<p class="aside-course-people">
+										<i class="fa fa-user-o" aria-hidden="true"></i>
+										<span th:text="${type.mkclearned}">9028</span>
+									</p>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="main-course-right" th:if="${mksid==null}">
+				<div class="lecturer-item" style="width: 100%;">
+					<img class="lecturer-uimg" src="res/i/header.jpg" th:if="${mkuid!=null}" th:text="${mkuid.mksimg}">
+					<span class="lecturer-name"  th:if="${mkuid!=null}"  th:text="${mkuid.mksname}" >王阳明</span>
+					<span class="lecturer-title" th:if="${mkuid!=null}" th:text="${mkuid.mkschool}">中华大学</span>
+					<span class="lecturer-p" th:if="${mkuid!=null}" th:text="${mkuid.mkskill}" >中华大学高级讲师，擅长写代码</span>
+					<a th:onclick="'javascript:follow('+${mkuid.mksid}+');'" ><span class="follow-btn" id="follow">关注</span></a>
+				</div>
+
+				<div class="js-commend-box"  >
+					<div class="mb40 recom-course-list-box">
+						<h4>推荐课程</h4>
+						<ul class="js-recom-course moco-aside-course clearfix" th:each="type:${type}">
+							<li>
+								<div class="aside-course-img">
+									<img src="" th:src="@{type.mkcimg}">
+									<p class="aside-course-type">实战</p>
+								</div>
+								<div class="aside-course-content">
+									<a href="//coding.imooc.com/class/71.html" class="aside-course-name" target="_blank" th:text="${type.mkctitle}">算法与数据结构--综合提升篇（c++版）
+									</a>
+									<p class="aside-course-price" >
+										<span style="font-weight: bold" >￥<span th:text="${type.mkcmoney}"></span></span>
+									</p>
+									<div class="aside-course-dot">
+										<i>&nbsp;</i>
+									</div>
+									<p class="aside-course-grade" th:text="${type.mkdfname}">中级</p>
+									<div class="aside-course-dot"><i>&nbsp;</i></div>
+									<p class="aside-course-people">
+										<i class="fa fa-user-o" aria-hidden="true"></i>
+										<span th:text="${type.mkclearned}">9028</span>
+									</p>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+		<div th:replace="tail::tail">尾</div>
+				
+	</body>
+	
+</html>

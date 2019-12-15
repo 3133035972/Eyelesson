@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="utf-8" xmlns:th="http://www.w3.org/1999/xhtml">
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<title>个人主页</title>
+		<link href="res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+		<link rel="stylesheet" type="text/css" href="res/font-awesome/css/font-awesome.min.css">
+		<link href="res/css/reset.css" rel="stylesheet" type="text/css"/>
+		<script type="text/javascript" src="res/js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="res/js/jquery.form.js"></script>
+		<script type="text/javascript" src="res/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="res/js/oc.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="res/css/moco.min.css">
+		<link rel="stylesheet" type="text/css" href="res/css/swiper.css">
+		<link rel="stylesheet" type="text/css" href="res/css/coupon-less.css">
+		<link rel="stylesheet" type="text/css" href="res/css/balance-less.css">
+		<link rel="stylesheet" type="text/css" href="res/css/bill-less.css">
+		<link rel="stylesheet" type="text/css" href="res/css/share_style.css">
+		<link rel="stylesheet" type="text/css" href="res/css/index-less.css">
+	</head>
+
+	<body>
+
+		<div th:replace="head::head"></div>
+
+		<!-- 中间开始 -->
+		
+		<div class='body-main'>
+
+
+		<div class="order-main clearfix">
+			
+			    
+		<div class="slider l">
+		    <h1>订单中心</h1>
+		    <ul class="nav-menu">
+		        <a href="#myorders" aria-controls="myorders" role="tab" data-toggle="tab">
+		            <li class="clearfix">
+		                <p class="nav-name l">我的订单</p>
+		                <span class="fa fa-caret-right"></span>
+		            </li> 
+		        </a>
+		        <a href="#mymoney" aria-controls="mymoney" role="tab" data-toggle="tab">
+		            <li class="clearfix ">
+		                <p class="nav-name l">我的余额</p>
+		                <span class="fa fa-caret-right"></span>
+		            </li> 
+		        </a>
+		        <a href="#mydiscount" aria-controls="mydiscount" role="tab" data-toggle="tab">
+		            <li class="clearfix active">
+		                <p class="nav-name l">我的优惠券
+		                                </p>
+		                <span class="fa fa-caret-right"></span>
+		            </li> 
+		        </a>
+		        <a href="#consumption" aria-controls="consumption" role="tab" data-toggle="tab">
+		            <li class="clearfix ">
+		                <p class="nav-name l">消费记录</p>
+		                <span class="fa fa-caret-right"></span>
+		            </li> 
+		        </a>
+		        <a href="#wen" aria-controls="wen" role="tab" data-toggle="tab">
+		            <li class="clearfix ">
+		                <p class="nav-name l">课程咨询</p>
+		                <span class="fa fa-caret-right"></span>
+		            </li> 
+		        </a>
+		        <a href="/pay/sharegoods" class="js-hide-in-act" style="display:none;">
+		            <li class="clearfix ">
+		                <p class="nav-name l">分销返利</p>
+		                <span class="fa fa-caret-right"></span>
+		            </li> 
+		        </a>
+		    </ul>
+		</div><!-- .slider end -->
+
+			
+			 <div class="tab-content">
+			    <!-- 我的订单 -->
+			    <div role="tabpanel" class="tab-pane active" id="myorders">
+				    	
+				    <div class="right-container l">
+						<div class="right-title">
+							<h2>我的订单</h2>
+							<ul>
+								<li class="action">
+									<a href="#allorder" aria-controls="allorder" role="tab" data-toggle="tab">全部<i class="js-all-num">2</i></a>
+								</li>
+								<li>
+									<a href="#nopayment" aria-controls="nopayment" role="tab" data-toggle="tab">未支付</a>
+								</li>
+								<li><a href="#complete" aria-controls="complete" role="tab" data-toggle="tab">已完成</a></li>
+								<li><a href="#invalid" aria-controls="invalid" role="tab" data-toggle="tab">已失效</a></li>
+							</ul>
+							<span><a href="/myorder?type=del"><i class="fa fa-trash" aria-hidden="true"></i>订单回收站</a></span>
+							</div>
+							<div class='myOrder'>
+								<!-- 内容部分 循环这里 -->
+								<div class="tab-content">
+									<!-- 全部 -->
+								    <div role="tabpanel" class="tab-pane active" id="allorder">
+								    	
+								    	<ul class="myOrder-list">
+									
+												<li data-flag="1912041348225431" >
+												<p class="myOrder-number">
+												<i class="fa-list fa" aria-hidden="true"></i>订单编号：1912041348225431
+												<span class="date">2019-12-04 13:48:22</span>						
+												<i class="fa fa-trash" aria-hidden="true" title="删除订单"></i>						
+												<a href="//www.imooc.com/user/feedback?order" target="_blank" class="myfeedback r">我要反馈</a>
+											</p>
+
+											<div class="myOrder-course clearfix">
+												<dl class="course-del l">
+													<dd class="clearfix">
+														<a href="https://class.imooc.com/sc/73" class="l">
+															<img class="l" src="" width="160" height="90"/>
+														</a>
+														<div class="del-box l">								
+													<p class="course-desc">视频学习不限期，提供720天种类丰富的教学服务</p>
+													<p class="price-btn-box clearfix">
+																<!-- 如果有优惠券 -->
+													<span class="l truepay-text">实付</span>
+													<span class="l course-little-price">￥4950.00</span>
+													</p>
+														</div>
+													</dd>
+													</dl>
+												<!-- 使用优惠券 -->
+													<div class="course-money l pt15">
+														<div class="type-box clearfix mb10">
+															<p class="type-text l">原价</p>
+															<p class="type-price l line-though">
+																<span class="RMB">&yen;</span>
+																6600.00
+															</p>
+														</div>
+														<div class="type-box clearfix mb10">
+															<p class="type-text l">折扣</p>
+															<p class="type-price l">
+																-
+																<span class="RMB">&yen;</span>
+																1650.00
+															</p>
+														</div>
+														<div class="total-box clearfix">
+															<p class="type-text l">实付</p>
+															<p class="type-price l">
+																<span class="RMB">&yen;</span>
+																4950.00
+															</p>
+														</div>
+
+													</div>
+													<div class="course-action l">
+														<p class="order-close">
+															已过期
+														</p>
+												</div>
+												</div>
+												</li>
+											</ul>
+								    </div>
+								    <!-- 未支付 -->
+								    <div role="tabpanel" class="tab-pane" id="nopayment">
+								    	
+								    	<div class="no-coupon">
+							        			您暂无未支付订单
+							        		</div>
+
+								    </div>
+								    <!-- 已完成 -->
+								    <div role="tabpanel" class="tab-pane" id="complete">
+								    	
+								    	<div class="no-coupon">
+							        			您暂无已完成订单
+							        		</div>
+
+								    </div>
+								    <!-- 已失效 -->
+								    <div role="tabpanel" class="tab-pane" id="invalid">
+								    	
+								    	<div class="no-coupon">
+							        			您暂无失效订单
+							        		</div>
+
+								    </div>
+		  						</div>	
+
+							</div>
+					</div>
+				</div>
+			    <!-- 优惠卷 -->
+			    <div role="tabpanel" class="tab-pane" id="mydiscount">
+
+					<div class="right-container l">
+						<div class="right-title">
+							<h2>我的优惠券</h2>
+							<ul>
+								<li class="action">
+						            <a href="#nouse" aria-controls="nouse" role="tab" data-toggle="tab">
+						            	未使用
+						            <i>0</i>
+						         </a>
+						        </li>
+						        <li class="">
+						            <a href="#yesuse" aria-controls="yesuse" role="tab" data-toggle="tab">
+						            	已使用
+						           <i>0</i>
+						           </a>
+						        </li>
+						        <li class="">
+						            <a href="#beoverdue" aria-controls="beoverdue" role="tab" data-toggle="tab">
+						            	已过期
+						            <i>0</i>
+						           </a>
+						        </li>
+						    </ul>
+					    </div>
+						<div class="js-cp-continer">
+							<div class="coupons-box">
+						        <div class="content-box">
+
+						        	 <div class="tab-content">
+									    <div role="tabpanel" class="tab-pane active" id="nouse">
+									    	
+									    	<div class="no-coupon">
+							        			您暂无可使用优惠券
+							        		</div>
+
+									    </div>
+									    <div role="tabpanel" class="tab-pane" id="yesuse">
+									    	<div class="no-coupon">
+							        			您暂未使用优惠券
+							        		</div>
+									    </div>
+									    <div role="tabpanel" class="tab-pane" id="beoverdue">
+									    	<div class="no-coupon">
+							        			您暂无过期优惠券
+							        		</div>
+									    </div>
+									    
+				  					</div>
+						        </div>
+							</div>
+
+							<!-- tip -->
+							<div class="tip-box">
+								<p class="tip-title">提示:</p>
+								<ol>
+									<li>优惠券不可与其它优惠券叠加使用，且不可与其他优惠活动同享（如：组合套餐），每单只能使用一张优惠券；</li>
+									<li>只有商品价大于优惠券满减门槛时才可使用（无满减门槛时可直接使用）；</li>
+									<li>慕课网优惠券可通过购买慕课网商品并评价或参加返优惠券的线上活动获得；</li>
+									<li>所有优惠券都有使用期限，获得优惠券后请您尽快使用；</li>
+									<li>续费时优惠券不可用；</li>
+									<li>当优惠券已使用后，将不可返还，除非您未支付并取消订单。</li>
+								</ol>
+							</div>
+							<!-- tip end -->
+						</div>
+					</div>
+			    </div>
+			    <!-- 余额 -->
+			    <div role="tabpanel" class="tab-pane" id="mymoney">
+					    <div class="right-container l">
+						<div class="right-title"><h2>我的余额</h2>
+						</div>
+						<div class="balance-container">
+							<div class="title-box">
+								<div>
+									<p class="title">当前余额</p>
+									<button class="recharge-btn js-recharge-btn">立即充值</button>
+								</div>
+								<div>
+									<p class="charge">￥0.00</p>
+									<p class="charge-tip">充值余额不可提现，仅限用于本平台课程消费</p>
+								</div>
+							</div>
+								  <div class="noData">
+									<span class="imv2-error_c"></span>
+									<p>目前暂无任何收支记录</p>
+								</div>
+							</div>	
+							</div>
+			    </div>
+				<!-- 消费记录 -->
+			    <div role="tabpanel" class="tab-pane" id="consumption">
+			    	
+			    	<div class="right-container l">
+						<div class="right-title">
+							<h2>消费记录</h2>
+							<ul>
+								<li>目前共计 <i>1</i> 条记录</li>
+								<li>消费金额 <i>￥10.00</i></li>
+								<li class="js-info"></li>
+							</ul>
+						</div>
+						
+						<div class="list-box">
+							<div class="detail-box">
+								<div class="table-title clearfix">
+									<p class="l bill-id">订单编号</p>
+									<p class="l bill-course">课程</p>
+									<p class="l bill-time">时间</p>
+									<p class="l bill-money">消费金额</p>
+									<p class="l bill-pay">支付方式</p>
+									<p class="l bill-result">支付结果</p>
+								</div>
+								<div class="table-detail">
+									<ul>
+										<li class="clearfix">
+											<p class="l bill-id">1912032034237130</p>
+				                            <p class="l bill-course" title='Java 快速开发'>Java 开发</p>
+				                            <p class="l bill-time">2019-12-03 20:34:23</p>
+				                            <p class="l bill-money">￥10.00</p>
+											<p class="l bill-pay">
+												苹果余额
+											</p>
+				                            <p class="l bill-result">
+				                                已支付
+				                            </p>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 课程咨询 -->
+				<div role="tabpanel" class="tab-pane" id="wen">
+
+					<div class="js-cp-continer">
+							<div class="coupons-box">
+						        <div class="content-box">
+						        	<div class="no-coupon">
+							        	您暂无咨询
+							        </div>
+							    </div>
+							</div>
+					</div>
+					
+				</div>
+
+
+
+			    </div>
+		  </div>
+
+	
+
+
+
+</div>
+		
+
+
+
+		<!-- 页脚-start -->
+		<div th:replace="tail::tail">尾</div>
+		<!-- 页脚-end-->
+		
+	</body>
+	
+</html>

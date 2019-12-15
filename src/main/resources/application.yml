@@ -1,0 +1,38 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1234
+    url: jdbc:mysql://127.0.0.1:3306/eyenet?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+  #配置静态资源
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,classpath:/templates/
+  thymeleaf:
+    encoding: UTF-8
+    suffix: .html
+    cache: false
+    # 配置前缀时必须加templates，浏览器访问页面时不加templates路径
+    prefix: classpath:/templates/
+  #json
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  #上传文件
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+#分页
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: countSql
+#设置mapper
+mapper:
+  #关闭驼峰命名规则
+  style: normal
+#添加MyBatis配置
+mybatis:
+  mapper-locations: classpath:com/eyelesson/mapper/*.xml  #配置映射文件
+  type-aliases-package: com.eyelesson.entity #配置实体类

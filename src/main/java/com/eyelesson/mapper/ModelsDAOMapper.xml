@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.eyelesson.dao.ModulesDAO">
+
+<!--    //根据对应的职位(角色)来获取不同的权限-->
+    <select id="findByParcode" resultType="com.eyelesson.entity.Modules">
+        select * from modules m
+        join posmodules pm on m.moduleCode = pm.moduleCode
+        join mk_position p on p.mkpid = pm.posId
+        where parentCode = #{param1} and p.mkpid = #{param2}
+
+    </select>
+
+</mapper>

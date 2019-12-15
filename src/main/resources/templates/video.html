@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="utf-8" xmlns:th="http://www.w3.org/1999/xhtml">
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<title>在线网校学习平台</title>
+
+
+		<link rel="stylesheet" type="text/css" href="res/css/ji.css">
+		<link rel="stylesheet" type="text/css" href="res/css/credit-less.css">
+		<link rel="stylesheet" type="text/css" href="res/font-awesome/css/font-awesome.min.css">
+		<link href="res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+		<link href="res/css/reset.css" rel="stylesheet" type="text/css"/>
+		<link href="res/css/moco.min.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="res/js/jquery-3.1.1.js"></script>
+		<script type="text/javascript" src="res/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="res/css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="res/css/index.css">
+		<link rel="stylesheet" type="text/css" href="res/simditor/site/assets/styles/simditor.css" />
+ 
+ 		<!-- <link rel="stylesheet" type="text/css" href="res/simditor-emoji-master/styles/simditor-emoji.css" />
+		
+		<script type="text/javascript" src="res/simditor-emoji-master/lib/simditor-emoji.js"></script> -->
+
+		<script type="text/javascript" src="res/simditor/site/assets/scripts/jquery.min.js"></script>
+		<script type="text/javascript" src="res/simditor/site/assets/scripts/module.js"></script>
+		<script type="text/javascript" src="res/simditor/site/assets/scripts/hotkeys.js"></script>
+		<script type="text/javascript" src="res/simditor/site/assets/scripts/uploader.js"></script>
+		<script type="text/javascript" src="res/simditor/site/assets/scripts/simditor.js"></script>
+
+		<!--[if lt IE 9]>
+		  <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		  <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		
+		<link rel="icon" type="image/png" href="res/i/ico.png" sizes="16x16">
+		<script type="text/javascript" src="res/js/my.js"></script>
+		<script type="text/javascript">
+		CONETXT_PATH = '';
+		
+		</script>
+		<script type="text/javascript">
+				$(function () {
+					shownote();
+				})
+		</script>
+		<style type="text/css">
+
+			.simditor .simditor-body, .editor-style {
+				width: 390px;
+				font-size: 16px;
+				font-family: arial, sans-serif;
+				line-height: 1.6;
+				color: #333;
+				outline: none;
+				word-wrap: break-word;
+			}
+			.simditor {
+				width: 393px;
+				position: relative;
+				border: 1px solid #c9d8db;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部-start -->
+		<div th:replace="head::head"></div>
+		<!-- 头部-end -->
+		
+
+		<!-- 播放器 页面中间的内容 -->
+		<div class="f-main clearfix">
+			<div class="main-course-left">
+					<div class="course-info">
+						<div class="course-title" style="font-size: 24px;" th:text="${son.mkcsname}">1-1 感受神秘的涟漪效果</div>
+
+						<input type="hidden" th:value="${son.mkcstid}" id="mkcstid">
+						<input type="hidden" th:value="${son.mkcsid}" id="mcid">
+						<div class="course-video">
+							<div id="psVideo" class="psVideo">
+					        <video th:src="${son.mkcsurl}" src="res/video/02.mp4" class="my-psVideo" id="my-video" poster="${son.mkcimg}" preload="metadata">
+					        </video>
+					        <div class="psVideo-loading">
+					            <span></span>
+					            <span></span>
+					            <span></span>
+					        </div>
+					        <div class="psVideo-play-one"></div>
+					        <div class="psVideo-shade psVideo-shade-on">
+					            <div class="psVideo-play-footer">
+					                <div class="psVideo-progress">
+					                    <span class="psVideo-timeBar"></span>
+					                </div>
+					                <div class="psVideo-play-btn psVideo-stop"></div>
+					                <div class="psVideo-time">
+					                    <span id="currentTime">00:00</span>
+					                    <span>/</span>
+					                    <span id="duration">00:00</span>
+					                </div>
+					                <div class="psVideo-dan">
+					                    <input type="text" class="psVideo-dan-input" placeholder="点击输入弹幕,回车键发送"/>
+					                    <span class="psVideo-dan-btn">发送</span>
+					                </div>
+					                <div class="psVideo-right-btn">
+					                    <div class="psVideo-btn all"></div>
+					                    <div class="psVideo-btn loop" id="loop"></div>
+					                    <div class="psVideo-btn set">
+					                        <div class="set-list">
+					                            <div class="play-speed">播放速度</div>
+					                            <div class="play-speed-list">
+					                                <span id="speed05Btn">X0.5</span>
+					                                <span class="moren" id="speed1Btn">X1</span>
+					                                <span id="speed2Btn">X2</span>
+					                            </div>
+					                        </div>
+					                        <div class="konge1"></div>
+					                    </div>
+					                    <div class="psVideo-btn huazhi">自动</div>
+					                    <div class="psVideo-btn sound" id="soundBtn">
+					                        <div class="sound-list">
+					                            <div class="sound-number">90</div>
+					                            <div class="volume">
+					                                <span class="volumeBar"></span>
+					                            </div>
+					                        </div>
+					                        <div class="konge"></div>
+					                    </div>
+					                </div>
+					            </div>
+					        </div>
+					        <div class="player-list">
+					            <div class="player-list-bk">
+					                <div class="player-list-head">播放列表</div>
+					                <div class="player-list-cotent">
+					                    <div class="player-list-box">
+<!--					                        <div class="player-list-video video-now">第1章</div>-->
+											<div th:each="ls:${listson}" >
+												<a th:href="@{/video(mkcstid=${ls.mkcstid},courseid=${ls.mkcsid})}" class="player-list-video" th:text="${ls.mkcsname}"></a>
+											</div>
+					                    </div>
+					                </div>
+					            </div>
+					        </div>
+					    </div>	
+						
+						</div>
+										
+						<div class="course-menu" style="position: relative">
+							<a  href="#ping" aria-controls="ping" role="tab" data-toggle="tab"><span class="menu-item  cur">评论</span></a>
+							<a  href="#wen" aria-controls="wen" role="tab" data-toggle="tab"><span class="menu-item">问答</span></a>
+							<div style="position: absolute;right: 0px;">
+								<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">我要评论</button>
+							</div>
+						</div>
+				</div>
+				<!--评论模态框-->
+				<div class="modal fade"id="myModal" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title">我要评论</h4>
+							</div>
+							<div class="modal-body">
+								<form>
+									<div class="form-group">
+										<textarea class="form-control" id="message-text" rows="3" placeholder="想说啥就说啥!"></textarea>
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+								<button type="button" class="btn btn-success">发布评论</button>
+							</div>
+						</div><!-- /.modal-content -->
+					</div><!-- /.modal-dialog -->
+				</div><!-- /.modal -->
+				<!-- 评论-start -->
+
+
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane active" id="ping">
+							<div th:each="pl:${pageinfo.list}">
+								<div class="comment clearfix">
+									<div class="comment-header"><img class="lecturer-uimg" src="res/i/header.jpg" th:text="${pl.mkuimg}"></div>
+										<input type="hidden" id="pmkcstid" th:value="${pl.mkcstid}"/>
+									<div class="comment-main">
+										<div class="user-name" th:text="${pl.mkuname}">我是张三</div>
+										<div class="comment-content" th:text="${pl.mkcmcontent}">这门课真实用！一个列表嵌套好多种布局的时候，用recyclerview控件优雅实现，效率果然提高不少，老板肯定又会夸我，啊哈哈！！！</div>
+										<div class="comment-footer">
+
+												<div class="mod-qa-list">
+													<div class="replymegfooter qa-footer clearfix">
+														<div class="l-box l">
+															<a title="赞"  th:onclick="'javascript:updatecount('+${pl.mkcmid}+')'" class="Jpraise moco-btn moco-btn-gray-l l" style="margin-top: -10px;">
+																<span class="fa fa-thumbs-up" aria-hidden="true"></span>
+																<em th:text="${pl.count}" id="ajaxpcount">0</em>
+															</a>
+															<a th:href="@{/video(mkcstid=${pl.mkcstid})}"  target="_blank" th:text="${pl.mkcsname}">2-4 小程序调用后台接口</a>
+														</div>
+														<em class="r"   th:text="${pl.mkcmcreatetime}">2天前</em>
+													</div>
+												</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+							<!--评论分页-->
+							<div class="text-center">
+								<span th:if="${pageinfo.hasPreviousPage}">
+									<a th:href="'/video?mkcstid=1&pageNum='+${pageinfo.prePage}" class="btn btn-primay btn-sm">上一页</a>
+								</span>
+								<span th:if="${pageinfo.hasNextPage}">
+									<a th:href="'/video?mkcstid=1&pageNum='+${pageinfo.nextPage}" class="btn btn-primay btn-sm">下一页</a>
+								</span>
+							</div>
+						</div>
+
+						<div role="tabpanel" class="tab-pane" id="wen">
+							<div th:each="list : ${wenall.list}">
+								<div class="comment clearfix">
+									<div class="comment-header">
+										<img class="lecturer-uimg" src="res/i/header.jpg" th:text="${list.mkuimg}">
+									</div>
+									<div class="comment-main">
+										<div>
+											<a th:href="@{/findNode(mkatpid=${list.mkatpid})}" class="user-name"  th:text="${list.mkatitle}"></a>
+										</div>
+										<div class="comment-content">
+											<div class="replycont qa-body clearfix" th:if="${list.mkatpcontent!=null}">
+												最新回答 / <a href="#" th:text="${list.uname}"></a>
+												<br/>
+												&nbsp;&nbsp;&nbsp;<span th:text="${list.mkatpcontent}"></span>
+												<br/>
+												<a th:href="@{/findNode(mkatpid=${list.mkatpid})}" class="moco-btn moco-btn-gray-l" target="_blank">+ 我来回答</a>
+												<span class="wait-answer">回答最高可+2积分</span>
+											</div>
+
+										</div>
+										<div class="mod-qa-list">
+											<div class="replymegfooter qa-footer clearfix">
+												<div class="l-box l">
+													<a href="/qadetail/336639" target="_blank" class="replynumber static-count ">
+												<span class="static-item answer">
+															<span th:text="${list.count}">0</span>  回答
+												</span>
+														<span class="static-item">
+                                    					<span th:text="${list.mkapreview}"></span>  浏览
+                        						</span>
+													</a>
+													<a th:href="@{/video(mkcstid=${list.mkcstid})}" target="_blank" th:text="${list.mkcsname}">2-4 小程序调用后台接口</a>
+												</div>
+												<em class="r" th:text="${list.mkatptime}">2天前</em>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!--如果没有数据-->
+<!--							<div class="panel-btn-wrap"  style="height: 120px; margin: 0px auto;">-->
+<!--								<a class="moco-btn moco-btn-gray-l" target="_blank">您还没有提问过!</a>-->
+<!--							</div>-->
+
+						</div>
+						<!--问答分页-->
+						<div class="text-center">
+							<span th:if="${wenall.hasPreviousPage}">
+								<a th:href="'/video?mkcstid='+$${son.mkcstid}+'&pagenum='+${wenall.prePage}" class="btn btn-primay btn-sm">上一页</a>
+							</span>
+							<span th:if="${wenall.hasNextPage}">
+								<a th:href="'/video?mkcstid='+${son.mkcstid}+'&pagenum='+${wenall.nextPage}" class="btn btn-primay btn-sm">下一页</a>
+							</span>
+						</div>
+					</div>
+
+
+
+
+				
+			</div>
+			
+			<!-- 章节-start -->
+			<div class="main-course-right" style="min-height: 920px;">
+					<ul class="nav nav-tabs" role="tablist">
+					<li  role="presentation" class="active">
+						<a href="#allchapter" aria-controls="allchapter" role="tab" data-toggle="tab">所有章节</a>
+					</li>
+					<li  role="presentation">
+						<a href="#mynote" aria-controls="mynote" role="tab" data-toggle="tab">笔记</a>
+					</li>
+
+				</ul>
+
+				 <div class="tab-content" >
+
+				    <div role="tabpanel" class="tab-pane active" id="allchapter"  >
+				    	<div class="video-course-fix-parent" >
+							<div class="video-course-fix" >
+								<div class="chapter" style="padding: 0px ;border: none;"th:each="fu:${listfu}" >
+									<a href="javascript:void(0);" class="js-open">
+										<h3>
+											<strong th:text="${fu.mkfstitle}">第1章 课程介绍</strong>
+											<span class="drop-down">▼</span>
+										</h3>
+									</a>
+									<ul class="chapter-sub" style="padding-left:10px" th:each="f:${fu.childrens}">
+										<a th:href="@{/video(mkcstid=${f.mkcstid})}" >
+											<li class="ellipsis video-li">
+												<i class="icon-video">▶</i> <span th:text="${f.mkcsname}+ ${f.mkcstime}"></span>
+											</li>
+										</a>
+									</ul>
+								</div>
+							</div>
+						</div>
+					 </div>
+
+					    <div role="tabpanel" class="tab-pane" id="mynote" style="height: 600px;">
+
+					    	<div style="width: 393px; height: 285px;">
+
+<!--								<form th:action="@{/InsertNode}" method="post">-->
+
+									<textarea id="editor" autofocus></textarea>
+
+									<input type="hidden"  id="mkcsid" th:value="${son.mkcstid}"/>
+
+									<!--从shiro获取用户id-->
+									<input type="hidden" id="mkuid" value="1">
+
+									<div style="position: relative">
+										<button th:onclick="insertall()"  style="position: absolute; right:0px;margin-top: 5px;" class="btn btn-primary">发布</button>
+									</div>
+<!--								</form>-->
+
+								<script type="text/javascript">
+									$(function(){
+										var editor = new Simditor({
+											textarea:$('#editor'),
+											//optional options
+											toolbar:[
+												'code' ,
+												'bold',
+												'italic',        // unordered list
+												'blockquote',
+												// 'emoji',
+												'image',
+												'indent',
+												'outdent',
+											],
+											//  emoji: {
+											// 	imagePath: 'images/emoji/'
+											// },
+											defaultImage : 'images/image.png', //编辑器插入图片时使用的默认图片
+											upload : {
+												url : '/InsertNode', //文件上传的接口地址
+												params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+												fileKey: 'file', //服务器端获取文件数据的参数名
+												connectionCount: 1,
+												width:100,
+												height:100,
+												leaveConfirm: '正在上传文件'
+											}
+										});
+									})
+
+								</script>
+							</div>
+							<!--显示已经发布过的笔记-->
+							<div style=" width: 500px" >
+								<div class="panel-list" >
+									<h5>我的笔记</h5>
+									<div id="panelNoteList" class="" th:if="${onenote!=null}">
+										<ul id="js-note-container" class="mod-post">
+											<li id="2384289" class="post-row js-find-txt" courseid="" noteid="2384289" uid="right_2384289" authorid="7874633">
+												<div class="media">
+													<a href="/u/7874633/courses" target="_blank">
+														<img src="" th:src="@{onenote.mkuimg}" width="40" height="40">
+													</a>
+												</div>
+												<div class="bd">
+													<div class="tit">
+														<a href="/u/7874633/courses" target="_blank" th:text="${onenote.mkuname}">我的名称</a>
+													</div>
+													<div class="js-note-main">
+														<div class="js-notelist-content notelist-content" style="overflow-y: auto;overflow-x: auto;height: 50px;">
+															<div class="autowrap note-content" id="ajaxcontent" ><p>内容</p></div>
+														</div>
+														<div class="clearfix">
+															<input class="moco-btn moco-btn-green sava_btn" type="button" value="保存">
+														</div>
+														<div class="footer clearfix">
+															<div class="actions l">
+																<a title="赞" th:onclick="'javascript:NoteFavor('+${onenote.mknid}+');'"  class="Jpraise moco-btn moco-btn-gray-l l" data-mid="18057">
+																	<span class="fa fa-thumbs-up" aria-hidden="true"></span>
+																	<em id="countfav"></em>
+																</a>
+																<a title="删除此条笔记" data-toggle="modal" data-target=".bs-example-modal-sm" class="delnote post-action" data-cid="">
+																	<i class="fa fa-trash" aria-hidden="true"></i>
+																	<em>删除</em>
+																</a>
+																<a th:href="@{/CourseNodeAll(mkuid=1)}" target="_blank" class="post-action">查看全文</a>
+															</div>
+															<span title="55分钟前" class="r timeago" id="ajaxtime">55分钟前</span>
+														</div>
+													</div>
+													<div class="js-note-editor note-editor" style="display:none;">
+														<div class="note-editor-tool">
+															<a href="javascript:void(0)" class="moco-btn js-note-cancel">取消</a>
+															<a href="javascript:void(0)" class="moco-btn moco-btn-red js-note-submit">提交</a>
+														</div>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+									<div class="panel-btn-wrap" th:if="${onenote!=null}">
+										<a href="/u/7874633/notepad/1059" class="moco-btn moco-btn-gray-l" target="_blank">查看更多我的笔记</a>
+									</div>
+									<div class="panel-btn-wrap" th:if="${onenote==null}">
+										<a class="moco-btn moco-btn-gray-l" target="_blank">您还没有发布过笔记</a>
+									</div>
+								</div>
+
+
+							</div>
+						</div>
+  				</div>
+<!--				删除笔记的模态框-->
+				<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+					<div class="modal-dialog modal-sm" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title">您确定要删除此笔记吗?</h4>
+							</div>
+							<div class="modal-body">
+								<p>删除后无法恢复</p>
+							</div>
+							<div class="modal-footer">
+								<a class="moco-btn moco-btn-line-g js-modal-cancel" onclick="return false" data-dismiss="modal"><span>取消</span></a>
+								<a class="moco-btn moco-btn-dark js-modal-submit" th:if="${onenote!=null}" th:onclick="'javascript:deletemid('+${onenote.mknid}+');'"><span>确定</span></a>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--显示相关课程-->
+				<div style="margin: 10px 10px; width: 380px">
+					<div class="js-commend-box"  >
+						<div class="mb40 recom-course-list-box">
+							<h4>推荐课程</h4>
+							<ul class="js-recom-course moco-aside-course clearfix" th:each="type:${type}">
+								<li>
+									<div class="aside-course-img">
+										<img src="" th:src="@{type.mkcimg}">
+										<p class="aside-course-type">实战</p>
+									</div>
+									<div class="aside-course-content">
+										<a href="//coding.imooc.com/class/71.html" class="aside-course-name" target="_blank" th:text="${type.mkctitle}">算法与数据结构--综合提升篇（c++版）
+										</a>
+										<p class="aside-course-price" >
+											<span style="font-weight: bold" >￥<span th:text="${type.mkcmoney}"></span></span>
+										</p>
+										<div class="aside-course-dot">
+											<i>&nbsp;</i>
+										</div>
+										<p class="aside-course-grade" th:text="${type.mkdfname}">中级</p>
+										<div class="aside-course-dot"><i>&nbsp;</i></div>
+										<p class="aside-course-people">
+											<i class="fa fa-user-o" aria-hidden="true"></i>
+											<span th:text="${type.mkclearned}">9028</span>
+										</p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+			<!-- 章节-end -->
+		</div>
+		
+		<!-- 页脚-start -->
+		<div th:replace="tail::tail">尾</div>
+		<!-- 页脚-end-->
+
+<!--		显示的按钮-->
+		<script type="text/javascript">
+
+		</script>
+		<script type="text/javascript" src="res/js/index.js"></script>
+	</body>
+	
+</html>

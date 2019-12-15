@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="utf-8" xmlns:th="http://www.w3.org/1999/xhtml">
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<title>个人主页</title>
+		<link href="res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+		<link rel="stylesheet" type="text/css" href="res/font-awesome/css/font-awesome.min.css">
+		<link href="res/css/reset.css" rel="stylesheet" type="text/css"/>
+		<script type="text/javascript" src="res/js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="res/js/jquery.form.js"></script>
+		<script type="text/javascript" src="res/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="res/js/oc.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="res/css/moco.min.css.css">
+		<link rel="stylesheet" type="text/css" href="res/css/swiper.css">
+		<link rel="stylesheet" type="text/css" href="res/css/3.css">
+		<link rel="stylesheet" type="text/css" href="res/css/4.css">
+		<link rel="stylesheet" type="text/css" href="res/css/5.css">
+		<style type="text/css">
+			
+						/**
+			 * 个人中心
+			 */
+			.tab-content ul{
+				list-style: none;
+				height: 30px;
+				padding: 0px;
+			}
+			.tab-content ul li{
+				width: 100px;
+				float: left;
+				height: 40px;
+			}
+
+			.tab-content ul li a{
+				text-align: center;
+				line-height: 40px;
+				font-size: 18px;
+			}
+
+			.custdiv ul li{
+				width: 100px;
+				height: 40px;
+				margin: 10px 20px;
+			}
+
+		</style>
+	</head>
+
+	<body>
+
+		<div th:replace="head::head"></div>
+
+		
+
+		<div class="bg-other user-head-info">
+		    <div class="user-info clearfix">
+				<div class="user-pic" data-is-fans="0" data-is-follows="">
+					<!-- 用户图片 -->
+					<div class="user-pic-bg" style="border: 0px solid red;">
+						<img src="res/i/header.jpg" alt="wdawd" class="img-circle" style="width: 141px;height: 140px;" >
+					</div><!--user-pic-big end-->			
+				</div>
+				<div class="user-info-right">
+					<h3 class="user-name clearfix">
+						qq_慕无忌2087832
+					</h3>
+					<!--25-->
+					<p class="about-info">
+						<span>男</span>
+						 
+						     
+							<span>
+						
+							</span>
+					
+					</p>
+				</div>
+				<div class="user-sign hide">
+					<p class="user-desc">这位同学很懒，木有签名的说～</p>       
+				</div>
+		        <div class="study-info clearfix">
+						<div class="item follows">
+					<div class="u-info-learn" title="学习时长4小时32分" style="cursor:pointer;">
+						<em>4h</em>
+					<span>学习时长 </span>
+				</div>
+					</div>
+						<div class="item follows">
+					<a href='/u/index/experience'><em>235</em></a>
+					<span>经验</span>
+						</div>
+						<div class="item follows">
+						<a href='/u/index/credit'><em>0</em></a>
+							                
+							<span>积分</span>
+						</div>
+		            	<div class="item follows">
+						<a href='/u/index/follows'><em>0</em></a>
+						<span>关注</span>
+						</div>
+						<div class="item follows">
+						<a href='/u/index/fans'><em>0</em></a>
+		                 <span>粉丝</span>
+						</div>
+		            	<div class="item follows"><a class="btn btn-primary" href="collect.html">个人设置</a>
+
+		            	</div> 
+				</div><!--.study-info end-->
+		    </div><!-- .user-info end -->
+		</div><!-- .big-pic end -->
+		
+
+		<div class="f-main clearfix">
+			<div class="setting-left">
+				<div class="personal">
+					<ul>
+						<li>
+							<a href="#home" aria-controls="messages" role="tab" data-toggle="tab">
+								<i class="fa fa-play-circle"></i>&nbsp;我的课程
+							</a>
+						</li>
+						<li>
+							<a href="#profile" aria-controls="messages" role="tab" data-toggle="tab">
+							 <i class="fa fa-file-text-o"></i>&nbsp;
+							收藏</a>
+						</li>
+						<li>
+							<a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">
+							 <i class="fa fa-file-text-o"></i>&nbsp;
+							笔记</a>
+						</li>
+						<li>
+							<a href="#settings" aria-controls="messages" role="tab" data-toggle="tab">
+								<i class="fa fa-file-text-o"></i>&nbsp;
+							猿问</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="setting-right">
+				<div class="tab-content">
+					<!-- 我的课程 -->
+				    <div role="tabpanel" class="tab-pane active" id="home">
+				     <ul>
+				     	<li>
+				     		<a href="#all" aria-controls="all" role="tab" data-toggle="tab">全部</a>
+				     	</li>
+				     	<li>
+				     		<a href="#FreeAdmission" aria-controls="FreeAdmission" role="tab" data-toggle="tab">免费课程</a>
+				     	</li>
+				     	<li>
+				     		<a href="#Pay" aria-controls="Pay" role="tab" data-toggle="tab">付费课程</a>
+				     	</li>
+				     </ul>
+				      <div class="split-line" style="margin: 20px 0px;"></div>
+
+				      <div class="tab-content">
+					    <div role="tabpanel" class="tab-pane active" id="all">全部</div>
+					    <div role="tabpanel" class="tab-pane" id="FreeAdmission">付费</div>
+					    <div role="tabpanel" class="tab-pane" id="Pay">免费</div>
+  					</div>
+
+				    </div>
+				    <!-- 收藏 -->
+				    <div role="tabpanel" class="tab-pane" id="profile">
+				    	<ul>
+				     	<li>
+				     		<a href="#noteall" aria-controls="noteall" role="tab" data-toggle="tab">全部</a>
+				     	</li>
+				     	<li>
+				     		<a href="#noteFreeAdmission" aria-controls="noteFreeAdmission" role="tab" data-toggle="tab">免费课程</a>
+				     	</li>
+				     	<li>
+				     		<a href="#notePay" aria-controls="notePay" role="tab" data-toggle="tab">付费课程</a>
+				     	</li>
+				     </ul>
+				      <div class="split-line" style="margin: 20px 0px;"></div>
+
+				      <div class="tab-content">
+					    <div role="tabpanel" class="tab-pane active" id="noteall">
+					    	awdawd
+					    </div>
+					    <div role="tabpanel" class="tab-pane" id="noteFreeAdmission">笔记付费</div>
+					    <div role="tabpanel" class="tab-pane" id="notePay">笔记免费</div>
+  					</div>
+				    </div>
+				    <!-- 笔记 -->
+				    <div role="tabpanel" class="tab-pane" id="messages">
+				    	
+				    	<ul>
+				     	<li>
+				     		<a href="#notelist" aria-controls="notelist" role="tab" data-toggle="tab">笔记列表</a>
+				     	</li>
+				     	<li>
+				     		<a href="#Newestnote" aria-controls="Newestnote" role="tab" data-toggle="tab">最近编辑</a>
+				     	</li>
+				     </ul>	
+				    	
+				    <div class="split-line" style="margin-top: 20px;"></div>
+				      <div class="tab-content">
+					    <div role="tabpanel" class="tab-pane" id="notelist">
+					    	<div class="custdiv" style=" background-color: #F8FAFC;height: 60px;margin-top: 0px;">
+					    		<ul>
+						     	<li>
+						     		<a class="btn btn-primary" href="#Exemptionclass" aria-controls="Exemptionclass" role="tab" data-toggle="tab">免费课程</a>
+						     	</li>
+						     	<li>
+						     		<a class="btn btn-primary" href="#payclass" aria-controls="payclass" role="tab" data-toggle="tab">付费课程</a>
+						     	</li>
+				     		</ul>
+					    	</div>
+					    	<hr>
+					    	<div class="tab-content">
+							    <div role="tabpanel" class="tab-pane active" id="Exemptionclass">
+							    	免费笔记
+							    </div>
+							    <div role="tabpanel" class="tab-pane" id="payclass">
+							    	付费笔记
+							    </div>
+  							</div>
+
+					    </div>
+					    <div role="tabpanel" class="tab-pane" id="Newestnote">最近编辑</div>
+  					</div>	
+
+				    </div>
+				    <!-- 猿问 -->
+				    <div role="tabpanel" class="tab-pane" id="settings">
+						<ul>
+				     	<li>
+				     		<a href="#myask" aria-controls="myask" role="tab" data-toggle="tab">我的提问</a>
+				     	</li>
+				     	<li>
+				     		<a href="#myAnswer" aria-controls="myAnswer" role="tab" data-toggle="tab">我的回答</a>
+				     	</li>
+				     	<li>
+				     		<a href="#myfollow" aria-controls="myfollow" role="tab" data-toggle="tab">我的关注</a>
+				     	</li>
+				     </ul>
+				      <div class="split-line" style="margin: 20px 0px;"></div>
+				      <div class="tab-content">
+					    <div role="tabpanel" class="tab-pane active" id="myask">笔记全部</div>
+					    <div role="tabpanel" class="tab-pane" id="myAnswer">笔记付费</div>
+					    <div role="tabpanel" class="tab-pane" id="myfollow">笔记免费</div>
+  					</div>
+
+				    </div>
+			  </div>	
+			</div>
+		</div>
+		
+		<!-- 页脚-start -->
+		<div th:replace="tail::tail"></div>
+		<!-- 页脚-end-->
+		
+	</body>
+	
+</html>

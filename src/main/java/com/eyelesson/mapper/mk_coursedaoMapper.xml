@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.eyelesson.dao.mk_coursedao">
+
+    <!--已学习过的-->
+    <select id="findByCouridUid" resultType="java.util.Map">
+        select * from mk_course mkc inner join mk_difficulty mkd on mkc.mkdfid
+        =mkd.mkdfid right join mk_fathercourse_section mkfs on mkc.mkcsid=mkfs.mkcourseid
+        right join mk_soncourse_section mkss on mkfs.mkfcsid
+        =mkss.mkfcsid and mkfs.mkcourseid=mkss.mkcsid
+        right join mk_process  mkpr on mkss.mkcstid=mkpr.mkcstid
+        where mkc.mkcsid=#{param1} and mkpr.mkuid=#{param2}
+    </select>
+    <!--根据课程id查询出来-->
+    <select id="findCourid" resultType="java.util.Map">
+        select * from mk_course mkc inner join mk_difficulty mkd on mkc.mkdfid
+        =mkd.mkdfid left join mk_soncourse_section mkss on mkc.mkcsid=mkss.mkcstid
+        left join mk_process mkpr on mkpr.mkcstid=mkss.mkcstid
+        where mkc.mkcsid=#{param1}
+    </select>
+
+    <!-- 获取所有的评论以及点赞-->
+    <select id="findPingAll" resultType="java.util.Map">
+        with
+        c as (
+        select mkco.mkcmid,mkss.mkcsid,mkus.mkuimg,mkus.mkuname,mkco.mkcmcontent,mkss.mkcsname,mkco.mkcmcreatetime
+        from mk_comment mkco inner join mk_soncourse_section mkss
+        on mkco.mkcstid=mkss.mkcstid inner join mk_use mkus on mkco.mkuid=mkus.mkuid
+        where mkcsid = #{param1}
+        group by mkco.mkcmid
+
+        )
+        select count(c.mkcmid) fabulous,c.* from c inner join mk_fabulous
+        f on c.mkcmid=f.mkcmid group by c.mkcmid
+        order by c.mkcmcreatetime desc
+    </select>
+<!-- 查询某个章节的所有评论-->
+    <select id="findZhangAll" resultType="java.util.Map">
+        select mkcm.mkcmid,mkus.mkuname,mkus.mkuimg,mkss.mkcsid,mkcm.mkcmcreatetime,mkcm.mkcmcontent,mkss.mkcsname,
+        count(mkf.mkcmid) count,mkss.mkcstid
+        from mk_comment mkcm inner join mk_soncourse_section mkss
+        on mkcm.mkcstid=mkss.mkcstid
+        inner join mk_fabulous mkf on mkcm.mkcmid=mkf.mkcmid
+        inner join mk_use mkus on mkf.mkuid=mkus.mkuid
+        where mkss.mkcstid=#{param1}
+        group by mkcm.mkuid
+    </select>
+    <!--查询出这个科目下所有的问答-->
+    <select id="findaskAll" resultType="java.util.Map">
+
+        select mkas.mkatpid,mkas.mkuid,mku.mkuname,mku.mkuimg,mkas.mkatitle,mkas.mkatpcontent,mkas.mkatptime,mkas.mkapreview,mkss.mkcsname,mkss.mkcsurl,mkss.mkcstid,count(mkas.mkatpid) count from mk_asktopic mkas
+        left join mk_soncourse_section mkss
+        on mkas.mkcstid=mkss.mkcstid
+        left join mk_answertopic mkan
+        on mkas.mkatpid=mkan.mkatpid
+        left join mk_use mku on mkas.mkuid=mku.mkuid
+        where mkss.mkcsid=#{param1}
+        group by mkas.mkatpid
+    </select>
+<!--    查询出这个类型课程-->
+    <select id="findTypeAll" resultType="java.util.Map">
+        select mkc.mkcsid,mkc.mkctitle,mkc.mkclearned,mkdf.mkdfname,mkc.mkcmoney,mkc.mkcimg from mk_course
+        mkc inner join mk_difficulty mkdf
+        on mkc.mkdfid=mkdf.mkdfid
+        where mkcid=#{param1}
+        order by mkclearned desc
+        limit 1,3
+    </select>
+    <!--  查看我在这个课程发的1个笔记  -->
+    <select id="findTimedesc" resultType="com.eyelesson.entity.Mk_Note">
+        with a as(select mku.mkuid,mku.mkuimg,mku.mkuname,mkn.mknid,
+        mkn.mknotecontent,mkn.mknctime,mkn.mknlink,
+        mkc.mkcsid,count(mkf.mknid) count
+        from mk_note mkn inner join  mk_use mku
+        on mkn.mkuid=mku.mkuid
+        left join mk_soncourse_section mkss
+        on mkn.mkcstid=mkss.mkcstid left join
+        mk_course mkc on mkss.mkcsid=mkc.mkcsid
+        left join mk_Fabulous mkf on mkn.mknid=mkf.mknid
+        where mkc.mkcsid=#{param1}
+        group by mkn.mknid
+        order by mkn.mknctime desc limit 0,1)
+        select *from a
+    </select>
+    <!--    查看这个课程的所有笔记-->
+    <select id="findAllNode" resultType="com.eyelesson.entity.Mk_Note">
+        select mku.mkuid,mku.mkuimg,mku.mkuname,mkn.mknid,
+        mkn.mknotecontent,mkn.mknctime,mkn.mknlink,
+        mkc.mkcsid,count(mkf.mknid) count
+        from mk_note mkn inner join  mk_use mku
+        on mkn.mkuid=mku.mkuid
+        inner join mk_soncourse_section mkss
+        on mkn.mkcstid=mkss.mkcstid inner join
+        mk_course mkc on mkss.mkcsid=mkc.mkcsid
+        inner join mk_Fabulous mkf on mkn.mknid=mkf.mknid
+        where mkc.mkcsid=#{param1}
+        group by mkn.mknid
+    </select>
+<!--    这个章节下面的所有问答-->
+    <select id="findZWen" resultType="java.util.Map">
+        select mkas.mkatpid,mkas.mkuid,mku.mkuname,mku.mkuimg,mkas.mkatitle,mkas.mkatpcontent,mkas.mkatptime,mkas.mkapreview,mkss.mkcsname,mkss.mkcsurl,mkss.mkcstid,count(mkas.mkatpid)
+        count,mkua.mkuname as uname,mkan.mkuid as uid from mk_asktopic mkas
+        left join mk_soncourse_section mkss
+        on mkas.mkcstid=mkss.mkcstid
+        left join mk_answertopic mkan
+        on mkas.mkatpid=mkan.mkatpid
+        left join mk_use mku on mkas.mkuid=mku.mkuid
+        left join mk_use mkua on mkan.mkuid=mkua.mkuid
+        where mkss.mkcstid=#{param1}
+        group by mkas.mkatpid
+    </select>
+</mapper>
