@@ -83,8 +83,11 @@ public class mk_courseservice {
     public Mk_Note OneNoteImg(Integer couseid)
     {
         Mk_Note note = mk_coursedao.findTimedesc(couseid);
-        List<Mk_NoteImg> noteImg = mk_coursedao.findNoteImg(note.getMknid());
-        note.setChildrens(noteImg);
+        if(note!=null)
+        {
+            List<Mk_NoteImg> noteImg = mk_coursedao.findNoteImg(note.getMknid());
+            note.setChildrens(noteImg);
+        }
         return note;
     }
 
