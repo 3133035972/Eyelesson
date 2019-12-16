@@ -83,7 +83,7 @@ public class Mk_NodeController {
     }
     //查看这个课程所有的笔记
     @RequestMapping("CourseNodeAll")
-    public String showCourseNote(int mkuid,Integer pagenum,Integer pagesize,Model model)
+    public String showCourseNote(int mkuid,Integer pagenum,Integer pagesize,Model model,Integer mkcsid)
     {
         if(pagenum==null)
         {
@@ -92,11 +92,12 @@ public class Mk_NodeController {
         PageInfo<Map<String, Object>> pageInfo = mkNoteService.NoteAll(mkuid, pagenum, 2);
         model.addAttribute("pageinfo",pageInfo);
         //作者的信息
-        Map<String, Object> mkcsid = mkNoteService.authAll((Integer) pageInfo.getList().get(1).get("mkcsid"));
-        model.addAttribute("auth",mkcsid);
+        Map<String, Object> auth = mkNoteService.authAll(mkcsid);
+        model.addAttribute("auth",auth);
         //用户的信息
         Mk_Use use = mkNoteService.mkUse(mkuid);
         model.addAttribute("use",use);
+        System.out.println(use);
         return "notepad";
     }
     //修改笔记

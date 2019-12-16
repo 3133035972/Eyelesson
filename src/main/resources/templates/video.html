@@ -20,7 +20,7 @@
 		<link rel="stylesheet" type="text/css" href="res/css/bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="res/css/index.css">
 		<link rel="stylesheet" type="text/css" href="res/simditor/site/assets/styles/simditor.css" />
- 
+ 		<link rel="stylesheet" type="text/css" href="res/css/pic-viewer-less.css">
  		<!-- <link rel="stylesheet" type="text/css" href="res/simditor-emoji-master/styles/simditor-emoji.css" />
 		
 		<script type="text/javascript" src="res/simditor-emoji-master/lib/simditor-emoji.js"></script> -->
@@ -184,7 +184,9 @@
 
 					<div class="tab-content">
 						<div role="tabpanel" class="tab-pane active" id="ping">
-							<div th:each="pl:${pageinfo.list}">
+
+							<span th:if="${pageinfo!=null}">
+								<div th:each="pl:${pageinfo.list}">
 								<div class="comment clearfix">
 									<div class="comment-header"><img class="lecturer-uimg" src="res/i/header.jpg" th:text="${pl.mkuimg}"></div>
 										<input type="hidden" id="pmkcstid" th:value="${pl.mkcstid}"/>
@@ -210,19 +212,32 @@
 									</div>
 								</div>
 							</div>
-							<!--评论分页-->
-							<div class="text-center">
-								<span th:if="${pageinfo.hasPreviousPage}">
-									<a th:href="'/video?mkcstid=1&pageNum='+${pageinfo.prePage}" class="btn btn-primay btn-sm">上一页</a>
-								</span>
-								<span th:if="${pageinfo.hasNextPage}">
-									<a th:href="'/video?mkcstid=1&pageNum='+${pageinfo.nextPage}" class="btn btn-primay btn-sm">下一页</a>
-								</span>
-							</div>
+								<!--评论分页-->
+								<div class="text-center">
+									<span th:if="${pageinfo.hasPreviousPage}">
+										<a th:href="'/video?mkcstid=1&pageNum='+${pageinfo.prePage}" class="btn btn-primay btn-sm">上一页</a>
+									</span>
+									<span th:if="${pageinfo.hasNextPage}">
+										<a th:href="'/video?mkcstid=1&pageNum='+${pageinfo.nextPage}" class="btn btn-primay btn-sm">下一页</a>
+									</span>
+								</div>
+							</span>
+
+							<span th:if="${pageinfo.list.size()==0}">
+								<div id="course_note">
+									<div class="no-data">
+										<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+										此课程暂无同学评论
+									</div>
+								</div>
+
+							</span>
 						</div>
 
 						<div role="tabpanel" class="tab-pane" id="wen">
-							<div th:each="list : ${wenall.list}">
+
+							<span th:if="${wenall!=null}">
+								<div th:each="list : ${wenall.list}">
 								<div class="comment clearfix">
 									<div class="comment-header">
 										<img class="lecturer-uimg" src="res/i/header.jpg" th:text="${list.mkuimg}">
@@ -261,19 +276,21 @@
 									</div>
 								</div>
 							</div>
-							<!--如果没有数据-->
-<!--							<div class="panel-btn-wrap"  style="height: 120px; margin: 0px auto;">-->
-<!--								<a class="moco-btn moco-btn-gray-l" target="_blank">您还没有提问过!</a>-->
-<!--							</div>-->
-
-						</div>
-						<!--问答分页-->
-						<div class="text-center">
-							<span th:if="${wenall.hasPreviousPage}">
-								<a th:href="'/video?mkcstid='+$${son.mkcstid}+'&pagenum='+${wenall.prePage}" class="btn btn-primay btn-sm">上一页</a>
+								<!--问答分页-->
+								<div class="text-center">
+									<span th:if="${wenall.hasPreviousPage}">
+										<a th:href="'/video?mkcstid='+$${son.mkcstid}+'&pagenum='+${wenall.prePage}" class="btn btn-primay btn-sm">上一页</a>
+									</span>
+									<span th:if="${wenall.hasNextPage}">
+										<a th:href="'/video?mkcstid='+${son.mkcstid}+'&pagenum='+${wenall.nextPage}" class="btn btn-primay btn-sm">下一页</a>
+									</span>
+								</div>
 							</span>
-							<span th:if="${wenall.hasNextPage}">
-								<a th:href="'/video?mkcstid='+${son.mkcstid}+'&pagenum='+${wenall.nextPage}" class="btn btn-primay btn-sm">下一页</a>
+							<span th:if="${wenall.list.size()==0}">
+								<div class="no-data">
+								<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+								此课程暂无同学问答
+							</div>
 							</span>
 						</div>
 					</div>
@@ -404,7 +421,7 @@
 																	<i class="fa fa-trash" aria-hidden="true"></i>
 																	<em>删除</em>
 																</a>
-																<a th:href="@{/CourseNodeAll(mkuid=1)}" target="_blank" class="post-action">查看全文</a>
+																<a th:href="@{/CourseNodeAll(mkuid=1,mkcsid=${son.mkcsid})}" target="_blank" class="post-action">查看全文</a>
 															</div>
 															<span title="55分钟前" class="r timeago" id="ajaxtime">55分钟前</span>
 														</div>
@@ -420,14 +437,12 @@
 										</ul>
 									</div>
 									<div class="panel-btn-wrap" th:if="${onenote!=null}">
-										<a href="/u/7874633/notepad/1059" class="moco-btn moco-btn-gray-l" target="_blank">查看更多我的笔记</a>
+										<a th:href="@{/CourseNodeAll(mkuid=1,mkcsid=${son.mkcsid})}" class="moco-btn moco-btn-gray-l" target="_blank">查看更多我的笔记</a>
 									</div>
 									<div class="panel-btn-wrap" th:if="${onenote==null}">
 										<a class="moco-btn moco-btn-gray-l" target="_blank">您还没有发布过笔记</a>
 									</div>
 								</div>
-
-
 							</div>
 						</div>
   				</div>

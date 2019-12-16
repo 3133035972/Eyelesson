@@ -13,6 +13,7 @@
 		<link href="res/css/reset.css" rel="stylesheet" type="text/css"/>
 		<script type="text/javascript" src="res/js/jquery-1.11.3.min.js"></script>
 		<script type="text/javascript" src="res/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="res/css/pic-viewer-less.css">
 		
 		<!--[if lt IE 9]>
 		  <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -75,7 +76,9 @@
 				</div>
 
 				<!-- 评论-start -->
-				<div th:each="list : ${pageinfo.list}">
+				<span th:if="${pageinfo!=null}">
+
+					<div th:each="list : ${pageinfo.list}">
 						<div class="comment clearfix">
 							<div class="comment-header">
 								<img class="lecturer-uimg" src="res/i/header.jpg" th:text="${list.mkuimg}">
@@ -87,6 +90,16 @@
 							</div>
 						</div>
 				</div>
+
+				</span>
+				<span th:if="${pageinfo.list.size()==0}">
+					<div id="course_note">
+					<div class="no-data">
+						<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+						此课程暂无同学评论
+					</div>
+				</div>
+				</span>
 				<!--分页-->
 				<div class="text-center">
 					<span th:if="${pageinfo.hasPreviousPage}">
