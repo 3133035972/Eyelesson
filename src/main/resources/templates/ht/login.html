@@ -21,11 +21,13 @@
         <div class="layui-pwd-icon larry-login">
             <input type="password" placeholder="密码" class="login_txtbx" lay-verify="required" name="mkupassword" value="123456"/>
         </div>
+        <div>
+            <p style="color:red; font-size:15px" th:text="${msg}"></p>
         </div>
         <div class="layui-submit larry-login">
             <input type="submit" lay-submit lay-filter="logSubmit" value="立即登陆" class="submit_btn"/>
         </div>
-    </form><p style="color:red; font-size:15px" th:text="${msg}"></p>
+    </form>
     <div class="layui-login-text">
         <p>© 2019-2020 AAA 版权所有</p>
         <p>第一小组答辩项目</p>

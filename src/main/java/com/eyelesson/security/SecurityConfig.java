@@ -19,6 +19,11 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
     //拦截请求配置
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        //设置权限 只在这些路径下面进行权限的设置和访问
+        http.authorizeRequests()//只设置后台请求才能触发认证
+                .antMatchers("/hou/**","/modules/**").access("@permissionConfig.hasPermission(request,authentication)");
+
         //认证请求
         http.authorizeRequests()
                 //只设置后台请求才能触发认证
@@ -53,7 +58,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 //禁用csrf跨域请求
                 .csrf()
                 .disable();
-        http.authorizeRequests().anyRequest().access("@permissionConfig.hasPermission(request,authentication)");
+
     }
 
     //配置不拦截的路径 后台的资源放行
