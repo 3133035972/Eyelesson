@@ -69,12 +69,6 @@
             <version>8.0.13</version>
             <scope>runtime</scope>
         </dependency>
-        <!--ojdbc6-->
-        <dependency>
-            <groupId>com.ojdbc6</groupId>
-            <artifactId>ojdbc6</artifactId>
-            <version>6.0</version>
-        </dependency>
         <!--通用Mapper-->
         <dependency>
             <groupId>tk.mybatis</groupId>

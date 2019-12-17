@@ -81,10 +81,14 @@
 					<div th:each="list : ${pageinfo.list}">
 						<div class="comment clearfix">
 							<div class="comment-header">
-								<img class="lecturer-uimg" src="res/i/header.jpg" th:text="${list.mkuimg}">
+								<a href="#">
+									<img class="lecturer-uimg" th:src="@{'img/'+${list.mkuimg}}">
+								</a>
 							</div>
 							<div class="comment-main">
-								<div class="user-name" th:text="${list.mkuname}">我是张三</div>
+								<a href="#">
+									<div class="user-name" th:text="${list.mkuname}">我是张三</div>
+								</a>
 								<div class="comment-content" th:text="${list.mkcmcontent}" >这门课真实用！一个列表嵌套好多种布局的时候，用recyclerview控件优雅实现，效率果然提高不少，老板肯定又会夸我，啊哈哈！！！</div>
 								<div class="comment-footer" th:text="${list.mkcmcreatetime}">时间：2016-12-05</div>
 							</div>
@@ -114,7 +118,7 @@
 			<!--			讲师内容部分-->
 			<div class="main-course-right" th:if="${mkuid==null}" >
 				<div class="lecturer-item" style="width: 100%;">
-					<img class="lecturer-uimg" src="res/i/header.jpg" th:if="${mksid!=null}" th:text="${mksid.mksimg}">
+					<img class="lecturer-uimg" th:if="${mksid!=null}" th:src="@{'img/'+${mksid.mksimg}}">
 					<span class="lecturer-name"  th:if="${mksid!=null}"  th:text="${mksid.mksname}" >王阳明</span>
 					<span class="lecturer-title" th:if="${mksid!=null}" th:text="${mksid.mkschool}">中华大学</span>
 					<span class="lecturer-p" th:if="${mksid!=null}" th:text="${mksid.mkskill}" >中华大学高级讲师，擅长写代码</span>
@@ -128,7 +132,7 @@
 						<ul class="js-recom-course moco-aside-course clearfix" th:each="type:${type}">
 							<li>
 								<div class="aside-course-img">
-									<img src="" th:src="@{type.mkcimg}">
+									<img  th:src="@{'img/'+${type.mkcimg}}">
 									<p class="aside-course-type">实战</p>
 								</div>
 								<div class="aside-course-content">
@@ -155,7 +159,7 @@
 
 			<div class="main-course-right" th:if="${mksid==null}">
 				<div class="lecturer-item" style="width: 100%;">
-					<img class="lecturer-uimg" src="res/i/header.jpg" th:if="${mkuid!=null}" th:text="${mkuid.mksimg}">
+					<img class="lecturer-uimg"  th:if="${mkuid!=null}" th:src="@{'img/'+${mkuid.mksimg}}">
 					<span class="lecturer-name"  th:if="${mkuid!=null}"  th:text="${mkuid.mksname}" >王阳明</span>
 					<span class="lecturer-title" th:if="${mkuid!=null}" th:text="${mkuid.mkschool}">中华大学</span>
 					<span class="lecturer-p" th:if="${mkuid!=null}" th:text="${mkuid.mkskill}" >中华大学高级讲师，擅长写代码</span>

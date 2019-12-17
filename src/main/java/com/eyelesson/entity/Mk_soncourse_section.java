@@ -16,8 +16,16 @@ public class Mk_soncourse_section {
     private String mkcsurl;
     private Integer mkcstime;
     private Integer mkonsale;
-
+    private String mkssimg;
     private Integer mkcid;
+
+    public String getMkssimg() {
+        return mkssimg;
+    }
+
+    public void setMkssimg(String mkssimg) {
+        this.mkssimg = mkssimg;
+    }
 
     public Integer getMkcid() {
         return mkcid;

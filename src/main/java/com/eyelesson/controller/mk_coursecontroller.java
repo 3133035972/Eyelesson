@@ -161,7 +161,8 @@ public class mk_coursecontroller {
         model.addAttribute("wenall",wenall);
         try{
             //这本笔记
-            Mk_Note oneNote = mk_courseservice.OneNoteImg(son.getMkcsid());
+            //从session中获取这个用户的id
+            Mk_Note oneNote = mk_courseservice.OneNoteImg(son.getMkcsid(),1);
             model.addAttribute("onenote",oneNote);
         }catch (Exception e){
             model.addAttribute("onenote",null);
@@ -174,7 +175,8 @@ public class mk_coursecontroller {
     @ResponseBody
     public Mk_Note showNote(Integer mkcsid)
     {
-        return mk_courseservice.OneNoteImg(mkcsid);
+        //从session获取这个用户的id
+        return mk_courseservice.OneNoteImg(mkcsid,1);
     }
 
     //删除笔记

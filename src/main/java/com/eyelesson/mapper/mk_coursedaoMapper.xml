@@ -73,11 +73,11 @@
         mkc.mkcsid,count(mkf.mknid) count
         from mk_note mkn inner join  mk_use mku
         on mkn.mkuid=mku.mkuid
-        left join mk_soncourse_section mkss
-        on mkn.mkcstid=mkss.mkcstid left join
+        inner join mk_soncourse_section mkss
+        on mkn.mkcstid=mkss.mkcstid inner join
         mk_course mkc on mkss.mkcsid=mkc.mkcsid
         left join mk_Fabulous mkf on mkn.mknid=mkf.mknid
-        where mkc.mkcsid=#{param1}
+        where mkc.mkcsid=#{param1} and mkn.mkuid=#{param2}
         group by mkn.mknid
         order by mkn.mknctime desc limit 0,1)
         select *from a
@@ -98,7 +98,7 @@
     </select>
 <!--    这个章节下面的所有问答-->
     <select id="findZWen" resultType="java.util.Map">
-        select mkas.mkatpid,mkas.mkuid,mku.mkuname,mku.mkuimg,mkas.mkatitle,mkas.mkatpcontent,mkas.mkatptime,mkas.mkapreview,mkss.mkcsname,mkss.mkcsurl,mkss.mkcstid,count(mkas.mkatpid)
+        select mkas.mkatpid,mkas.mkuid,mku.mkuname,mku.mkuimg,mkas.mkatitle,mkas.mkatpcontent,mkas.mkatptime,mkas.mkapreview,mkss.mkcsname,mkss.mkcsurl,mkss.mkcstid,count(mkan.mkatpid)
         count,mkua.mkuname as uname,mkan.mkuid as uid from mk_asktopic mkas
         left join mk_soncourse_section mkss
         on mkas.mkcstid=mkss.mkcstid

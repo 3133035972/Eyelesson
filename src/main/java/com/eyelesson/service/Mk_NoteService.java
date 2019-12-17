@@ -25,23 +25,15 @@ public class Mk_NoteService {
     //发布笔记
     public int Insert(Mk_Note mk_note)
     {
-        return mkNodeDAO.insertSelective(mk_note);
+        return mkNodeDAO.insert(mk_note);
     }
     //发布笔记图片
     public int InsertImg(Mk_NoteImg mkNoteImg)
     {
         return mkNoteImgDAO.insert(mkNoteImg);
     }
-    //查看详细的笔记
-    public Map<String,Object> nodes(int mktapid)
-    {
-        return mkNodeDAO.notes(mktapid);
-    }
-    //查看前5个相关问题
-    public List<Mk_asktopic> limit5(int mkcstid)
-    {
-        return mkNodeDAO.limit5(mkcstid);
-    }
+
+
     //查看这个课程的全部笔记
     public PageInfo<Map<String,Object>> NoteAll(int mkuid,int pagenum,int pagesize)
     {

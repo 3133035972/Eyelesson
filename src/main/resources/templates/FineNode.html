@@ -157,7 +157,7 @@
                         <span class="care l">关注</span>
                     </div>
                     <a href="/u/8075445/bbs" target="_blank" class="qa-author" >
-                        <img th:src="@{nodes.mkuimg}" width="40" height="40" >
+                        <img th:src="@{'img/'+${nodes.mkuimg}}" width="40" height="40" >
                         <a th:text="${nodes.mkuname}"></a>
                     </a>
                 </div>
@@ -165,7 +165,7 @@
                     <div class="qa-content-inner aimgPreview">
                         <div id="js-content-main">
                             <h1  class="js-qa-wenda-title qa-wenda-title" th:text="${nodes.mkatitle}">小程序端发送POST失败   后端控制台不输出</h1>
-                            <div id="js-qa-content" class="qa-disscus rich-text" th:text="${nodes.mkatpcontent}"><p>POST失败</p><p><img src="" title="" alt="" data-src="" style="cursor: pointer;"></p><p><img src="" title="" alt="" data-src="" style="cursor: pointer;"></p></div>
+                            <div id="js-qa-content" class="qa-disscus rich-text" th:utext="${nodes.mkatpcontent}"><p>POST失败</p><p><img src="" title="" alt="" data-src="" style="cursor: pointer;"></p><p><img src="" title="" alt="" data-src="" style="cursor: pointer;"></p></div>
                         </div>
                     </div>
 
@@ -263,7 +263,7 @@
                     <div class="qa-ci-avator l js-header-avator" href="https://www.imooc.com/u/index/allcourses">
 
                         <a href="/u/8360092/bbs">
-                            <img src="" width="40" height="40">
+                            <img th:src="@{'img/'+${nodes.mkuimg}}" width="40" height="40">
                         </a>
                     </div>
                     <div class="qa-ci-wrap">

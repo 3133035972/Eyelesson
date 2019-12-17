@@ -61,7 +61,7 @@ public interface mk_coursedao  extends Mapper<mk_course> {
     @Select("select *from mk_noteimg where mknid=#{param1}")
     List<Mk_NoteImg> findNoteImg(int mknid);
     //查询这个课程1个笔记和图片
-    Mk_Note findTimedesc(int couseid);
+    Mk_Note findTimedesc(int couseid,int mkuid);
     //查询这个课程所有的笔记和图片
     List<Mk_Note> findAllNode(int couseid);
     //删除笔记
