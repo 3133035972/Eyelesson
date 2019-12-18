@@ -18,66 +18,70 @@
         <div class="layui-header">
             <!-- 头部区域 -->
             <ul class="layui-nav layui-layout-left">
-
+                <!--侧边伸缩-->
                 <li class="layui-nav-item layadmin-flexible" lay-unselect>
                     <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
                         <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
                     </a>
                 </li>
-
-
+                <!--刷新-->
                 <li class="layui-nav-item" lay-unselect>
                     <a href="javascript:;" layadmin-event="refresh" title="刷新">
                         <i class="layui-icon layui-icon-refresh-3"></i>
                     </a>
                 </li>
-
-
             </ul>
+            <!--上右-->
             <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
-
+                <!--消息中心-->
                 <li class="layui-nav-item" lay-unselect>
                     <a lay-href="app/message/index.html" layadmin-event="message" lay-text="消息中心">
                         <i class="layui-icon layui-icon-notice"></i>
-
                         <!-- 如果有新消息，则显示小圆点 -->
                         <span class="layui-badge-dot"></span>
                     </a>
                 </li>
+                <!--切换主题颜色-->
                 <li class="layui-nav-item layui-hide-xs" lay-unselect>
                     <a href="javascript:;" layadmin-event="theme">
                         <i class="layui-icon layui-icon-theme"></i>
                     </a>
                 </li>
+                <!--便签-->
                 <li class="layui-nav-item layui-hide-xs" lay-unselect>
                     <a href="javascript:;" layadmin-event="note">
                         <i class="layui-icon layui-icon-note"></i>
                     </a>
                 </li>
+                <!--全屏显示-->
                 <li class="layui-nav-item layui-hide-xs" lay-unselect>
                     <a href="javascript:;" layadmin-event="fullscreen">
                         <i class="layui-icon layui-icon-screen-full"></i>
                     </a>
                 </li>
+                <!--个人信息-->
                 <li class="layui-nav-item" lay-unselect>
                     <a href="javascript:;">
-                        <cite>贤心</cite>
+                        <span th:text="${session.infos.mkpname}"></span>-
+                        <span th:text="${session.infos.mksname}"></span>
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a lay-href="set/user/info.html">基本资料</a></dd>
                         <dd><a lay-href="set/user/password.html">修改密码</a></dd>
                         <hr>
-                        <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
+                        <dd>
+                            <a href="/ht/login.html">退出</a>
+                        </dd>
                     </dl>
                 </li>
 
                 <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                    <a href="javascript:;" layadmin-event="about"><i
-                            class="layui-icon layui-icon-more-vertical"></i></a>
+                    <a href="javascript:;" ></a>
                 </li>
                 <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
-                    <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                    <a href="javascript:;" ></a>
                 </li>
+
             </ul>
         </div>
 
@@ -97,13 +101,10 @@
 
 
         <script>
-            //Demo
             layui.use(['tree', 'layer', 'element'], function () {
                 var layer = layui.layer
                     , $ = layui.jquery;
                 var element = layui.element;
-                //y页面开始就加载
-                console.log("页面开始加载了");
                 $.ajax({
                     type: "post",
                     url: '/modules/getModules',
@@ -169,6 +170,8 @@
                                     menu += "</dd>"
                                     element.init();
                                     console.log("二级菜单" + JSON.stringify(twoMenu[j].text))
+                                    console.log("二级菜单路径" + JSON.stringify(twoMenu[j].attributes))
+
                                 }
                             }
                             menu += " </dl></li>"
@@ -217,6 +220,7 @@
             </div>
         </div>
 
+
         <!-- 辅助元素，一般用于移动设备下遮罩 -->
         <div class="layadmin-body-shade" layadmin-event="shade"></div>
 
@@ -226,12 +230,11 @@
 
 <script>
     layui.config({
-        base: '../layuiadmin/' //静态资源所在路径
+        base: '/hts/layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
     }).use('index');
 </script>
-
 
 </body>
 </html>

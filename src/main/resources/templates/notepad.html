@@ -61,7 +61,7 @@
         <div class="user-info clearfix">
             <div class="user-pic">
                 <div class="user-pic-bg">
-                    <a href="" target="_blank"><img class="img" th:src="@{'img/'+${use.mkuimg}}"></a>
+                    <a href="" target="_blank"><img class="img" th:src="@{auth.mkuimg}"></a>
                 </div>
             </div>
             <div class="user-info-left">
@@ -70,7 +70,7 @@
                     <input type="hidden" id="mkuid" th:value="${use.mkuid}"/>
                 </h3>
                 <div class="note-course">
-                    <a href="/learn/1199" target="_blank" >课程名称：<span th:text="${auth.mkctitle}">Springboot 微信小程序 – 微信登录功能实战</span></a>
+                    <a href="/learn/1199" target="_blank" th:text="${auth.mkctitle}">课程名称：Nodejs全栈入门</a>
                 </div>
                 <a href="/u/8360092/courses" target="_blank" class="user-info-site">TA的个人中心</a>
             </div>
@@ -199,7 +199,7 @@
         </div>
         <div class="detail-right">
             <div class="note-course">
-                <a href="/learn/1199" target="_blank"><img class="note-course-img" th:src="@{'img/'+${auth.mkcimg}}" alt=""></a>
+                <a href="/learn/1199" target="_blank"><img class="note-course-img" th:src="@{auth.mksimg}" alt=""></a>
                 <div class="note-course-info">
                     <h2 th:text="${auth.mkctitle}">Nodejs全栈入门</h2>
                     <ul class="note-course-item">
@@ -228,7 +228,7 @@
 
             <div class="note-course teacher-info">
                 <a href="/u/1145997" target="_blank">
-                    <img class="teacher-img" th:src="@{'img/'+${auth.mksimg}}" width="80" height="80">
+                    <img class="teacher-img" src="" width="80" height="80">
                 </a>
                 <span class="tit">
                         <a href="/u/1145997" target="_blank" th:text="${auth.mksname}">一缕孤烟</a>
