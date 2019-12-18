@@ -80,14 +80,11 @@ public class mk_courseservice {
     }
 
     //获取这个课程下面的笔记和图片1个 一对多
-    public Mk_Note OneNoteImg(Integer couseid,Integer mkuid)
+    public Mk_Note OneNoteImg(Integer couseid)
     {
-        Mk_Note note = mk_coursedao.findTimedesc(couseid,mkuid);
-        if(note!=null)
-        {
-            List<Mk_NoteImg> noteImg = mk_coursedao.findNoteImg(note.getMknid());
-            note.setChildrens(noteImg);
-        }
+        Mk_Note note = mk_coursedao.findTimedesc(couseid);
+        List<Mk_NoteImg> noteImg = mk_coursedao.findNoteImg(note.getMknid());
+        note.setChildrens(noteImg);
         return note;
     }
 

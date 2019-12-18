@@ -20,9 +20,23 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+/*
+        // 解决跨域
+        http.headers().frameOptions().disable();
+
         //设置权限 只在这些路径下面进行权限的设置和访问
         http.authorizeRequests()//只设置后台请求才能触发认证
                 .antMatchers("/hou/**","/modules/**").access("@permissionConfig.hasPermission(request,authentication)");
+*/
+
+
+
+        // 解决跨域
+        http.headers().frameOptions().disable();
+
+        //设置权限 只在这些路径下面进行权限的设置和访问
+        http.authorizeRequests()//只设置后台请求才能触发认证
+                .antMatchers("/hou/**","/modules/**").access("@permissionConfig.hasPermission(request,authentication)").and().csrf().disable();
 
         //认证请求
         http.authorizeRequests()
@@ -64,7 +78,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
     //配置不拦截的路径 后台的资源放行
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/ht/**","/res/**");
+        web.ignoring().antMatchers("/hts/**","/res/**");
     }
 
     @Autowired
@@ -75,4 +89,6 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
         //认证生成器
         auth.authenticationProvider(authenticationProviderConfig);
     }
+
+
 }

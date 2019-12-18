@@ -12,9 +12,9 @@ public interface Mk_UserFlower {
     Mk_Userconcerns findAuth(int mkusid, int mkucid);
     //关注作者
     @Insert("insert into mk_userconcerns values(#{param1},#{param2})")
-    int Insertuserconcerns(int mkusid,int mkucid);
+    int Insertuserconcerns(int mkusid, int mkucid);
     //取消关注作者
     @Delete("delete from mk_userconcerns where mkusid=#{param1} and mkucid=#{param2}")
-    int DeleteAuth(int mkusid,int mkucid);
+    int DeleteAuth(int mkusid, int mkucid);
 
 }

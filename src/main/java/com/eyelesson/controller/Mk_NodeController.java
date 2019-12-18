@@ -72,6 +72,15 @@ public class Mk_NodeController {
         return 1;
     }
 
+    //查看详细的笔记
+    @RequestMapping("findNode")
+    public String FindNode(int mkatpid,Model model) {
+        Map<String, Object> nodes = mkNoteService.nodes(mkatpid);
+        List<Mk_asktopic> limit5=mkNoteService.limit5((Integer) nodes.get("mkcstid"));
+        model.addAttribute("top5",limit5);
+        model.addAttribute("nodes", nodes);
+        return "FineNode";
+    }
     //查看这个课程所有的笔记
     @RequestMapping("CourseNodeAll")
     public String showCourseNote(int mkuid,Integer pagenum,Integer pagesize,Model model,Integer mkcsid)
@@ -88,6 +97,7 @@ public class Mk_NodeController {
         //用户的信息
         Mk_Use use = mkNoteService.mkUse(mkuid);
         model.addAttribute("use",use);
+        System.out.println(use);
         return "notepad";
     }
     //修改笔记

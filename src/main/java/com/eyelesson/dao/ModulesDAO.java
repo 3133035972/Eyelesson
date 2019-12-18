@@ -10,7 +10,7 @@ public interface ModulesDAO extends Mapper<Modules> {
 
 
    //根据对应的职位(角色)来获取不同的权限
-   List<Modules> findByParcode(String parentcode,Integer posid);
+   List<Modules> findByParcode(String parentcode, Integer posid);
 
 
 }

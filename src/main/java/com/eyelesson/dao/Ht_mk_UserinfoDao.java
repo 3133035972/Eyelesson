@@ -1,9 +1,13 @@
 package com.eyelesson.dao;
 
 import com.eyelesson.entity.Mk_UserInfo;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-public interface Ht_mk_UserinfoDao {
+import java.util.Map;
+
+@Mapper
+public interface Ht_mk_UserinfoDao extends tk.mybatis.mapper.common.Mapper<Mk_UserInfo> {
 
     //后台登录
     @Select("select mkst.*,mkuse.mkuserid,mkuse.mkusername,mkuse.mkupassword from mk_userinfo mkuse\n" +
@@ -17,5 +21,14 @@ public interface Ht_mk_UserinfoDao {
             " join mk_position mkp on mkp.mkpid = mks.mksposid\n" +
             " where mkusername = #{param1}")
     Integer findPosIdByUserName(String mkusername);
+
+
+    //后台首页根据用户名显示对应的职位和员工名称
+    @Select("select u.mkuserid,p.mkpname,e.mksname from mk_userinfo  u\n" +
+            "join mk_staff e on e.mksid = u.mksid\n" +
+            "join mk_position p on p.mkpid = e.mksposid\n" +
+            "where u.mkusername = #{param1}")
+    Map<String,Object> findPosAndEmpNameByUserName(String mkusername);
+
 
 }

@@ -12,8 +12,13 @@ import java.util.Map;
 
 public interface Mk_NodeDAO extends Mapper<Mk_Note> {
 
-    //发布笔记
-    int InsertNode(Mk_Note mkNote);
+    //详细查看这个用户发的笔记
+    Map<String,Object> notes(int mkatpid);
+    //查看前五个相关问题
+    @Select("select *from mk_asktopic\n" +
+            "where mkcstid=#{param1}\n" +
+            "order by mkatptime desc limit 5")
+    List<Mk_asktopic> limit5(int mkcsid);
     //查看这个课程的全部笔记
     List<Map<String,Object>> NoteAll(int mkuid);
     //这个课程讲师的信息
@@ -23,6 +28,6 @@ public interface Mk_NodeDAO extends Mapper<Mk_Note> {
     Mk_Use use(int mkuid);
     //修改笔记
     @Update("update mk_note set mknotecontent=#{param1} where mknid=#{param2}")
-    int UpdateNode(String content,int mknid);
+    int UpdateNode(String content, int mknid);
 
 }
