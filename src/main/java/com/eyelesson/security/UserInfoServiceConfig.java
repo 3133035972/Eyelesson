@@ -37,7 +37,7 @@ public class UserInfoServiceConfig implements UserDetailsService {
         Mk_UserInfo user=htUserInfoService.findByUname(s);
 
         System.out.println(user);
-        System.out.println(user.getMkupassword());
+        /*System.out.println(user.getMkupassword());*/
 
 
         //2.根据用户名查询  显示对应的职位和员工名称在后台首页

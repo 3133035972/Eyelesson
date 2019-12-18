@@ -29,8 +29,6 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .antMatchers("/hou/**","/modules/**").access("@permissionConfig.hasPermission(request,authentication)");
 */
 
-
-
         // 解决跨域
         http.headers().frameOptions().disable();
 
@@ -81,8 +79,10 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/hts/**","/res/**");
     }
 
+
     @Autowired
     AuthenticationProviderConfig authenticationProviderConfig;
+
     //认证管理配置
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

@@ -25,8 +25,9 @@ public class ModulesController {
     {
         //获取职位的id
         //根据职位的id去查询
-//        System.out.println(modelsService.getTree((Integer) session.getAttribute("posid")));
+       System.out.println(modelsService.getTree((Integer) session.getAttribute("posid")));
         return modelsService.getTree((Integer) session.getAttribute("posid"));
+
     }
 
 
