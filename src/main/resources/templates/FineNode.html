@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Title</title>
 
+
+
     <link href="res/css/reset1.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="res/js/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="res/js/bootstrap.min.js"></script>
@@ -155,7 +157,7 @@
                         <span class="care l">关注</span>
                     </div>
                     <a href="/u/8075445/bbs" target="_blank" class="qa-author" >
-                        <img th:src="@{nodes.mkuimg}" width="40" height="40" >
+                        <img th:src="@{'img/'+${nodes.mkuimg}}" width="40" height="40" >
                         <a th:text="${nodes.mkuname}"></a>
                     </a>
                 </div>
@@ -163,7 +165,7 @@
                     <div class="qa-content-inner aimgPreview">
                         <div id="js-content-main">
                             <h1  class="js-qa-wenda-title qa-wenda-title" th:text="${nodes.mkatitle}">小程序端发送POST失败   后端控制台不输出</h1>
-                            <div id="js-qa-content" class="qa-disscus rich-text" th:text="${nodes.mkatpcontent}"><p>POST失败</p><p><img src="" title="" alt="" data-src="" style="cursor: pointer;"></p><p><img src="" title="" alt="" data-src="" style="cursor: pointer;"></p></div>
+                            <div id="js-qa-content" class="qa-disscus rich-text" th:utext="${nodes.mkatpcontent}"><p>POST失败</p><p><img src="" title="" alt="" data-src="" style="cursor: pointer;"></p><p><img src="" title="" alt="" data-src="" style="cursor: pointer;"></p></div>
                         </div>
                     </div>
 
@@ -182,14 +184,16 @@
 
                 <div class="qa-comments" data-title="小程序端发送POST失败   后端控制台不输出">
 
-                    <div class="qa-comment js-qa-comment" data-cid="493206" id="id_493206">
+<!--                    评论开始了-->
+                    <div class="qa-comment js-qa-comment" data-cid="493206" id="id_493206" th:each="li:${answlist}">
 
 
                         <div class="qa-comment-wrap clearfix ">
+                            <!--1级评论开始-->
                             <div class="qa-comment-author">
-                                <a href="/u/6770146/bbs" title="不朽的战斗机">
-                                    <img src="//img3.mukewang.com/user/54584df10001dacf02200220-40-40.jpg" width="40" height="40">
-                                    <span class="qa-comment-nick">不朽的战斗机</span>
+                                <a  href="/u/6770146/bbs" title="不朽的战斗机">
+                                    <img th:src="@{'img/'+${li.mkuimg}}"  width="40" height="40">
+                                    <span class="qa-comment-nick" th:text="${li.mkuname}">不朽的战斗机</span>
                                 </a>
                             </div>
                             <div class="qa-comment-d ">
@@ -197,44 +201,90 @@
                                 <div class="qa-comment-inner">
                                     <div class="qa-comment-c aimgPreview">
                                         <div class="rich-text">
-                                            <p>点同学笔记看看有吗</p>
+                                            <p th:utext="${li.mkatpcontent}">点同学笔记看看有吗</p>
                                         </div>
-
-
                                     </div>
                                     <div class="qa-comment-addon">
-                                        <span class="qa-comment-time">2019-05-11</span>
+                                        <span class="qa-comment-time" th:text="${li.mkantptime}">2019-05-11</span>
                                         <div class="qa-comment-addon-r">
                                             <a href="javascript:;" data-id="493206" data-type="6" data-uid="6770146" class="js-tip-off l tipoff">举报</a>
                                             <span class="qa-total-reply js-reply-item-reply">
-                            <i class="fa fa-commenting" aria-hidden="true"></i>
-                            <span class="js-qa-tr-num">回复</span>
-                        </span>
+                                                <i class="fa fa-commenting" aria-hidden="true"></i>
+                                                <span class="js-qa-tr-num" th:onclick="'javascript:huifu('+${li.mkantid}+')'">回复</span>
+                                            </span>
                                             <span class="js-qa-comment-support qa-comment-support  js-qacom-supported-user" data-ids="307336-493206">
-                            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                            <span>1</span>
-                        </span>
+                                                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                                <span>1</span>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="qa-reply">
+<!--                        二级评论-->
+                        <div class="qa-reply" >
                             <div class="qa-reply-header"></div>
                             <div class="qa-replies">
                                 <div class="qa-reply-c">
-                                    <!--  <p class="qa-reply-loading">
-                                        加载中...
-                                    </p>  -->
                                     <!-- 默认显示三条回复的回复 -->
+                                    <div class="qa-reply-item" data-rid="493206" th:each="l:${li.children}">
+                                        <a class="qa-reply-item-author" href="/u/7874633/bbs" title="qq_慕无忌2087832"><img th:src="@{'img/'+${l.mkuimg}}" width="40" height="40"></a>
+                                        <div class="qa-reply-item-inner">
+                                            <a href="/u/7874633/bbs" class="qa-reply-nick" th:text="${l.mkuname}">qq_慕无忌2087832</a>
+                                            <p class="q-reply-item-c" th:text="${l.mkatpcontent}">
+                                                瓦达问答
+                                            </p>
+                                            <div class="qa-reply-item-foot clearfix">
+                                                <span class="reply-item-index r">#1</span>
+                                                <span >5天前</span>
+                                                <span class="qa-reply-item-reply js-reply-item-reply" data-uid="7874633|qq_慕无忌2087832"><i class="fa fa-commenting" aria-hidden="true"></i>回复</span>
+                                            </div>
+                                        </div>
+                                        <div class="qa-reply-item" data-rid="493206" th:if="${l.children!=null}" th:each="la:${l.children}">
+                                            <a class="qa-reply-item-author" href="/u/7874633/bbs" title="qq_慕无忌2087832"><img th:src="@{'img/'+${la.mkuimg}}" width="40" height="40"></a>
+                                            <div class="qa-reply-item-inner">
+                                                <p>
+                                                    <a href="/u/7874633/bbs" class="qa-reply-nick" th:text="${la.mkuname}">qq_慕无忌2087832</a>
+                                                    回复<a href="/u/7874633/bbs" class="qa-reply-nick" th:text="${l.mkuname}"></a>
+                                                </p>
+                                                <p class="q-reply-item-c" th:text="${la.mkatpcontent}">
+                                                    瓦达问答
+                                                </p>
+                                                <div class="qa-reply-item-foot clearfix">
+                                                    <span class="reply-item-index r">#1</span>
+                                                    <span >5天前</span>
+                                                    <span class="qa-reply-item-reply js-reply-item-reply" data-uid="7874633|qq_慕无忌2087832"><i class="fa fa-commenting" aria-hidden="true"></i>回复</span>
+                                                </div>
+                                            </div>
+                                            <div class="qa-reply-item" data-rid="493206" th:if="${la.children!=null}" th:each="lc:${la.children}">
+                                                <a class="qa-reply-item-author" href="/u/7874633/bbs" title="qq_慕无忌2087832"><img th:src="@{'img/'+${lc.mkuimg}}" width="40" height="40"></a>
+                                                <div class="qa-reply-item-inner">
+                                                    <p>
+                                                        <a href="/u/7874633/bbs" class="qa-reply-nick" th:text="${lc.mkuname}">qq_慕无忌2087832</a>
+                                                        回复<a href="/u/7874633/bbs" class="qa-reply-nick" th:text="${la.mkuname}"></a>
+                                                    </p>
+                                                    <p class="q-reply-item-c" th:text="${lc.mkatpcontent}">
+                                                        瓦达问答
+                                                    </p>
+                                                    <div class="qa-reply-item-foot clearfix">
+                                                        <span class="reply-item-index r">#1</span>
+                                                        <span >5天前</span>
+                                                        <span class="qa-reply-item-reply js-reply-item-reply" data-uid="7874633|qq_慕无忌2087832"><i class="fa fa-commenting" aria-hidden="true"></i>回复</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
+                                    </div>
+
+                                    <div class="overplusnum js-overplus-num" data-rid="493206" data-uid="6400258">点击展开后面<em class="js-reminds-num">3</em>条评论</div>
                                 </div>
 
                                 <!-- 回复框 -->
-                                <div class="js-qa-reply-ibox qa-reply-ibox  clearfix" style="display:none">
-                                    <div class="qa-reply-iavator l js-header-avator" href="https://www.imooc.com/u/index/allcourses">
+                                <div class="js-qa-reply-ibox qa-reply-ibox  clearfix" th:id="${li.mkantid}" style="display:none;">
+                                    <div class="qa-reply-iavator l js-header-avator">
                                         <a href="/u/7874633/id">
-                                            <img src="//img3.mukewang.com/545847490001582602200220-100-100.jpg" alt="">
+                                            <img src="//img1.mukewang.com/545847490001582602200220-100-100.jpg" alt="">
                                         </a>
                                     </div>
                                     <div class="qa-reply-iwrap">
@@ -261,7 +311,7 @@
                     <div class="qa-ci-avator l js-header-avator" href="https://www.imooc.com/u/index/allcourses">
 
                         <a href="/u/8360092/bbs">
-                            <img src="" width="40" height="40">
+                            <img th:src="@{'img/'+${nodes.mkuimg}}" width="40" height="40">
                         </a>
                     </div>
                     <div class="qa-ci-wrap">

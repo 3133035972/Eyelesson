@@ -63,6 +63,18 @@
 				position: relative;
 				border: 1px solid #c9d8db;
 			}
+
+			#mkatitle{
+				display: block;
+				height: 36px;
+				background: #fff;
+				border: 1px solid #9199a1;
+				border-radius: 6px;
+				margin-top: 16px;
+				width: 100%;
+				padding: 0 12px;
+				box-sizing: border-box;
+			}
 		</style>
 	</head>
 
@@ -82,7 +94,7 @@
 						<input type="hidden" th:value="${son.mkcsid}" id="mcid">
 						<div class="course-video">
 							<div id="psVideo" class="psVideo">
-					        <video th:src="${son.mkcsurl}" src="res/video/02.mp4" class="my-psVideo" id="my-video" poster="${son.mkcimg}" preload="metadata">
+					        <video src="res/video/02.mp4" class="my-psVideo" id="my-video" th:attr="poster=@{'img/'+${son.mkssimg}}"   preload="metadata">
 					        </video>
 					        <div class="psVideo-loading">
 					            <span></span>
@@ -153,12 +165,12 @@
 							<a  href="#ping" aria-controls="ping" role="tab" data-toggle="tab"><span class="menu-item  cur">评论</span></a>
 							<a  href="#wen" aria-controls="wen" role="tab" data-toggle="tab"><span class="menu-item">问答</span></a>
 							<div style="position: absolute;right: 0px;">
-								<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">我要评论</button>
+								<button class="btn btn-primary" data-toggle="modal" data-target="#mycomment">我要评论</button>
 							</div>
 						</div>
 				</div>
 				<!--评论模态框-->
-				<div class="modal fade"id="myModal" role="dialog">
+				<div class="modal fade"id="mycomment" role="dialog">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
@@ -168,13 +180,14 @@
 							<div class="modal-body">
 								<form>
 									<div class="form-group">
-										<textarea class="form-control" id="message-text" rows="3" placeholder="想说啥就说啥!"></textarea>
+											<textarea class="form-control" id="harcomment" rows="3" placeholder="想说啥就说啥!"></textarea>
+										<p style="color: red;" id="comment">请输入内容!</p>
 									</div>
 								</form>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
-								<button type="button" class="btn btn-success">发布评论</button>
+								<button type="button" th:onclick="haircomment()" class="btn btn-success">发表评论</button>
 							</div>
 						</div><!-- /.modal-content -->
 					</div><!-- /.modal-dialog -->
@@ -188,7 +201,7 @@
 							<span th:if="${pageinfo!=null}">
 								<div th:each="pl:${pageinfo.list}">
 								<div class="comment clearfix">
-									<div class="comment-header"><img class="lecturer-uimg" src="res/i/header.jpg" th:text="${pl.mkuimg}"></div>
+									<div class="comment-header"><img class="lecturer-uimg" th:src="@{'img/'+${pl.mkuimg}}"></div>
 										<input type="hidden" id="pmkcstid" th:value="${pl.mkcstid}"/>
 									<div class="comment-main">
 										<div class="user-name" th:text="${pl.mkuname}">我是张三</div>
@@ -215,10 +228,10 @@
 								<!--评论分页-->
 								<div class="text-center">
 									<span th:if="${pageinfo.hasPreviousPage}">
-										<a th:href="'/video?mkcstid=1&pageNum='+${pageinfo.prePage}" class="btn btn-primay btn-sm">上一页</a>
+										<a th:href="@{/video(mkcstid=${son.mkcstid},pageNum=${pageinfo.prePage})}" class="btn btn-primay btn-sm">上一页</a>
 									</span>
 									<span th:if="${pageinfo.hasNextPage}">
-										<a th:href="'/video?mkcstid=1&pageNum='+${pageinfo.nextPage}" class="btn btn-primay btn-sm">下一页</a>
+										<a th:href="@{/video(mkcstid=${son.mkcstid},pageNum=${pageinfo.nextPage})}" class="btn btn-primay btn-sm">下一页</a>
 									</span>
 								</div>
 							</span>
@@ -240,38 +253,42 @@
 								<div th:each="list : ${wenall.list}">
 								<div class="comment clearfix">
 									<div class="comment-header">
-										<img class="lecturer-uimg" src="res/i/header.jpg" th:text="${list.mkuimg}">
+										<img class="lecturer-uimg" th:src="@{'img/'+${list.mkuimg}}">
 									</div>
 									<div class="comment-main">
 										<div>
 											<a th:href="@{/findNode(mkatpid=${list.mkatpid})}" class="user-name"  th:text="${list.mkatitle}"></a>
 										</div>
 										<div class="comment-content">
-											<div class="replycont qa-body clearfix" th:if="${list.mkatpcontent!=null}">
-												最新回答 / <a href="#" th:text="${list.uname}"></a>
-												<br/>
-												&nbsp;&nbsp;&nbsp;<span th:text="${list.mkatpcontent}"></span>
-												<br/>
+											<div class="replycont qa-body clearfix">
+												<div class="l replydes" style="margin-top: -15px;" th:if="${list.containsKey('uname')==true}">
+												<span class="replysign">最赞回答 /
+													<a href="/u/6770146/courses" target="_blank" title="不朽的战斗机" class="nickname" th:text="${list.uname}">不朽的战斗机</a></span>
+													<div class="replydet" th:text="${list.mkatpcontent}">点同学笔记看看有吗</div>
+												</div>
+											</div>
+											</div>
+											<div class="replycont qa-body clearfix" th:if="${list.containsKey('uname')==false}">
 												<a th:href="@{/findNode(mkatpid=${list.mkatpid})}" class="moco-btn moco-btn-gray-l" target="_blank">+ 我来回答</a>
 												<span class="wait-answer">回答最高可+2积分</span>
 											</div>
-
-										</div>
-										<div class="mod-qa-list">
+										<div class="comment-footer">
+											<div class="mod-qa-list">
 											<div class="replymegfooter qa-footer clearfix">
 												<div class="l-box l">
-													<a href="/qadetail/336639" target="_blank" class="replynumber static-count ">
-												<span class="static-item answer">
+													<a th:href="@{/findNode(mkatpid=${list.mkatpid})}" target="_blank" class="replynumber static-count ">
+														<span class="static-item answer">
 															<span th:text="${list.count}">0</span>  回答
-												</span>
+														</span>
 														<span class="static-item">
                                     					<span th:text="${list.mkapreview}"></span>  浏览
-                        						</span>
+                        								</span>
 													</a>
 													<a th:href="@{/video(mkcstid=${list.mkcstid})}" target="_blank" th:text="${list.mkcsname}">2-4 小程序调用后台接口</a>
 												</div>
 												<em class="r" th:text="${list.mkatptime}">2天前</em>
 											</div>
+										</div>
 										</div>
 									</div>
 								</div>
@@ -279,10 +296,10 @@
 								<!--问答分页-->
 								<div class="text-center">
 									<span th:if="${wenall.hasPreviousPage}">
-										<a th:href="'/video?mkcstid='+$${son.mkcstid}+'&pagenum='+${wenall.prePage}" class="btn btn-primay btn-sm">上一页</a>
+										<a th:href="'/video?mkcstid='+${son.mkcstid}+'&pageNum='+${wenall.prePage}" class="btn btn-primay btn-sm">上一页</a>
 									</span>
 									<span th:if="${wenall.hasNextPage}">
-										<a th:href="'/video?mkcstid='+${son.mkcstid}+'&pagenum='+${wenall.nextPage}" class="btn btn-primay btn-sm">下一页</a>
+										<a th:href="'/video?mkcstid='+${son.mkcstid}+'&pageNum='+${wenall.nextPage}" class="btn btn-primay btn-sm">下一页</a>
 									</span>
 								</div>
 							</span>
@@ -295,10 +312,6 @@
 						</div>
 					</div>
 
-
-
-
-				
 			</div>
 			
 			<!-- 章节-start -->
@@ -309,6 +322,9 @@
 					</li>
 					<li  role="presentation">
 						<a href="#mynote" aria-controls="mynote" role="tab" data-toggle="tab">笔记</a>
+					</li>
+					<li  role="presentation">
+						<a href="#myask" aria-controls="mynote" role="tab" data-toggle="tab">问答</a>
 					</li>
 
 				</ul>
@@ -337,21 +353,19 @@
 						</div>
 					 </div>
 
-					    <div role="tabpanel" class="tab-pane" id="mynote" style="height: 600px;">
+					<div role="tabpanel" class="tab-pane" id="mynote" style="height: 600px;">
 
-					    	<div style="width: 393px; height: 285px;">
-
+						<div style="width: 393px; height: 285px;">
 <!--								<form th:action="@{/InsertNode}" method="post">-->
-
 									<textarea id="editor" autofocus></textarea>
-
 									<input type="hidden"  id="mkcsid" th:value="${son.mkcstid}"/>
-
 									<!--从shiro获取用户id-->
 									<input type="hidden" id="mkuid" value="1">
-
-									<div style="position: relative">
-										<button th:onclick="insertall()"  style="position: absolute; right:0px;margin-top: 5px;" class="btn btn-primary">发布</button>
+									<div style="width: 200px; float: left">
+										<p class="note-panel-error-tip error-tip" style="color: red;" id="Tips"></p>
+									</div>
+									<div style="position: relative;">
+										<button th:onclick="insertall()"  style="position: absolute; right:0px;margin-top: 5px;float: left" class="btn btn-primary">发布笔记</button>
 									</div>
 <!--								</form>-->
 
@@ -397,7 +411,7 @@
 											<li id="2384289" class="post-row js-find-txt" courseid="" noteid="2384289" uid="right_2384289" authorid="7874633">
 												<div class="media">
 													<a href="/u/7874633/courses" target="_blank">
-														<img src="" th:src="@{onenote.mkuimg}" width="40" height="40">
+														<img src="" th:src="@{'img/'+${onenote.mkuimg}}" width="40" height="40">
 													</a>
 												</div>
 												<div class="bd">
@@ -445,6 +459,70 @@
 								</div>
 							</div>
 						</div>
+
+					<div role="tabpanel" class="tab-pane" id="myask" style="height: 600px">
+						<h4 style="font-weight: bold;">提问题</h4>
+
+						<input type="text" id="mkatitle"  style="width: 393px"  placeholder="请一句话说明你的问题">
+
+						<div style="width: 393px; height: 285px;margin-top: 5px;">
+
+							<textarea id="editor1" autofocus></textarea>
+
+							<input type="hidden"  id="mkaskcstid" th:value="${son.mkcstid}"/>
+							<!--从session获取用户id-->
+							<input type="hidden" id="mkaskuid" value="1">
+							<div style="width: 200px; float: left">
+								<p class="note-panel-error-tip error-tip" style="color: red;" id="WTips"></p>
+							</div>
+							<div style="position: relative">
+								<button th:onclick="insermkask()"  style="position: absolute; right:0px;margin-top: 5px;" class="btn btn-primary">发布问答</button>
+							</div>
+
+							<script type="text/javascript">
+								$(function(){
+									var editor = new Simditor({
+										textarea:$('#editor1'),
+										//optional options
+										toolbar:[
+											'code' ,
+											'bold',
+											'italic',        // unordered list
+											'blockquote',
+											// 'emoji',
+											'image',
+											'indent',
+											'outdent',
+										],
+										//  emoji: {
+										// 	imagePath: 'images/emoji/'
+										// },
+										defaultImage : 'images/image.png', //编辑器插入图片时使用的默认图片
+										upload : {
+											url : '/InsertNode', //文件上传的接口地址
+											params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+											fileKey: 'file', //服务器端获取文件数据的参数名
+											connectionCount: 1,
+											width:100,
+											height:100,
+											leaveConfirm: '正在上传文件'
+										}
+									});
+								})
+
+							</script>
+						</div>
+						<!--显示已经发布过的笔记-->
+						<div style=" width: 500px" >
+							<div class="panel-list" >
+								<h5>其他问答</h5>
+								<div class="panel-btn-wrap">
+									<a class="moco-btn moco-btn-gray-l" target="_blank">查看更多本节问答</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
   				</div>
 <!--				删除笔记的模态框-->
 				<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
@@ -474,7 +552,7 @@
 							<ul class="js-recom-course moco-aside-course clearfix" th:each="type:${type}">
 								<li>
 									<div class="aside-course-img">
-										<img src="" th:src="@{type.mkcimg}">
+										<img src="" th:src="@{'img/'+${type.mkcimg}}">
 										<p class="aside-course-type">实战</p>
 									</div>
 									<div class="aside-course-content">
@@ -509,9 +587,6 @@
 		<!-- 页脚-end-->
 
 <!--		显示的按钮-->
-		<script type="text/javascript">
-
-		</script>
 		<script type="text/javascript" src="res/js/index.js"></script>
 	</body>
 	

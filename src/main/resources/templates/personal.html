@@ -1,262 +1,425 @@
 <!DOCTYPE html>
-<html lang="utf-8" xmlns:th="http://www.w3.org/1999/xhtml">
-	<head>
-	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
-		<meta name="keywords" content="">
-		<meta name="description" content="">
-		<title>个人主页</title>
-		<link href="res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-		<link rel="stylesheet" type="text/css" href="res/font-awesome/css/font-awesome.min.css">
-		<link href="res/css/reset.css" rel="stylesheet" type="text/css"/>
-		<script type="text/javascript" src="res/js/jquery-1.11.3.min.js"></script>
-		<script type="text/javascript" src="res/js/jquery.form.js"></script>
-		<script type="text/javascript" src="res/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="res/js/oc.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="res/css/moco.min.css.css">
-		<link rel="stylesheet" type="text/css" href="res/css/swiper.css">
-		<link rel="stylesheet" type="text/css" href="res/css/3.css">
-		<link rel="stylesheet" type="text/css" href="res/css/4.css">
-		<link rel="stylesheet" type="text/css" href="res/css/5.css">
-		<style type="text/css">
-			
-						/**
-			 * 个人中心
-			 */
-			.tab-content ul{
-				list-style: none;
-				height: 30px;
-				padding: 0px;
-			}
-			.tab-content ul li{
-				width: 100px;
-				float: left;
-				height: 40px;
-			}
+<html lang="utf-8">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<title>个人主页</title>
+	<link href="res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" type="text/css" href="res/font-awesome/css/font-awesome.min.css">
+	<link href="res/css/reset1.css" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript" src="res/js/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="res/js/jquery.form.js"></script>
+	<script type="text/javascript" src="res/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="res/js/oc.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="res/css/allcourse-less.css">
+	<link rel="stylesheet" type="text/css" href="res/css/note-less.css">
+	<style type="text/css">
 
-			.tab-content ul li a{
-				text-align: center;
-				line-height: 40px;
-				font-size: 18px;
-			}
+		/**
+* 个人中心
+*/
+		.tab-content ul{
+			list-style: none;
+			height: 30px;
+			padding: 0px;
+		}
+		.tab-content ul li{
+			width: 100px;
+			float: left;
+			height: 40px;
+		}
 
-			.custdiv ul li{
-				width: 100px;
-				height: 40px;
-				margin: 10px 20px;
-			}
+		.tab-content ul li a{
+			text-align: center;
+			line-height: 40px;
+			font-size: 18px;
+		}
 
-		</style>
-	</head>
+		.custdiv ul li{
+			width: 100px;
+			height: 40px;
+			margin: 10px 20px;
+		}
 
-	<body>
+	</style>
+</head>
 
-		<div th:replace="head::head"></div>
+<body>
 
-		
+<!-- 中间部分 -->
+<div class="bg-other user-head-info">
+	<div class="user-info clearfix">
+		<div class="user-pic" data-is-fans="0" data-is-follows="">
+			<!-- 用户图片 -->
+			<div class="user-pic-bg" style="border: 0px solid red;">
+				<img src="res/i/header.jpg" alt="wdawd" class="img-circle" style="width: 141px;height: 140px;" >
+			</div><!--user-pic-big end-->
+		</div>
+		<div class="user-info-right">
+			<h3 class="user-name clearfix">
+				qq_慕无忌2087832
+			</h3>
+			<!--25-->
+			<p class="about-info">
+				<span>男</span>
 
-		<div class="bg-other user-head-info">
-		    <div class="user-info clearfix">
-				<div class="user-pic" data-is-fans="0" data-is-follows="">
-					<!-- 用户图片 -->
-					<div class="user-pic-bg" style="border: 0px solid red;">
-						<img src="res/i/header.jpg" alt="wdawd" class="img-circle" style="width: 141px;height: 140px;" >
-					</div><!--user-pic-big end-->			
-				</div>
-				<div class="user-info-right">
-					<h3 class="user-name clearfix">
-						qq_慕无忌2087832
-					</h3>
-					<!--25-->
-					<p class="about-info">
-						<span>男</span>
-						 
-						     
-							<span>
-						
-							</span>
-					
-					</p>
-				</div>
-				<div class="user-sign hide">
-					<p class="user-desc">这位同学很懒，木有签名的说～</p>       
-				</div>
-		        <div class="study-info clearfix">
-						<div class="item follows">
-					<div class="u-info-learn" title="学习时长4小时32分" style="cursor:pointer;">
-						<em>4h</em>
+
+				<span>
+
+				</span>
+
+				<a class="more-user-info"><i class="fa fa-angle-down" aria-hidden="true"></i>更多信息</a>
+			</p>
+		</div>
+		<div class="user-sign hide">
+			<p class="user-desc">这位同学很懒，木有签名的说～</p>
+		</div>
+		<div class="study-info clearfix">
+			<div class="item follows">
+				<div class="u-info-learn" title="学习时长4小时32分" style="cursor:pointer;">
+					<em>4h</em>
 					<span>学习时长 </span>
 				</div>
+			</div>
+			<div class="item follows">
+				<a href='/u/index/experience'><em>235</em></a>
+				<span>经验</span>
+			</div>
+			<div class="item follows">
+				<a href='/u/index/credit'><em>0</em></a>
+
+				<span>积分</span>
+			</div>
+			<div class="item follows">
+				<a href='/u/index/follows'><em>0</em></a>
+				<span>关注</span>
+			</div>
+			<div class="item follows">
+				<a href='/u/index/fans'><em>0</em></a>
+				<span>粉丝</span>
+			</div>
+			<div class="item follows"><div class="item follows"><a href="/user/setbindsns" class="set-btn"><i class="fa fa-cog" aria-hidden="true"></i>个人设置</a></div>
+
+			</div>
+		</div><!--.study-info end-->
+	</div><!-- .user-info end -->
+</div><!-- .big-pic end -->
+
+
+<div class="wrap">
+
+	<div class="slider" style="position: absolute; left: 24px; top: 0px;">
+		<ul>
+			<li>
+				<a href="#mycourse" aria-controls="mycourse" role="tab" data-toggle="tab">
+					<i class="fa fa-play-circle"></i><span>我的课程</span><b class="icon-drop_right"></b>
+				</a>
+			</li>
+			<li>
+				<a href="#mycollection" aria-controls="mycollection" role="tab" data-toggle="tab">
+					<i class="fa fa-star"></i><span>收藏</span><b class="icon-drop_right"></b>
+				</a>
+			</li>
+			<!-- 只能自己看的 -->
+
+			<li>
+				<a href="#mynote" aria-controls="mynote" role="tab" data-toggle="tab" class="active">
+					<i class="fa fa-pencil"></i><span>笔记</span><b class="icon-drop_right"></b>
+				</a>
+			</li>
+
+			<li>
+				<a href="#myatpic" aria-controls="myatpic" role="tab" data-toggle="tab">
+					<!-- 图标 -->
+					<i class="fa fa-question-circle"></i><span>猿问</span><b class="icon-drop_right"></b>
+				</a>
+			</li>
+
+			<li>
+				<a href="#remember" aria-controls="remember" role="tab" data-toggle="tab">
+					<!-- 图标 -->
+					<i class="fa fa-pencil-square-o"></i><span>笔记</span><b class="icon-drop_right"></b>
+				</a>
+			</li>
+
+
+
+
+		</ul>
+	</div>
+	<div class="u-container">
+
+		<div class="tab-content">
+
+			<!-- 我的课程 -->
+			<div role="tabpanel" class="tab-pane active" id="mycourse">
+
+
+				<div class="nav">
+					<div class="tool-left l">
+						<a href="#allcourse" aria-controls="allcourse" role="tab" data-toggle="tab" class="sort-item active">全部</a>
+						<a href="#moneycourse" aria-controls="moneycourse" role="tab" data-toggle="tab" class="sort-item ">实战课程</a>
+						<a href="#courses" aria-controls="courses" role="tab" data-toggle="tab" class="sort-item ">免费课程</a>
 					</div>
-						<div class="item follows">
-					<a href='/u/index/experience'><em>235</em></a>
-					<span>经验</span>
-						</div>
-						<div class="item follows">
-						<a href='/u/index/credit'><em>0</em></a>
-							                
-							<span>积分</span>
-						</div>
-		            	<div class="item follows">
-						<a href='/u/index/follows'><em>0</em></a>
-						<span>关注</span>
-						</div>
-						<div class="item follows">
-						<a href='/u/index/fans'><em>0</em></a>
-		                 <span>粉丝</span>
-						</div>
-		            	<div class="item follows"><a class="btn btn-primary" href="collect.html">个人设置</a>
+				</div>
 
-		            	</div> 
-				</div><!--.study-info end-->
-		    </div><!-- .user-info end -->
-		</div><!-- .big-pic end -->
-		
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="allcourse">
+						全部的东西
+					</div>
+					<div role="tabpanel" class="tab-pane" id="moneycourse">
+						实战课程
+					</div>
+					<div role="tabpanel" class="tab-pane" id="courses">
+						免费课程
+					</div>
+				</div>
 
-		<div class="f-main clearfix">
-			<div class="setting-left">
-				<div class="personal">
-					<ul>
-						<li>
-							<a href="#home" aria-controls="messages" role="tab" data-toggle="tab">
-								<i class="fa fa-play-circle"></i>&nbsp;我的课程
-							</a>
-						</li>
-						<li>
-							<a href="#profile" aria-controls="messages" role="tab" data-toggle="tab">
-							 <i class="fa fa-file-text-o"></i>&nbsp;
-							收藏</a>
-						</li>
-						<li>
-							<a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">
-							 <i class="fa fa-file-text-o"></i>&nbsp;
-							笔记</a>
-						</li>
-						<li>
-							<a href="#settings" aria-controls="messages" role="tab" data-toggle="tab">
-								<i class="fa fa-file-text-o"></i>&nbsp;
-							猿问</a>
-						</li>
-					</ul>
+
+			</div>
+
+			<!-- 我的收藏 -->
+			<div role="tabpanel" class="tab-pane" id="mycollection">
+
+
+				<div class="nav">
+					<div class="tool-left l">
+						<a href="#allcollect" aria-controls="allcollect" role="tab" data-toggle="tab" class="sort-item active">全部</a>
+						<a href="#learncourse" aria-controls="learncourse" role="tab" data-toggle="tab" class="sort-item ">学习路线</a>
+						<a href="#Freecourse" aria-controls="Freecourse" role="tab" data-toggle="tab" class="sort-item ">免费课程</a>
+						<a href="#warcourse" aria-controls="warcourse" role="tab" data-toggle="tab" class="sort-item ">实战课程</a>
+					</div>
+				</div>
+				<!-- 我的收藏开始 -->
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="allcollect">
+
+						<div class="all-course-main">
+							<div class="not-conts">
+								没有任何课程，可以先<a href="//www.imooc.com" class="find-course">去找找课程</a>
+							</div>
+						</div>
+
+					</div>
+					<div role="tabpanel" class="tab-pane" id="learncourse">
+
+						<div class="all-course-main">
+							<div class="not-conts">
+								您还没有收藏学习路线，请到<a href="//www.imooc.com" class="find-course">学习路线中添加</a>
+							</div>
+						</div>
+
+					</div>
+					<div role="tabpanel" class="tab-pane" id="Freecourse">
+
+
+						<div class="all-course-main">
+							<div class="not-conts">
+								你最近有没有收藏任何课程,可以先去<a href="//www.imooc.com" class="find-course">找找课程</a>
+							</div>
+						</div>
+
+					</div>
+					<div role="tabpanel" class="tab-pane" id="warcourse">
+
+						<div class="all-course-main">
+							<div class="not-conts">
+								你最近有没有收藏任何课程,可以先去<a href="//www.imooc.com" class="find-course">找找课程</a>
+							</div>
+						</div>
+
+
+					</div>
 				</div>
 			</div>
-			<div class="setting-right">
+
+			<!-- 我的笔记 -->
+			<div role="tabpanel" class="tab-pane" id="mynote">
+
+				<div class="nav clearfix">
+					<a href="#notelist" aria-controls="notelist" role="tab" data-toggle="tab" data-order="0" class="active js-order">笔记列表</a>
+					<a href="#Latelylist" aria-controls="Latelylist" role="tab" data-toggle="tab" data-order="1" class="js-order">最近编辑</a>
+					<div class="note-search-input clearfix">
+						<div class="search-btn">搜索</div>
+						<input type="text" class="js-input-text" placeholder="输入笔记内容关键字">
+					</div>
+				</div>
+				<!-- 搜索课程 -->
+				<div class="search-container" id="searchContainer" style="display: none;">
+					<div class="search-intro">
+						<div class="search-close js-search-close">关闭搜索</div>
+						<p>全部笔记中包含关键字“<span class="g1"></span>”共<span class="g2">0</span>条</p>
+					</div>
+
+					<div id="searchlist" class="searchlist"></div>
+					<div class="paginationwrap">
+						<div class="pagination js-search-pagination clearfix"></div>
+					</div>
+				</div>
+
 				<div class="tab-content">
-					<!-- 我的课程 -->
-				    <div role="tabpanel" class="tab-pane active" id="home">
-				     <ul>
-				     	<li>
-				     		<a href="#all" aria-controls="all" role="tab" data-toggle="tab">全部</a>
-				     	</li>
-				     	<li>
-				     		<a href="#FreeAdmission" aria-controls="FreeAdmission" role="tab" data-toggle="tab">免费课程</a>
-				     	</li>
-				     	<li>
-				     		<a href="#Pay" aria-controls="Pay" role="tab" data-toggle="tab">付费课程</a>
-				     	</li>
-				     </ul>
-				      <div class="split-line" style="margin: 20px 0px;"></div>
+					<div role="tabpanel" class="tab-pane active" id="notelist">
 
-				      <div class="tab-content">
-					    <div role="tabpanel" class="tab-pane active" id="all">全部</div>
-					    <div role="tabpanel" class="tab-pane" id="FreeAdmission">付费</div>
-					    <div role="tabpanel" class="tab-pane" id="Pay">免费</div>
-  					</div>
+						<div class="container" id="container">
+							<div class="js-order-title">
+								<div class="note-type">
+									<a class="js-note-type active" data-type="1" href="#notecourse" aria-controls="notecourse" role="tab" data-toggle="tab">免费课程</a>
 
-				    </div>
-				    <!-- 收藏 -->
-				    <div role="tabpanel" class="tab-pane" id="profile">
-				    	<ul>
-				     	<li>
-				     		<a href="#noteall" aria-controls="noteall" role="tab" data-toggle="tab">全部</a>
-				     	</li>
-				     	<li>
-				     		<a href="#noteFreeAdmission" aria-controls="noteFreeAdmission" role="tab" data-toggle="tab">免费课程</a>
-				     	</li>
-				     	<li>
-				     		<a href="#notePay" aria-controls="notePay" role="tab" data-toggle="tab">付费课程</a>
-				     	</li>
-				     </ul>
-				      <div class="split-line" style="margin: 20px 0px;"></div>
+									<a class="js-note-type " data-type="2" href="#notemoneycourse" aria-controls="notemoneycourse" role="tab" data-toggle="tab">实战课程</a>
+								</div>
+								<div class="note-count">共 <span class="js-total">3</span> 条笔记</div>
+							</div>
+							<div class="js-order-title search-intro" style="display:none">
+								最近 60 天，写了 <span class="js-total">3</span> 条笔记
+							</div>
+							<!-- 笔记列表 -->
+							<div id="notelist" class="note-course-list clearfix">
 
-				      <div class="tab-content">
-					    <div role="tabpanel" class="tab-pane active" id="noteall">
-					    	awdawd
-					    </div>
-					    <div role="tabpanel" class="tab-pane" id="noteFreeAdmission">笔记付费</div>
-					    <div role="tabpanel" class="tab-pane" id="notePay">笔记免费</div>
-  					</div>
-				    </div>
-				    <!-- 笔记 -->
-				    <div role="tabpanel" class="tab-pane" id="messages">
-				    	
-				    	<ul>
-				     	<li>
-				     		<a href="#notelist" aria-controls="notelist" role="tab" data-toggle="tab">笔记列表</a>
-				     	</li>
-				     	<li>
-				     		<a href="#Newestnote" aria-controls="Newestnote" role="tab" data-toggle="tab">最近编辑</a>
-				     	</li>
-				     </ul>	
-				    	
-				    <div class="split-line" style="margin-top: 20px;"></div>
-				      <div class="tab-content">
-					    <div role="tabpanel" class="tab-pane" id="notelist">
-					    	<div class="custdiv" style=" background-color: #F8FAFC;height: 60px;margin-top: 0px;">
-					    		<ul>
-						     	<li>
-						     		<a class="btn btn-primary" href="#Exemptionclass" aria-controls="Exemptionclass" role="tab" data-toggle="tab">免费课程</a>
-						     	</li>
-						     	<li>
-						     		<a class="btn btn-primary" href="#payclass" aria-controls="payclass" role="tab" data-toggle="tab">付费课程</a>
-						     	</li>
-				     		</ul>
-					    	</div>
-					    	<hr>
-					    	<div class="tab-content">
-							    <div role="tabpanel" class="tab-pane active" id="Exemptionclass">
-							    	免费笔记
-							    </div>
-							    <div role="tabpanel" class="tab-pane" id="payclass">
-							    	付费笔记
-							    </div>
-  							</div>
+								<div class="tab-content">
+									<!-- 免费课程 -->
+									<div role="tabpanel" class="tab-pane active" id="notecourse">
+										<div class="note-item-wrap js-course-note" data-type="1" data-cid="1059">
+											<div class="note-pic">
+												<img class="course-banner" src="">
+											</div>
+											<div class="note-content">
+												<h3>Springboot 微信小程序 – 微信登录功能实战</h3>
+												<div class="note-course-type default">免费课程</div>
+												<div class="note-course-count">笔记 3 条</div>
+												<div class="note-edit-time">编辑时间：2019-12-12 16:37:01</div>
+											</div>
+										</div>
+									</div>
+									<!-- 笔记实战课程 -->
+									<div role="tabpanel" class="tab-pane" id="notemoneycourse">
 
-					    </div>
-					    <div role="tabpanel" class="tab-pane" id="Newestnote">最近编辑</div>
-  					</div>	
 
-				    </div>
-				    <!-- 猿问 -->
-				    <div role="tabpanel" class="tab-pane" id="settings">
-						<ul>
-				     	<li>
-				     		<a href="#myask" aria-controls="myask" role="tab" data-toggle="tab">我的提问</a>
-				     	</li>
-				     	<li>
-				     		<a href="#myAnswer" aria-controls="myAnswer" role="tab" data-toggle="tab">我的回答</a>
-				     	</li>
-				     	<li>
-				     		<a href="#myfollow" aria-controls="myfollow" role="tab" data-toggle="tab">我的关注</a>
-				     	</li>
-				     </ul>
-				      <div class="split-line" style="margin: 20px 0px;"></div>
-				      <div class="tab-content">
-					    <div role="tabpanel" class="tab-pane active" id="myask">笔记全部</div>
-					    <div role="tabpanel" class="tab-pane" id="myAnswer">笔记付费</div>
-					    <div role="tabpanel" class="tab-pane" id="myfollow">笔记免费</div>
-  					</div>
+									</div>
 
-				    </div>
-			  </div>	
+								</div>
+							</div>
+							<!-- 最近编辑 -->
+							<div class="paginationwrap">
+								<div class="pagination js-pagination clearfix"></div>
+							</div>
+						</div>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="Latelylist">
+
+						最新编辑课程
+
+					</div>
+				</div>
+
+
+
+
 			</div>
+
+			<!-- 我的问题 -->
+			<div role="tabpanel" class="tab-pane" id="myatpic">
+
+				<div class="nav">
+					<a href="#Myquestion" aria-controls="Myquestion" role="tab" data-toggle="tab" class="active">我的提问</a>
+					<a href="#myanswer" aria-controls="myanswer" role="tab" data-toggle="tab">我的回答</a>
+					<a href="#myflowwer" aria-controls="myflowwer" role="tab" data-toggle="tab">我的关注</a>
+				</div>
+
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="Myquestion">
+
+						<div class="all-course-main">
+							<div class="not-conts">
+								你还没有提出任何问题,可以先去<a href="//www.imooc.com" class="find-course">看看猿问</a>
+							</div>
+						</div>
+
+					</div>
+					<div role="tabpanel" class="tab-pane" id="myanswer">
+
+						<div class="all-course-main">
+							<div class="not-conts">
+								你还没有回答任何问题，可以先去<a href="//www.imooc.com" class="find-course">看看猿问</a>
+							</div>
+						</div>
+
+					</div>
+					<div role="tabpanel" class="tab-pane" id="myflowwer">
+
+						<div class="all-course-main">
+							<div class="not-conts">
+								你还没有关注任何问题，可以先去<a href="//www.imooc.com" class="find-course">看看猿问</a>
+							</div>
+						</div>
+
+
+					</div>
+
+				</div>
+
+
+
+
+			</div>
+			<!-- 笔记 -->
+			<div role="tabpanel" class="tab-pane" id="remember">
+
+				<div class="nav">
+					<a href="#Myarticle" aria-controls="Myarticle" role="tab" data-toggle="tab" class="active">我的文章</a>
+					<a href="#mypossession" aria-controls="mypossession" role="tab" data-toggle="tab">我的收藏</a>
+					<a href="#mypush" aria-controls="mypush" role="tab" data-toggle="tab">我的推荐</a>
+					<a href="#mycomment" aria-controls="mycomment" role="tab" data-toggle="tab">我的评论</a>
+				</div>
+
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="Myarticle">
+
+						<div class="all-course-main">
+							<div class="not-conts">
+								你还没有任何原创文章，快去<a href="//www.imooc.com" class="find-course">发表文章吧</a>
+							</div>
+						</div>
+
+					</div>
+					<div role="tabpanel" class="tab-pane" id="mypossession">
+
+						<div class="all-course-main">
+							<div class="not-conts">
+								你还没有任何收藏，可以先去<a href="//www.imooc.com" class="find-course">看看文章</a>
+							</div>
+						</div>
+
+					</div>
+					<div role="tabpanel" class="tab-pane" id="mypush">
+
+						<div class="all-course-main">
+							<div class="not-conts">
+								你还没有任何推荐，可以先去<a href="//www.imooc.com" class="find-course">看看文章</a>
+							</div>
+						</div>
+
+					</div>
+					<div role="tabpanel" class="tab-pane" id="mycomment">
+
+						<div class="all-course-main">
+							<div class="not-conts">
+								你还没有任何文章评论，可以先<a href="//www.imooc.com" class="find-course">看看文章</a>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
 		</div>
-		
-		<!-- 页脚-start -->
-		<div th:replace="tail::tail"></div>
-		<!-- 页脚-end-->
-		
-	</body>
-	
+
+	</div>
+</div>
+
+
+</body>
+
 </html>

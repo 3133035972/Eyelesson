@@ -100,7 +100,7 @@
 			<!-- 教师信息&推荐课程 - start -->
 			<div class="main-course-right"  >
 				<div class="lecturer-item" style="width: 100%;">
-					<img class="lecturer-uimg" src="res/i/header.jpg" th:if="${mksid!=null}" th:text="${mksid.mksimg}">
+					<img class="lecturer-uimg"  th:if="${mksid!=null}" th:src="@{'img/'+${mksid.mksimg}}">
 					<span class="lecturer-name"  th:if="${mksid!=null}"  th:text="${mksid.mksname}" >王阳明</span>
 					<span class="lecturer-title" th:if="${mksid!=null}" th:text="${mksid.mkschool}">中华大学</span>
 					<span class="lecturer-p" th:if="${mksid!=null}" th:text="${mksid.mkskill}" >中华大学高级讲师，擅长写代码</span>
@@ -113,7 +113,7 @@
 						<ul class="js-recom-course moco-aside-course clearfix" th:each="type:${type}">
 							<li>
 								<div class="aside-course-img">
-									<img src="" th:src="@{type.mkcimg}">
+									<img src="" th:src="@{'img/'+${type.mkcimg}}">
 									<p class="aside-course-type">实战</p>
 								</div>
 								<div class="aside-course-content">

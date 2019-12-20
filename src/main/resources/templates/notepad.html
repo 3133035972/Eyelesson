@@ -61,7 +61,7 @@
         <div class="user-info clearfix">
             <div class="user-pic">
                 <div class="user-pic-bg">
-                    <a href="" target="_blank"><img class="img" th:src="@{auth.mkuimg}"></a>
+                    <a href="" target="_blank"><img class="img" th:src="@{'img/'+${use.mkuimg}}"></a>
                 </div>
             </div>
             <div class="user-info-left">
@@ -70,7 +70,7 @@
                     <input type="hidden" id="mkuid" th:value="${use.mkuid}"/>
                 </h3>
                 <div class="note-course">
-                    <a href="/learn/1199" target="_blank" th:text="${auth.mkctitle}">课程名称：Nodejs全栈入门</a>
+                    <a href="/learn/1199" target="_blank" >课程名称：<span th:text="${auth.mkctitle}">Springboot 微信小程序 – 微信登录功能实战</span></a>
                 </div>
                 <a href="/u/8360092/courses" target="_blank" class="user-info-site">TA的个人中心</a>
             </div>
@@ -92,13 +92,13 @@
                     <div class="js-note-main" th:id="'main'+${pl.mknid}">
                         <div class="note-content"><p  th:utext="${pl.mknotecontent}">ddddd</p></div>
                         <div class="note-tool">
-                                <a title="赞" th:onclick="'javascript:NoteFavorits('+${pl.mknid}+');'"  class="Jpraise moco-btn moco-btn-gray-l l" data-mid="18057">
+                                <a title="赞" style="text-decoration: none" th:onclick="'javascript:NoteFavorits('+${pl.mknid}+');'"  class="Jpraise moco-btn moco-btn-gray-l l" data-mid="18057">
                                     <span class="fa fa-thumbs-up" aria-hidden="true"></span>
                                     <em id="countfav" th:text="${pl.count}">0</em>
                                 </a>
                             <ul class="note-tool-nav">
-                                <li><a th:onclick="'javascript:showdisplay('+${pl.mknid}+');'" class="js-btn-edit" >编辑</a></li>
-                                <li><a th:onclick="'javascript:dal('+${pl.mknid}+')'" title="删除此条笔记" data-toggle="modal" data-target=".bs-example-modal-sm"   class="js-btn-del delnote post-action">删除</a></li>
+                                <li><a  th:onclick="'javascript:showdisplay('+${pl.mknid}+');'" class="js-btn-edit" >编辑</a></li>
+                                <li><a  th:onclick="'javascript:dal('+${pl.mknid}+')'" title="删除此条笔记" data-toggle="modal" data-target=".bs-example-modal-sm"   class="js-btn-del delnote post-action">删除</a></li>
                             </ul>
                         </div>
                     </div>
@@ -199,7 +199,7 @@
         </div>
         <div class="detail-right">
             <div class="note-course">
-                <a href="/learn/1199" target="_blank"><img class="note-course-img" th:src="@{auth.mksimg}" alt=""></a>
+                <a href="/learn/1199" target="_blank"><img class="note-course-img" th:src="@{'img/'+${auth.mkcimg}}" alt=""></a>
                 <div class="note-course-info">
                     <h2 th:text="${auth.mkctitle}">Nodejs全栈入门</h2>
                     <ul class="note-course-item">
@@ -219,7 +219,7 @@
                     </ul>
                     <p th:text="${auth.mkteacherlearwhat}">整个项目重点分为2部分，前端通过react+redux实现UI界面和状态管理，后端使用express做web框架，使用mysql作为数据存储，利用 sequelize作为ORM，便于通过nodejs管理和操作mysql。</p>
                     <div class="note-course-btn">
-                        <a  target="_blank" class="moco-btn moco-btn-lg moco-btn-red">
+                        <a  target="_blank" style="text-decoration: none" class="moco-btn moco-btn-lg moco-btn-red">
                             详细了解此课程
                         </a>
                     </div>
@@ -228,7 +228,7 @@
 
             <div class="note-course teacher-info">
                 <a href="/u/1145997" target="_blank">
-                    <img class="teacher-img" src="" width="80" height="80">
+                    <img class="teacher-img" th:src="@{'img/'+${auth.mksimg}}" width="80" height="80">
                 </a>
                 <span class="tit">
                         <a href="/u/1145997" target="_blank" th:text="${auth.mksname}">一缕孤烟</a>

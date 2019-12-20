@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="utf-8" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
     <meta name="keywords" content="">
@@ -13,72 +13,51 @@
     <link href="/res/css/reset.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="/res/js/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="/res/bootstrap/bootstrap.js"></script>
-
     <!--[if lt IE 9]>
     <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
     <link rel="icon" type="image/png" href="/res/i/ico.png" sizes="16x16">
+    <link rel="stylesheet" type="text/css" href="/res/index/head.css"/>
     <script type="text/javascript">
         CONETXT_PATH = '';
     </script>
 </head>
 
-<style>
-
-
-    #xuanfu {
-        width: 300px;
-        height: 300px;
-        border: 5px solid #cccccc;
-        border-radius: 10px;
-        background: white;
-        position: absolute;
-        top: 70px;
-        left: 1150px;
-        z-index: 999;
-        display: none;
-    }
-
-</style>
-
-
 <body>
 <div th:fragment="head">
-<!-- 头部-start -->
-<div class="f-header" >
-    <div class="f-header-box clearfix">
-        <a href=".." class="logo" title="网校在线学习平台"></a>
-        <nav class="header-nav">
-            <a href="/MkUse/index" class="header-nav-item">首 页</a>
-            <a href="list.html" class="header-nav-item" >免费课程</a>
-            <a href="list.html" class="header-nav-item" >实战课程</a>
-            <a href="list.html" class="header-nav-item">猿 问</a>
 
-            <div style="border: 1px solid white;width: 220px;height: 35px;margin-top: -5px;margin-left: 380px;background: white;border-radius: 10px">
-                <input type="text" placeholder="请输入关键字..." style="height: 35px;width: 200px;border: 5px solid white;border-radius: 10px"/>
-                <a href="javascript:;" style="border: 0px solid red;width: 20px;margin-top: -30px;margin-left: 195px">
-                    <i class="glyphicon glyphicon-search" style="font-size: 20px"></i>
-                </a>
-            </div>
+    <!-- 头部-start -->
+    <div class="f-header">
+        <div class="f-header-box clearfix">
+            <a href=".." class="logo" title="网校在线学习平台"></a>
+            <nav class="header-nav">
+                <a href="/Mk_Use/index" class="header-nav-item">首 页</a>
+                <a href="list.html" class="header-nav-item">免费课程</a>
+                <a href="list.html" class="header-nav-item">实战课程</a>
+                <a href="list.html" class="header-nav-item">猿 问</a>
 
-        </nav>
+                <div style="border: 1px solid white;width: 220px;height: 35px;margin-top: -5px;margin-left: 380px;background: white;border-radius: 10px">
+                    <input type="text" placeholder="请输入关键字..."
+                           style="height: 35px;width: 200px;border: 5px solid white;border-radius: 10px"/>
+                    <a href="javascript:;"
+                       style="border: 0px solid red;width: 20px;position: absolute;top: 32px;left:860px">
+                        <i class="glyphicon glyphicon-search" style="font-size: 20px"></i>
+                    </a>
+                </div>
+            </nav>
 
-
-
-
-        <nav class="header-nav" style="float:right">
-            <a href="#" class="header-nav-item" style="margin-left:0px;font-size:14px;">管理后台</a>
-            <!--<th:block th:text="" />-->
-            <span id="isshow" th:if="${session.msgss==null}">
+            <nav class="header-nav" style="float:right">
+                <a href="#" class="header-nav-item" style="margin-left:0px;font-size:14px;">管理后台</a>
+                <!--<th:block th:text="" />-->
+                <span id="isshow" th:if="${session.msgss==null}">
 					<a href="#myModal" class="header-nav-item" data-toggle="modal" onclick="login();"
                        style="margin-right:0px;font-size:14px;">登录</a>
 					<a href="#myModal" class="header-nav-item" data-toggle="modal" onclick="registe()"
                        style="margin-left:0px;font-size:14px;">注册</a>
 				</span>
 
-            <span id="isshow2" style="width: 400px" th:if="${session.msgss!=null}">
+                <span id="isshow2" style="width: 400px" th:if="${session.msgss!=null}">
 					<a href="javascript:;" class="header-nav-item" data-toggle="modal"
                        style="margin-right:0px;">
 							<i class="glyphicon glyphicon-shopping-cart" style="font-size: 20px"></i>
@@ -87,369 +66,438 @@
                        style="margin-right:0px;">
 							<i class="glyphicon glyphicon-envelope" style="font-size: 20px"></i>
 					</a>
-					<a  href="javascript:;" class="header-nav-item" data-toggle="modal"
+					<a href="javascript:;" class="header-nav-item" data-toggle="modal"
                        style="margin-right:0px;font-size:14px;">
 							我的课程
 					</a>
-					<a  id="userdetail" href="javascript:;" class="header-nav-item"
+					<a id="userdetail" href="javascript:;" class="header-nav-item"
                        data-toggle="modal" style="margin-left:0px;height: 50px">
 						<img th:src="${session.msgss.mkuimg}" class="img-circle" style="height: 30px;width: 30px">
 					</a>
 				</span>
 
-
-        </nav>
+            </nav>
+        </div>
     </div>
-</div>
 
-<!-- 鼠标放头像悬浮 -->
-<div id="xuanfu" th:if="${session.msgss!=null}">
-    <a  href="javascript:;" style="width: 300px;margin-top:20px;margin-left: 10px;">
-        <img th:src="${session.msgss.mkuimg}" class="img-circle" style="height: 80px;width: 80px;">
-        <label style="font-size: 25px;margin-left: 10px;margin-top: -40px" th:text="${session.msgss.mkuname}"></label>
-        <p style="font-size: 12px;margin-top: -30px;margin-left: 100px">积分<label
-                th:text="${session.msgss.mkuintegral}"></label></p>
-    </a>
-    <a href="javascript:;"
-       style="border: 1px solid #F8F8F8;height: 40px;width:45%;margin-top: 30px;text-align: center;background:#F8F8F8;margin-left: 10px"
-       onmousemove="bigImg(this)" onmouseout="normalImg(this)">
+    <!-- 鼠标放头像悬浮 -->
+    <div id="xuanfu" th:if="${session.msgss!=null}">
+        <a href="javascript:;" style="width:300px;position: absolute;top: 10px;left: 20px">
+
+            <img th:src="${session.msgss.mkuimg}" class="img-circle" style="height: 80px;width: 80px;">
+
+            <label style="font-size: 25px;margin-left: 10px;margin-top: -40px"
+                   th:text="${session.msgss.mkuname}"></label>
+            <p style="font-size: 12px;margin-top: -30px;margin-left: 100px">积分<label
+                    th:text="${session.msgss.mkuintegral}"></label></p>
+        </a>
+
+        <a href="javascript:;"
+           style="border:3px solid #F8F8F8;height: 40px;width:45%;text-align: center;background:#F8F8F8;position: absolute;top: 110px;left: 10px"
+           onmousemove="bigImg(this)" onmouseout="normalImg(this)">
 					<span style="line-height: 40px;">
                         <i class="glyphicon glyphicon-book"></i>
 						我的课程
 					</span>
-    </a>
-    <a  href="javascript:;"
-       style="border: 1px solid #F8F8F8;height: 40px;width:45%;margin-top: -40px;text-align: center;background:#F8F8F8;margin-left: 150px"
-       onmousemove="bigImg(this)" onmouseout="normalImg(this)">
+        </a>
+
+        <a href="javascript:;"
+           style="border: 1px solid #F8F8F8;height: 40px;width:45%;text-align: center;background:#F8F8F8;position: absolute;top: 110px;left: 150px"
+           onmousemove="bigImg(this)" onmouseout="normalImg(this)">
 					<span style="line-height: 40px;">
                         <i class="glyphicon glyphicon-list-alt"></i>
 						订单中心
 					</span>
-    </a>
-    <a  href="javascript:;"
-       style="border: 1px solid #F8F8F8;height: 40px;width:45%;margin-top: 5px;text-align: center;background:#F8F8F8;margin-left: 10px"
-       onmousemove="bigImg(this)" onmouseout="normalImg(this)">
+        </a>
+
+        <a href="javascript:;"
+           style="border: 1px solid #F8F8F8;height: 40px;width:45%;text-align: center;background:#F8F8F8;position: absolute;top: 160px;left: 10px"
+           onmousemove="bigImg(this)" onmouseout="normalImg(this)">
 					<span style="line-height: 40px;">
                         <i class="glyphicon glyphicon-hourglass"></i>
 						积分商城
 					</span>
-    </a>
-    <a href="javascript:;"
-       style="border: 1px solid #F8F8F8;height: 40px;width:45%;margin-top: -40px;text-align: center;background:#F8F8F8;margin-left: 150px"
-       onmousemove="bigImg(this)" onmouseout="normalImg(this)">
+        </a>
+
+        <a href="javascript:;"
+           style="border: 1px solid #F8F8F8;height: 40px;width:45%;text-align: center;background:#F8F8F8;position: absolute;top: 160px;left: 150px"
+           onmousemove="bigImg(this)" onmouseout="normalImg(this)">
 					<span style="line-height: 40px;">
                         <i class="glyphicon glyphicon-cog"></i>
 						个人设置
 					</span>
-    </a>
+        </a>
 
-    <a href="/MkUse/logout" style="height: 20px;width:20%;margin-top: 40px;text-align: center;margin-left: 20px">
+        <a href="/Mk_Use/logout"
+           style="height: 20px;width:20%;text-align: center;position: absolute;top: 240px;left: 20px">
 					<span style="line-height: 40px;font-size: 12px">
 						安全退出
 					</span>
-    </a>
+        </a>
 
-</div>
+    </div>
 
-<script type="text/javascript">
-    /* 头像 鼠标悬浮事件 移入 */
-    $("#userdetail").mouseover(function () {
-        $("#xuanfu").show();
-    });
-    /* 头像 鼠标悬浮事件 移出 */
-    $("#userdetail").mouseout(function () {
-        $("#xuanfu").hide();
-    })
+    <script type="text/javascript">
 
-    /* 头像 鼠标悬浮事件 移入 */
-    $("#xuanfu").mouseover(function () {
-        $("#xuanfu").show();
-    });
-    /* 头像 鼠标悬浮事件 移出 */
-    $("#xuanfu").mouseout(function () {
-        $("#xuanfu").hide();
-    })
-
-
-    function bigImg(x) {
-        /*$('.xuan').css('background','#C8C8C8')*/
-        x.style.background = '#C8C8C8'
-    }
-
-
-    function normalImg(x) {
-        /*$('.xuan').css('background','#F8F8F8')*/
-        x.style.background = '#F8F8F8'
-
-    }
-
-
-    /* 获取验证码 */
-    function sendCodes(a) {
-        //随后使用ajax方式提交
-        timer(a);
-    }
-
-    var wait = 60
-
-    /* 验证码倒计时 */
-    function timer(b) {
-        if (wait == 0) {
-            $(b).text("重新验证码")
-            $(b).removeAttr("disabled");
-            $(b).css("border-color", "1e9fff").css("background", "#ffffff").css("cursor", "pointer").css("color", "#1481b8");
-            wait = 60;
-        } else {
-            $(b).attr("disabled", "true");
-            $(b).css("border-color", "fbfbfb").css("background", "white").css("cursor", "not-allowed").css("color", "black").css("font-size", "12px");
-            $(b).text(wait + "秒后重发");
-            wait--;
-            setTimeout(function () {
-                timer(b)
-            }, 1000);
-        }
-    }
-
-    /* 关闭登录注册窗口 */
-    function closemyModal() {
-        /* 隐藏遮罩层 */
-        $(".modal-backdrop").css('display', 'none')
-        /* 隐藏登录窗口 */
-        $("#myModal").css('display', 'none')
-    }
-
-    /* 显示登录 */
-    function login() {
-        alert("123")
-        $('#loginTitle').css('color', '#337Ab7');
-        $('#loginForm').show();
-        $(".modal-backdrop").css('display', 'block')
-        $('#registeTitle').css('color', '#000');
-        $('#registeForm').hide();
-        $('#phoneloginForm').hide();
-    }
-
-    /* 显示手机号登录 */
-    function pathonLogin() {
-        $('#phoneloginForm').show();
-        $('#loginTitle').css('color', '#337Ab7');
-        $('#loginForm').hide();
-
-    }
-
-    /* 显示注册 */
-    function registe() {
-        $('#registeTitle').css('color', '#337Ab7');
-        $('#registeForm').show();
-        $('#loginTitle').css('color', '#000');
-        $('#loginForm').hide();
-        $('#phoneloginForm').hide();
-
-    }
-
-
-    /* 注册 */
-    function zhucelogin() {
-        $.ajax({
-            url: '/MkUse/insertUser',
-            data: $("#registeForm").serialize(),
-            type: 'post',
-            success: function (data) {
-                alert(data)
-                if (data == '1') {
-                    $(".msg").text("手机号已存在,请重新输入")
-                } else {
-                    alert("注册成功,请登录")
-                    window.location = 'http://localhost:8080/MkUse/index'
-                }
-            },
-            error: function (xhr, msg) {
-                alert('出错')
-            }
+        /* 头像 鼠标悬浮事件 移入 */
+        $("#userdetail").mouseover(function () {
+            $("#xuanfu").show();
+        });
+        /* 头像 鼠标悬浮事件 移出 */
+        $("#userdetail").mouseout(function () {
+            $("#xuanfu").hide();
         })
-    }
 
-    /* 登录 */
-    function loginFormOne(cc) {
-        var aa;
-        if (cc == "loginForm") {
-            aa = $("#loginForm").serialize();
-        } else {
-            aa = $("#phoneloginForm").serialize();
+        /* 头像 鼠标悬浮事件 移入 */
+        $("#xuanfu").mouseover(function () {
+            $("#xuanfu").show();
+        });
+
+        /* 头像 鼠标悬浮事件 移出 */
+        $("#xuanfu").mouseout(function () {
+            $("#xuanfu").hide();
+        })
+
+        function bigImg(x) {
+            /*$('.xuan').css('background','#C8C8C8')*/
+            x.style.background = '#C8C8C8'
         }
-        $.ajax({
-            url: '/MkUse/selectOne',
-            data: aa,
-            type: 'post',
-            success: function (data) {
-                if (data.length == 0) {
-                    $(".msg").text("输入错误,请重新输入")
-                } else {
-                    /*/!* 显示个人窗口 *!/
-                    $("#isshow2").css('display','block')
-                    /!* 隐藏登录注册 *!/
-                    $("#isshow").css("display",'none')
-                    /!* 隐藏遮罩层 *!/
-                    $(".modal-backdrop").css('display','none')
-                    /!* 隐藏登录窗口 *!/
-                    $("#myModal").css('display','none')*/
-                    window.location = 'http://localhost:8080/MkUse/index'
 
-                }
-            },
-            error: function (xhr, msg) {
-                alert("出错")
+        function normalImg(x) {
+            /*$('.xuan').css('background','#F8F8F8')*/
+            x.style.background = '#F8F8F8'
+
+        }
+
+
+        var yzm = "";
+
+        /*获取手机验证码*/
+        function sendCodes(a,c) {
+            var phone;
+            //随后使用ajax方式提交
+            if (c=='zcmkuphone'){
+                phone = $("#zcmkuphone").val();
+            }else{
+                phone = $("#zlmkuphone").val();
             }
 
-        })
-    }
+            if (phone!=""){
+                $.ajax({
+                    url:"/Mk_Use/phone",
+                    data:{"phone":phone},
+                    type:'post',
+                    success:function(data){
+                        alert(data)
+                        if (data!='0'){
+                            yzm=data;
+                            /* 倒计时 */
+                            timer(a);
+                        }else{
+                            $(".msg").text("手机号已被注册")
+                        }
+                    },error:function (xhr,msg) {
+                        alert("数据错误")
+                    }
+                })
+            }else {
+                $(".msg").text("请输入手机号")
+            }
+        }
+        var wait = 60
+
+        /* 验证码倒计时 */
+        function timer(b) {
+            if (wait == 0) {
+                $(b).text("重新验证码")
+                $(b).removeAttr("disabled");
+                $(b).css("border-color", "1e9fff").css("background", "#ffffff").css("cursor", "pointer").css("color", "#1481b8");
+                wait = 60;
+            } else {
+                $(b).attr("disabled", "true");
+                $(b).css("border-color", "fbfbfb").css("background", "white").css("cursor", "not-allowed").css("color", "black").css("font-size", "12px");
+                $(b).text(wait + "秒后重发");
+                wait--;
+                setTimeout(function () {
+                    timer(b)
+                }, 1000);
+            }
+        }
+
+        /* 关闭登录注册窗口 */
+        function closemyModal() {
+            /* 隐藏遮罩层 */
+            $(".modal-backdrop").hide()
+            /* 隐藏登录窗口 */
+            $("#myModal").hide()
+            $(".form-control").text("");
+        }
+
+        /* 显示登录 */
+        function login() {
+            $('#registeTitle').css('color', '#000');
+            $('#registeForm').hide();
+            $('#phoneloginForm').hide();
+            $(".msg").text("");
+            $('#loginTitle').css('color', '#337Ab7');
+            $('#loginForm').show();
+            $(".modal-backdrop").css('display', 'block')
 
 
-</script>
+        }
 
-<!-- 头部-end -->
-<!-- 登录注册-start -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" style="position:fixed; top:25%;width:384px;left: 40%;" >
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" style="font-size:18px;">×</span>
-                </button>
-                <h4 class="modal-title" id="loginTitle" style="float: left; color: #337Ab7;cursor: pointer; "
-                    onclick="login();">登录</h4>
-                <h4 class="modal-title" id="registeTitle" style="float: left;margin-left: 20px;cursor: pointer;"
-                    onclick="registe();">注册</h4>
-                <div class="clearfix"></div>
-                <!-- 关闭按钮 -->
-                <a href="javascript:void(0)" onclick="closemyModal()"
-                   style="width: 20px;height: 20px;position: absolute;top: 20px;left: 320px;background: url('/res/i/nlogin.png') no-repeat 0 0;cursor: pointer;"></a>
-            </div>
+        /* 显示手机号登录 */
+        function pathonLogin() {
+            $('#phoneloginForm').show();
+            $('#loginTitle').css('color', '#337Ab7');
+            $('#loginForm').hide();
+            $(".msg").text("");
+        }
 
-            <div class="modal-body">
-                <!-- 登录 -->
-                <form id="loginForm" action="/MkUse/selectOne" class="form-horizontal"
-                      style="padding: 0px 20px;margin-left:25px;width: 300px;" method="post">
+        /* 显示注册 */
+        function registe() {
+            $('#registeTitle').css('color', '#337Ab7');
+            $('#registeForm').show();
+            $('#loginTitle').css('color', '#000');
+            $('#loginForm').hide();
+            $('#phoneloginForm').hide();
+            $(".msg").text("");
+        }
 
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="mkuphone" name="mkuphone" placeholder="请输入登录手机号/邮箱">
-                    </div>
+        /* 注册 */
+        function zhucelogin() {
+            if($("#zcmkuphone").val()=="" || $("#zcyzm").val()=="" || $("#zcmkupassword").val()==""){
+                $(".msg").text("请填写信息在注册")
+            }else{
 
-                    <div class="form-group help">
-                        <input type="password" class="form-control" id="mkupassword" name="mkupassword"
-                               placeholder="请输入密码">
-                    </div>
+                if ($("#zcyzm").val()!=yzm){
+                    $(".msg").text("请输入正确的验证码")
+                } else{
+                    $.ajax({
+                        url: '/Mk_Use/insertUser',
+                        data: $("#registeForm").serialize(),
+                        type: 'post',
+                        success: function (data) {
+                            alert(data)
+                            if (data == '1') {
+                                $(".msg").text("手机号已存在,请重新输入")
+                            } else {
+                                alert("注册成功,请登录")
+                                window.location = 'http://localhost:8080/Mk_Use/index'
+                            }
+                        },
+                        error: function (xhr, msg) {
+                            alert('出错')
+                        }
 
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" value="None" id="checkbox1" name="check">
-                            <span class="text" style="color: #787D82;font-size: 14px;">7天内自动登录</span>
-                        </label>
-                        <a href="javascript:;" style="color: #9199a1;margin-top: -25px;margin-left: 150px;width: 65px">找回密码</a>
-                        <div style="border-right: 1px solid #9199a1;margin-top: -18px;margin-left: 200px;width: 20px;height: 15px;"></div>
-                        <a href="javascript:;" style="color: #9199a1;margin-top: -18px;margin-left: 230px;width: 65px">无法登录</a>
-                    </div>
+                    })
+                }
+            }
+        }
 
-                    <p class="msg"></p>
+        /* 登录 */
+        function loginFormOne(cc) {
+            var aa;
+            if (cc == "loginForm") {
+                aa = $("#loginForm").serialize();
+            } else {
+                aa = $("#phoneloginForm").serialize();
+            }
 
-                    <a href="javascript:void(0)" onclick="loginFormOne('loginForm')">
-                        <div class="header-login-btn">登 录</div>
-                    </a>
+            if($("#dlmkuphone").val()=="" || $("#dlyzm").val()==""){
+                $(".msg").text("请填写信息在登录")
+            }else{
+                if($("#dlyzm").val()!=yzm){
+                    $(".msg").text("请输入正确的验证码")
+                }else{
+                    $.ajax({
+                        url: '/Mk_Use/selectOne',
+                        data: aa,
+                        type: 'post',
+                        success: function (data) {
+                            if (data.length == 0) {
+                                $(".msg").text("输入错误,请重新输入")
+                            } else {
+                                /*/!* 显示个人窗口 *!/
+                                $("#isshow2").css('display','block')
+                                /!* 隐藏登录注册 *!/
+                                $("#isshow").css("display",'none')
+                                /!* 隐藏遮罩层 *!/
+                                $(".modal-backdrop").css('display','none')
+                                /!* 隐藏登录窗口 *!/
+                                $("#myModal").css('display','none')*/
+                                window.location = 'http://localhost:8080/Mk_Use/index'
+                            }
+                        },
+                        error: function (xhr, msg) {
+                            alert("出错")
+                        }
 
-                    <div style="width: 90px;height: 25px;margin-top: 10px">
-                        <a href="javascript:void(0)" style="color: red" onclick="pathonLogin()">手机短信登录</a>
-                    </div>
+                    })
+                }
+            }
+        }
 
-                    <div style="height: 25px;margin-top: 5px;margin-left: 40px">
+    </script>
+    <!-- 头部-end -->
+
+
+    <!-- 登录注册-start -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+         style="position:fixed; top:25%;width:384px;left: 40%;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" dataclose-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="font-size:18px;">×</span>
+                    </button>
+                    <h4 class="modal-title" id="loginTitle" style="float: left; color: #337Ab7;cursor: pointer; "
+                        onclick="login();">登录</h4>
+                    <h4 class="modal-title" id="registeTitle" style="float: left;margin-left: 20px;cursor: pointer;"
+                        onclick="registe();">注册</h4>
+                    <div class="clearfix"></div>
+                    <!-- 关闭按钮 -->
+                    <a href="javascript:void(0)" onclick="closemyModal()"
+                       style="width: 20px;height: 20px;position: absolute;top: 20px;left: 320px;"
+                       class="glyphicon glyphicon-remove"></a>
+                </div>
+
+                <div class="modal-body">
+                    <!-- 登录 -->
+                    <form id="loginForm" action="/Mk_Use/selectOne" class="form-horizontal"
+                          style="padding: 0px 20px;margin-left:25px;width: 300px;" method="post">
+
+                        <div class="form-group">
+                            <input type="text" class="form-control"  name="mkuphone"
+                                   placeholder="请输入登录手机号/邮箱">
+                        </div>
+
+                        <div class="form-group help">
+                            <input type="password" class="form-control" id="mkupassword" name="mkupassword"
+                                   placeholder="请输入密码">
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" value="None" id="checkbox1" name="check">
+                                <span class="text" style="color: #787D82;font-size: 14px;">7天内自动登录</span>
+                            </label>
+                            <a href="javascript:;"
+                               style="color: #9199a1;margin-top: -25px;margin-left:30px;width: 65px">找回密码</a>
+                            <div style="border-right: 1px solid #9199a1;margin-top: -23px;margin-left: 200px;width: 20px;height: 15px;"></div>
+                            <a href="javascript:;" style="color: #9199a1; position: absolute;top: 115px;left: 280px">无法登录</a>
+                            <!--<a href="javascript:;" style="color: #9199a1;margin-top:-100px;margin-left: 250px;width: 65px;height: 15px">无法登录</a>-->
+                        </div>
+
+                        <p class="msg"></p>
+
+                        <a href="javascript:void(0)" onclick="loginFormOne('loginForm')">
+                            <div class="header-login-btn" style="border-radius: 50px;">登 录</div>
+                        </a>
+
+                        <div style="width: 90px;height: 25px;margin-top: 10px">
+                            <a href="javascript:void(0)" style="color: red" onclick="pathonLogin()">手机短信登录</a>
+                        </div>
+
+                        <div style="height: 25px;margin-top: 5px;margin-left: 40px">
                         <span style="font-size: 12px;">登录即同意目课网<a href="javascript:;"
-                                                                  style="color: red;font-size: 12px;color: #37f;margin-top: -18px;margin-left:100px">《私密政策》</a></span>
-                    </div>
+                                                                  style="color: red;font-size: 12px;color: #37f;margin-top: -18px;margin-left:0px">《私密政策》</a></span>
+                        </div>
 
-                </form>
+                    </form>
 
-                <!-- 手机号登录 -->
-                <form id="phoneloginForm" class="form-horizontal"
-                      style="padding: 0px 20px;margin-left:25px;width: 300px;display: none">
+                    <!-- 手机号登录 -->
+                    <form id="phoneloginForm" class="form-horizontal"
+                          style="padding: 0px 20px;margin-left:25px;width: 300px;display: none">
 
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="mkuphone" placeholder="请输入登录手机号">
-                    </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="dlmkuphone" name="mkuphone" placeholder="请输入登录手机号">
+                        </div>
 
-                    <div class="form-group help">
-                        <input type="password" class="form-control" style="width: 200px"
-                               placeholder="请输入短信验证码">
-                        <p style="margin-top: -25px;margin-left: 215px;width: 100px">
-                            <a href="javascript:void(0)" style="font-size: 12px;color:#1481b8!important;"
-                               onclick="sendCodes(this)">获取验证码</a>
-                        </p>
-                    </div>
+                        <div class="form-group help">
+                            <input type="text" class="form-control" id="dlyzm" style="width: 200px"
+                                   placeholder="请输入短信验证码">
+                            <p style="margin-top: -25px;margin-left: 215px;width: 100px">
+                                <a href="javascript:void(0)" style="font-size: 12px;color:#1481b8!important;"
+                                   onclick="sendCodes(this,'dlmkuphone')">获取验证码</a>
+                            </p>
+                        </div>
 
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" value="None" id="checkbox1" name="check">
-                            <span class="text" style="color: #787D82;font-size: 14px;">7天内自动登录</span>
-                        </label>
-                    </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" value="None" id="checkbox1" name="check">
+                                <span class="text" style="color: #787D82;font-size: 14px;">7天内自动登录</span>
+                            </label>
+                        </div>
 
-                    <p class="msg"></p>
+                        <p class="msg"></p>
 
-                    <a href="javascript:void(0)" onclick="loginFormOne('phoneloginForm')">
-                        <div class="header-login-btn">登 录</div>
-                    </a>
+                        <a href="javascript:void(0)" onclick="loginFormOne('phoneloginForm')">
+                            <div class="header-login-btn" style="border-radius: 50px">登 录</div>
+                        </a>
 
-                    <div style="width: 90px;height: 25px;margin-top: 10px">
-                        <a href="javascript:;" style="color: red" onclick="login()">账号密码登录</a>
-                    </div>
+                        <div style="width: 90px;height: 25px;margin-top: 10px">
+                            <a href="javascript:;" style="color: red" onclick="login()">账号密码登录</a>
+                        </div>
 
-                    <div style="height: 25px;margin-top: 5px;margin-left: 40px">
+                        <div style="height: 25px;margin-top: 5px;margin-left: 40px">
                         <span style="font-size: 12px;">登录即同意目课网<a href="javascript:;"
-                                                                  style="color: red;font-size: 12px;color: #37f;margin-top: -18px;margin-left:100px">《私密政策》</a></span>
-                    </div>
+                                                                  style="color: red;font-size: 12px;color: #37f;margin-top: -18px;margin-left:0px">《私密政策》</a></span>
+                        </div>
 
-                </form>
+                    </form>
 
 
-                <!-- 注册 -->
-                <form id="registeForm" class="form-horizontal"
-                      style="padding: 0px 20px;margin-left:25px;width: 300px;display: none">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="mkuphone" placeholder="请输入手机号">
-                    </div>
-                    <div class="form-group help">
-                        <input type="text" class="form-control" style="width: 200px"
-                               placeholder="请输入短信验证码">
-                        <p style="margin-top: -25px;margin-left: 215px;width: 100px">
-                            <a href="javascript:void(0)" style="font-size: 12px;color:#1481b8!important;"
-                               onclick="sendCodes(this)">获取验证码</a>
-                        </p>
-                    </div>
-                    <div class="form-group help">
-                        <input type="password" class="form-control" name="mkupassword" placeholder="请输入密码">
-                    </div>
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" value="None" id="checkbox1" name="check">
-                            <span class="text" style="color: #787D82;font-size: 14px;">
-										同意&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&
+                    <!-- 注册 -->
+                    <form id="registeForm" class="form-horizontal"
+                          style="padding: 0px 20px;margin-left:25px;width: 300px;display: none">
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="zcmkuphone" name="mkuphone" placeholder="请输入手机号">
+                        </div>
+
+                        <div class="form-group help">
+
+                            <input type="text" class="form-control" id="zcyzm" style="width: 200px"
+                                   placeholder="请输入短信验证码">
+
+                            <p style="margin-top: -25px;margin-left: 215px;width: 100px">
+                                <a href="javascript:void(0)" style="font-size: 12px;color:#1481b8!important;"
+                                   onclick="sendCodes(this,'zcmkuphone')">获取验证码</a>
+                            </p>
+
+                        </div>
+
+                        <div class="form-group help">
+                            <input type="password" class="form-control" id="zcmkupassword" name="mkupassword" placeholder="请输入密码">
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" value="None" id="checkbox1" name="check">
+                                <span class="text" style="color: #787D82;font-size: 14px;">
+										同意&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&
 										<a href="javascript:;"
-                                           style="color: red;font-size: 12px;color: #37f;margin-top: -20px;margin-left:40px">《慕课网注册协议》</a>
+                                           style="color: red;font-size: 12px;color: #37f;margin-top: -24px;margin-left:-120px">《慕课网注册协议》</a>
 										<a href="javascript:;"
-                                           style="color: red;font-size: 12px;color: #37f;margin-top: -18px;margin-left:145px">《隐私政策》</a>
+                                           style="color: red;font-size: 12px;color: #37f;margin-top:-198px;margin-left:0  px">《隐私政策》</a>
 									</span>
-                        </label>
-                    </div>
+                            </label>
+                        </div>
 
-                    <p class="msg"></p>
+                        <p class="msg"></p>
 
-                    <a href="javascript:void(0)" onclick="zhucelogin()">
-                        <div class="header-login-btn">注册</div>
-                    </a>
-                </form>
+                        <a href="javascript:void(0)" onclick="zhucelogin()">
+                            <div class="header-login-btn" style="border-radius: 50px">注册</div>
+                        </a>
+
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- 登录注册-end -->
+    <!-- 登录注册-end -->
+
 </div>
 </body>
 </html>
