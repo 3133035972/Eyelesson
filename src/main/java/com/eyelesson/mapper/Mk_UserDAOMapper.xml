@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.eyelesson.dao.Mk_UseDAO">
+
+<!--    查询这个人的信息-->
+    <select id="users" resultType="java.util.Map">
+        with a as(
+        select mku.*,sum(mkpro.mkprduration) as learn  from mk_use mku
+        left join mk_process mkpro
+        on mku.mkuid=mkpro.mkuid
+        group by mku.mkuid),
+        b as(
+        select mku.mkuid,count(mkccs.mkucid) as follor from mk_use mku
+        left join mk_userconcerns mkccs on mku.mkuid=mkccs.mkucid
+        group by mku.mkuid)
+        select a.*,b.follor from a inner join b on a.mkuid=b.mkuid
+        where a.mkuid=#{param1}
+    </select>
+
+</mapper>

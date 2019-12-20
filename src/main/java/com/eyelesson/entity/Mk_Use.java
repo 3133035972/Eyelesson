@@ -30,7 +30,7 @@ public class Mk_Use {
     private Integer mkustate;
     private Integer mkfollowcount;
     private Integer mkuintegral;
-    private Integer mkurole;
+    private Integer mkposid;
 
     @Override
     public String toString() {
@@ -55,7 +55,7 @@ public class Mk_Use {
                 ", mkustate=" + mkustate +
                 ", mkfollowcount=" + mkfollowcount +
                 ", mkuintegral=" + mkuintegral +
-                ", mkurole=" + mkurole +
+                ", mkposid=" + mkposid +
                 '}';
     }
 
@@ -219,11 +219,11 @@ public class Mk_Use {
         this.mkuintegral = mkuintegral;
     }
 
-    public Integer getMkurole() {
-        return mkurole;
+    public Integer getMkposid() {
+        return mkposid;
     }
 
-    public void setMkurole(Integer mkurole) {
-        this.mkurole = mkurole;
+    public void setMkposid(Integer mkposid) {
+        this.mkposid = mkposid;
     }
 }

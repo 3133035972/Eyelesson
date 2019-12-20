@@ -5,11 +5,12 @@
     <!--已学习过的-->
     <select id="findByCouridUid" resultType="java.util.Map">
         select * from mk_course mkc inner join mk_difficulty mkd on mkc.mkdfid
-        =mkd.mkdfid right join mk_fathercourse_section mkfs on mkc.mkcsid=mkfs.mkcourseid
+        =mkd.mkdfid left join mk_fathercourse_section mkfs on mkc.mkcsid=mkfs.mkcourseid
         right join mk_soncourse_section mkss on mkfs.mkfcsid
         =mkss.mkfcsid and mkfs.mkcourseid=mkss.mkcsid
         right join mk_process  mkpr on mkss.mkcstid=mkpr.mkcstid
         where mkc.mkcsid=#{param1} and mkpr.mkuid=#{param2}
+        order by mkpr.mkprid desc limit 1
     </select>
     <!--根据课程id查询出来-->
     <select id="findCourid" resultType="java.util.Map">

@@ -41,6 +41,4 @@ public class Ht_UserInfoController {
         return "/ht/login";
     }
 
-
-
 }

@@ -3,7 +3,7 @@
 <mapper namespace="com.eyelesson.dao.Mk_UseDAO">
 
     <select id="findOne" parameterType="Mk_Use" resultType="Mk_Use">
-        select * from mk_use where mkuphone=#{mkuphone}
+        select * from mk_use where mkuphone=#{mkuphone} and mkustate=0
         <if test="mkupassword != null">
             and  mkupassword=#{mkupassword}
         </if>
@@ -11,7 +11,7 @@
 
 
     <select id="selectOnes" parameterType="Mk_Use" resultType="Mk_Use">
-        select * from mk_use where mkuphone=#{mkuphone}
+        select * from mk_use where mkuphone=#{mkuphone} and mkustate=0
     </select>
 
 

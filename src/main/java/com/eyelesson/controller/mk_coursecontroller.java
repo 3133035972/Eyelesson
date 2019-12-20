@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequestMapping("mk_course")
 public class mk_coursecontroller {
 
     @Autowired

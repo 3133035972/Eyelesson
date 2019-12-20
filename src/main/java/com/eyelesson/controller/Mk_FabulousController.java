@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 
 @Controller
+@RequestMapping("Mk_Fabulous")
 public class Mk_FabulousController {
 
     @Autowired

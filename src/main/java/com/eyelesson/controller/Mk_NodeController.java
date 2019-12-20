@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Controller
+@RequestMapping("Mk_Node")
 public class Mk_NodeController {
 
     @Autowired
