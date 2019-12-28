@@ -6,7 +6,7 @@
 	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
 		<meta name="keywords" content="">
 		<meta name="description" content="">
-		<title>在线网校学习平台</title>
+		<title>目课学习平台</title>
 		<link rel="stylesheet" type="text/css" href="res/font-awesome/css/font-awesome.min.css">
 		<link href="res/css/moco.min.css" rel="stylesheet" type="text/css">
 		<link href="res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -38,9 +38,11 @@
 						<div class="course-title" th:text="${commentlist.mkctitle}">带您完成神秘的涟漪按钮效果-入门篇</div>
 						
 						<div class="course-meta">
-							<a th:href="@{/video(mkcstid=${commentlist.mkcstid})}" class="learn-btn" th:if="${commentlist.containsKey('mkprid')==true}" >继续学习</a>
-
-							<a th:href="@{/video(mkcstid=${commentlist.mkcstid})}" class="learn-btn" th:if="${commentlist.containsKey('mkprid')==false}" >开始学习</a>
+							<a th:if="${commentlist.containsKey('mkcstid')==false}" class="learn-btn" >暂无章节学习</a>
+							<span th:if="${commentlist.containsKey('mkcstid')==true}">
+								<a th:href="@{/video(mkcstid=${commentlist.mkcstid})}" class="learn-btn" th:if="${commentlist.containsKey('mkprid')==true}" >继续学习</a>
+								<a th:href="@{/video(mkcstid=${commentlist.mkcstid})}" class="learn-btn" th:if="${commentlist.containsKey('mkprid')==false}" >开始学习</a>
+							</span>
 
 							<div class="static-item" th:if="${commentlist.containsKey('mkprid')}" >
 								<div class="meta">上次学到</div>
@@ -64,8 +66,8 @@
 							</a>
 						</div>
 						
-						<div class="course-brief" th:text="${commentlist.mkcontent}">
-								简介：安卓声音录制与播放功能实现，包括录制到文件、播放文件，可以实现类似于微信的语音消息发送与播放，还包括录制到字节流，从字节流播放，可以实现视频直播/实时对讲功能中的声音录制和播放。 Android大牛齐聚之地，这里总有人为你答疑解惑！慕课网Android讨论群 556384357
+						<div class="course-brief">
+							简介：<span th:text="${commentlist.mkteacherlearwhat}">安卓声音录制与播放功能实现，包括录制到文件、播放文件，可以实现类似于微信的语音消息发送与播放，还包括录制到字节流，从字节流播放，可以实现视频直播/实时对讲功能中的声音录制和播放。 Android大牛齐聚之地，这里总有人为你答疑解惑！慕课网Android讨论群 556384357</span>
 						</div>
 						
 						<div class="course-menu">
@@ -81,12 +83,12 @@
 					<div th:each="list : ${pageinfo.list}">
 						<div class="comment clearfix">
 							<div class="comment-header">
-								<a href="#">
-									<img class="lecturer-uimg" th:src="@{'img/'+${list.mkuimg}}">
+								<a th:href="@{/Mk_Use/useshow(mkuid=${list.mkuid})}" target="_blank">
+									<img class="lecturer-uimg"  th:src="@{'img/'+${list.mkuimg}}">
 								</a>
 							</div>
 							<div class="comment-main">
-								<a href="#">
+								<a th:href="@{/Mk_Use/useshow(mkuid=${list.mkuid})}" target="_blank">
 									<div class="user-name" th:text="${list.mkuname}">我是张三</div>
 								</a>
 								<div class="comment-content" th:text="${list.mkcmcontent}" >这门课真实用！一个列表嵌套好多种布局的时候，用recyclerview控件优雅实现，效率果然提高不少，老板肯定又会夸我，啊哈哈！！！</div>

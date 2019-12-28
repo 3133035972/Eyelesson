@@ -1,367 +1,182 @@
 <!DOCTYPE html>
 <html lang="utf-8" xmlns:th="http://www.w3.org/1999/xhtml">
-	<head>
-	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
-		<meta name="keywords" content="">
-		<meta name="description" content="">
-		<title>在线网校学习平台</title>
-		
-		<link href="res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-		<link href="res/css/reset.css" rel="stylesheet" type="text/css"/>
-		<script type="text/javascript" src="res/js/jquery-1.11.3.min.js"></script>
-		<script type="text/javascript" src="res/js/bootstrap.min.js"></script>
-		
-		<!--[if lt IE 9]>
-		  <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-		  <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-		<![endif]-->
-		
-		<link rel="icon" type="image/png" href="res/i/ico.png" sizes="16x16">
-		<script type="text/javascript">
-		CONETXT_PATH = '';
-		</script>
-	</head>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>目课学习平台</title>
 
-	<body>
-		<!-- 头部-start -->
-		<div th:replace="head::head"></div>
-		<!-- 头部-end -->
-		
-		<!-- 登录注册-start -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"  style="position:fixed; top:30%;">
-		    <div class="modal-dialog" role="document">
-		        <div class="modal-content">
-		        
-		            <div class="modal-header">
-		                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		                    <span aria-hidden="true" style="font-size:18px;">×</span>
-		                </button>
-		                <h4 class="modal-title"  id="loginTitle"  style="float: left; color: #337Ab7;cursor: pointer; " onclick="login();">登 录</h4>
-		                <h4 class="modal-title"  id="registeTitle"  style="float: left;margin-left: 20px;cursor: pointer;" onclick="registe();">注 册</h4>
-		                <div class="clearfix"></div>
-		            </div>
-		            
-		            <div class="modal-body">
-		               	<form id="loginForm" class="form-horizontal" style="padding: 0px 20px;">
-		                      <div class="form-group">
-		                          <input type="email" class="form-control"  id="username"  placeholder="用户名">
-		                      </div>
-		                      <div class="form-group help">
-		                          <input type="password" class="form-control"  id="password"  placeholder="密　码">
-		                      </div>
-		                      <div class="form-group">
-		                          <label>
-		                           <input type="checkbox" value="None" id="checkbox1" name="check">
-		                           <span class="text" style="color: #787D82;font-size: 14px;">下次自动登录</span>
-		                          </label>
-		                      </div>
-		                      
-		                      <a href="javascript:void(0)">
-		                      	<div class="header-login-btn">登 录</div>
-		                      </a>
-		                  </form>
-		                  
-		                   <form id="registeForm" class="form-horizontal" style="padding: 0px 20px;display: none;">
-		                       <div class="form-group">
-		                           <input type="email" class="form-control"  id="username"  placeholder="用户名">
-		                       </div>
-		                       <div class="form-group help">
-		                           <input type="password" class="form-control"  id="password"  placeholder="密　码">
-		                       </div>
-		                       <a href="javascript:void(0)">
-		                      	<div class="header-login-btn">注 册</div>
-		                       </a>
-		                   </form>
-		                  
-		            </div>
-					
-		        </div>
-		    </div>
-		</div>
-		<!-- 登录注册-end -->
+    <link href="/res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/res/css/reset.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="/res/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/res/js/bootstrap.min.js"></script>
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/res/listjs/listjs.js" rel="stylesheet"></script>
+
+    <link rel="icon" type="image/png" href="/res/i/ico.png" sizes="16x16">
+    <script type="text/javascript">
+        CONETXT_PATH = '';
+    </script>
+</head>
 
 
-		
-		<div class="f-main clearfix">
-			<!-- 一级分类-start -->
-			<div class="course-nav-row clearfix">
-				<span class="hd">方向：</span>
-				<ul class="course-nav">
-					<li class="course-nav-item cur-course-nav">
-						<a href="/course/list">全部</a>
-					</li>
-					<li class="course-nav-item">
-						<a href="/course/list?c=fe">前端开发</a>
-					</li>
-					<li class="course-nav-item">
-						<a href="/course/list?c=be">后端开发</a>
-					</li>
-					<li class="course-nav-item">
-						<a href="/course/list?c=mobile" >移动开发</a>
-					</li>
-					<li class="course-nav-item">
-						<a href="/course/list?c=data" >数据库</a>
-					</li>
-					<li class="course-nav-item">
-						<a href="/course/list?c=cb" >云计算&amp;大数据</a>
-					</li>
-					<li class="course-nav-item">
-						<a href="/course/list?c=op" >运维&amp;测试</a>
-					</li>
-					<li class="course-nav-item">
-						<a href="/course/list?c=photo"  >UI设计</a>
-					</li>
-				</ul>
-			</div>
-			<!-- 一级分类-end -->
-			
-			<!-- 二级分类-start -->
-			<div class="course-nav-row clearfix">
-				<span class="hd">分类：</span>
-				<ul class="course-nav">
-					<li class="course-nav-item cur-course-nav">
-						<a href="/course/list">全部</a>
-					</li>
-					<li class="course-nav-item">
-						<a href="/course/list?c=fe">Java</a>
-					</li>
-					<li class="course-nav-item">
-						<a href="/course/list?c=be">HTML/CSS</a>
-					</li>
-					<li class="course-nav-item">
-						<a href="/course/list?c=mobile" >JavaScript</a>
-					</li>
-					<li class="course-nav-item">
-						<a href="/course/list?c=data" >Jquery</a>
-					</li>
-					<li class="course-nav-item">
-						<a href="/course/list?c=cb" >CSS</a>
-					</li>
-					<li class="course-nav-item">
-						<a href="/course/list?c=op" >Python</a>
-					</li>
-					<li class="course-nav-item">
-						<a href="/course/list?c=photo"  >Django</a>
-					</li>
-					<li class="course-nav-item">
-						<a href="/course/list?c=photo"  >Android</a>
-					</li>
-					<li class="course-nav-item">
-						<a href="/course/list?c=photo"  >IOS</a>
-					</li>
-					<li class="course-nav-item">
-						<a href="/course/list?c=photo"  >WebApp</a>
-					</li>
-					<li class="course-nav-item">
-						<a href="/course/list?c=photo"  >MySql</a>
-					</li>
-					<li class="course-nav-item">
-						<a href="/course/list?c=photo"  >MongoDB</a>
-					</li>
-					<li class="course-nav-item">
-						<a href="/course/list?c=photo"  >Oracle</a>
-					</li>
-					<li class="course-nav-item">
-						<a href="/course/list?c=photo"  >大数据</a>
-					</li>
-				</ul>
-			</div>
-			<!-- 二级分类-end -->
-			
-			<!-- 课程列表-start -->
-			<div class="types-block clearfix" style="padding:0px;">
-				<h3 style="margin-bottom: 20px;">	
-					<span class="types-title" style="margin-right:40px;">课程列表</span>
-					<a href="javascript:void(0)" style="display: inline-block;margin-right:20px;" onclick="_queryPage(1,undefined,'last')">
-					<span >最新</span>
-					</a>
-					<a href="javascript:void(0)" style="display: inline-block;" onclick="_queryPage(1,undefined,'pop')">
-					<span >最热</span>
-					</a>
-				</h3>
-				<div class="types-content clearfix" style="margin-bottom: 20px;">
-				
-					<a href="">
-					<div class="course-card-container">
-						<div class="course-card-top green-bg">
-							<span>测试</span>
-						</div>
 
-						<div class="course-card-content">
-							<h3 class="course-card-name">Android自动化测试实战 工具 框架 脚本</h3>
-							<p title="找Android自动化测试工作必学的主流工具、框架和自动化脚本">找Android自动化测试工作必学的主流工具、框架和自动化脚本</p>
-							<div class="course-card-bottom">
-								<div class="course-card-info">初级<span>·</span>178人在学</div>
-							</div>
-						</div>
-					</div>
-					</a>
 
-					<a href="">
-					<div class="course-card-container">
-						<div class="course-card-top pink-bg">
-							<span>WebApp</span>
-						</div>
-						<div class="course-card-content">
-							<h3 class="course-card-name">AngularJS仿拉勾网WebApp 开发移动端单页应用</h3>
-							<p title="基于AngularJS，仿拉勾网开发一个招聘类的移动端单页应用">基于AngularJS，仿拉勾网开发一个招聘类的移动端单页应用</p>
-							<div class="clearfix course-card-bottom">
-								<div class="course-card-info">初级<span>·</span>3444人在学</div>
-							</div>
-						</div>
-					</div>
-					</a>
-					
-					<div class="course-card-container">
-						<div class="course-card-top brown-bg">
-							<span>Django</span>
-						</div>
-	
-						<div class="course-card-content">
-							<h3 class="course-card-name">强力django杀手级xadmin 打造上线标准的在线教育平台</h3>
-							<p title="全面掌握django框架,轻松应对python web开发工作">全面掌握django框架,轻松应对python web开发工作</p>
-							<div class="clearfix course-card-bottom">
-								<div class="course-card-info">初级<span>·</span>4888人在学</div>
-							</div>
-						</div>
-					</div>
+<body>
+<!-- 头部-start -->
+<div th:replace="head::head"></div>
+<!-- 头部-end -->
 
-					<div class="course-card-container">
-						<div class="course-card-top purple-bg">
-							<span>Python</span>
-						</div>
-	
-						<div class="course-card-content">
-							<h3 class="course-card-name">Python高级编程技巧实战</h3>
-							<p title="精选50个python训练任务，提升实战技能与高效编程技巧">精选50个python训练任务，提升实战技能与高效编程技巧</p>
-							<div class="clearfix course-card-bottom">
-								<div class="course-card-info">高级<span>·</span>81333人在学</div>
-							</div>
-						</div>
-					</div>
-					
-					<div class="course-card-container" style="margin-right: 0px;">
-						<div class="course-card-top green-bg">
-							<span>PHP</span>
-						</div>
-						
-						<div class="course-card-content">
-							<h3 class="course-card-name">前端后台ThinkPHP开发整站</h3>
-							<p title="用PHP+MySQL+Ajax开完新闻资讯整站，实现“小全栈”的梦想">用PHP+MySQL+Ajax开完新闻资讯整站，实现“小全栈”的梦想</p>
-							<div class="clearfix course-card-bottom">
-								<div class="course-card-info">中级<span>·</span>6133人在学</div>
-							</div>
-						</div>
-					</div>
-					
-				</div>
-				
-				
-				<div class="types-content clearfix">
-				
-					<a href="">
-					<div class="course-card-container">
-						<div class="course-card-top green-bg">
-							<span>测试</span>
-						</div>
 
-						<div class="course-card-content">
-							<h3 class="course-card-name">Android自动化测试实战 工具 框架 脚本</h3>
-							<p title="找Android自动化测试工作必学的主流工具、框架和自动化脚本">找Android自动化测试工作必学的主流工具、框架和自动化脚本</p>
-							<div class="course-card-bottom">
-								<div class="course-card-info">初级<span>·</span>178人在学</div>
-							</div>
-						</div>
-					</div>
-					</a>
+<div class="f-main clearfix">
+    <!-- 一级分类-start -->
+    <div class="course-nav-row clearfix" style="height: 50px">
+        <span class="hd">方向：</span>
+        <ul class="course-nav">
+            <li class="course-nav-item cur-course-nav yj">
+                <a href="/Mk_Use/list">全部</a>
+            </li>
+            <li th:each="fx:${session.qtflfx}" class="course-nav-item">
+                <!--<a th:href="@{/Mk_Use/list(mkctid=${fx.mkctid})}">[[${fx.mkctname}]]</a>-->
+                <a style="font-size: 14px"  href="javascript:;"  th:id="${fx.mkctid}"  onclick="fls('yj',this)">[[${fx.mkctname}]]</a>
+            </li>
 
-					<a href="">
-					<div class="course-card-container">
-						<div class="course-card-top pink-bg">
-							<span>WebApp</span>
-						</div>
-						<div class="course-card-content">
-							<h3 class="course-card-name">AngularJS仿拉勾网WebApp 开发移动端单页应用</h3>
-							<p title="基于AngularJS，仿拉勾网开发一个招聘类的移动端单页应用">基于AngularJS，仿拉勾网开发一个招聘类的移动端单页应用</p>
-							<div class="clearfix course-card-bottom">
-								<div class="course-card-info">初级<span>·</span>3444人在学</div>
-							</div>
-						</div>
-					</div>
-					</a>
-					
-					<div class="course-card-container">
-						<div class="course-card-top brown-bg">
-							<span>Django</span>
-						</div>
-	
-						<div class="course-card-content">
-							<h3 class="course-card-name">强力django杀手级xadmin 打造上线标准的在线教育平台</h3>
-							<p title="全面掌握django框架,轻松应对python web开发工作">全面掌握django框架,轻松应对python web开发工作</p>
-							<div class="clearfix course-card-bottom">
-								<div class="course-card-info">初级<span>·</span>4888人在学</div>
-							</div>
-						</div>
-					</div>
+        </ul>
+    </div>
+    <!-- 一级分类-end -->
 
-					<div class="course-card-container">
-						<div class="course-card-top purple-bg">
-							<span>Python</span>
-						</div>
-	
-						<div class="course-card-content">
-							<h3 class="course-card-name">Python高级编程技巧实战</h3>
-							<p title="精选50个python训练任务，提升实战技能与高效编程技巧">精选50个python训练任务，提升实战技能与高效编程技巧</p>
-							<div class="clearfix course-card-bottom">
-								<div class="course-card-info">高级<span>·</span>81333人在学</div>
-							</div>
-						</div>
-					</div>
-					
-					<div class="course-card-container" style="margin-right: 0px;">
-						<div class="course-card-top green-bg">
-							<span>PHP</span>
-						</div>
-						
-						<div class="course-card-content">
-							<h3 class="course-card-name">前端后台ThinkPHP开发整站</h3>
-							<p title="用PHP+MySQL+Ajax开完新闻资讯整站，实现“小全栈”的梦想">用PHP+MySQL+Ajax开完新闻资讯整站，实现“小全栈”的梦想</p>
-							<div class="clearfix course-card-bottom">
-								<div class="course-card-info">中级<span>·</span>6133人在学</div>
-							</div>
-						</div>
-					</div>
-					
-				</div>
-				
-			</div>
-			<!-- 课程列表-end -->
-			
-			<!-- 分页-start -->
-			<div class="page-box clearfix">
-				<div class="page clearfix">
-					<div style="float:left;">
-						<a class="page-next" href="javascript:void(0);" onclick="_queryPage('1')">首 页</a>
-						<a class="page-next" href="javascript:void(0);" onclick="_queryPage('${page.pageNum-1}')">上一页</a>
-						<a class="page-cur" href="javascript:void(0);" >1</a>
-						<a class="page-num" href="javascript:void(0);" onclick="_queryPage('${n}');">2</a>
-						<a class="page-num" href="javascript:void(0);" >3</a>
-						<a class="page-num" href="javascript:void(0);" >4</a>
-						<a class="page-num" href="javascript:void(0);" >5</a>
-						<a class="page-num" href="javascript:void(0);" >6</a>
-						<a class="page-num" href="javascript:void(0);" >7</a>
-						<span class="page-omit">...</span>
-						<a class="page-next" href="javascript:void(0);"  onclick="_queryPage('${page.pageNum+1}')">下一页</a> 
-						<a class="page-next" href="javascript:void(0);"  onclick="_queryPage('${page.pageTotalCount!}')">尾 页</a> 
-					</div>
-				</div>
-			</div>
-			<!-- 分页-end -->	
-		</div>
+    <!-- 二级分类-start -->
+    <div class="course-nav-row clearfix">
+        <span class="hd">分类：</span>
+        <ul class="course-nav">
+            <li class="course-nav-item cur-course-nav ej">
+                <a href="javascript:;" onclick="fls('ej',this)">全部</a>
+            </li>
+            <li th:each="fl:${session.qtflfls}" class="course-nav-item" >
+                <a href="javascript:;" th:id="${fl.mkcid}" onclick="fls('ej',this)" th:text="${fl.mkcname}"></a>
+            </li>
+        </ul>
+    </div>
+    <!-- 二级分类-end -->
 
-		<div th:replace="tail::tail">尾</div>
-	</body>
-	
+    <!-- 难度-start -->
+    <div class="course-nav-row clearfix">
+        <span class="hd">难度：</span>
+        <ul class="course-nav">
+            <li class="course-nav-item cur-course-nav nd">
+                <a href="javascirpt:;" onclick="fls('nd',this)">全部</a>
+            </li>
+
+            <li th:each="nd:${session.qtflnd}" class="course-nav-item">
+                <!--<a th:href="@{/Mk_Use/list(mkctid=0,mkcid=0,mkdfid=${nd.mkdfid})}">[[${nd.mkdfname}]]</a>-->
+                <a href="javascript:;" th:id="${nd.mkdfid}" onclick="fls('nd',this)">[[${nd.mkdfname}]]</a>
+            </li>
+
+        </ul>
+    </div>
+    <!-- 难度-end -->
+
+    <script type="text/javascript">
+        /* 鼠标移入事件 : onmousemove */
+        function bigImgss(x) {
+            //    $(x).find('h3')
+            $(x).find('h3').css("color","#FF5151")
+        }
+        /* 鼠标移出事件 : onmouseout */
+        function normalImgss(x) {
+            $(x).find('h3').css("color","black")
+        }
+    </script>
+
+    <!-- 课程列表-start -->
+    <div class="types-block clearfix" style="padding:0px;">
+        <h3 style="margin-bottom: 20px;">
+            <span class="types-title" style="margin-right:40px;">课程列表</span>
+            <a href="javascript:void(0)" style="display: inline-block;margin-right:20px;"
+               onclick="_queryPage(1,undefined,'last')">
+                <span>最新</span>
+            </a>
+            <a href="javascript:void(0)" style="display: inline-block;" onclick="_queryPage(1,undefined,'pop')">
+                <span>最热</span>
+            </a>
+        </h3>
+        <div class="types-content clearfix" style="margin-bottom: 20px;">
+
+            <!-- 免费好课-start -->
+            <div id="mfstart" class="types-block clearfix" style="height: 320px;">
+                <div onmousemove="bigImgss(this)" onmouseout="normalImgss(this)"  th:each="q:${session.flselect.data}" class="types-content" style="float: left;margin-right: 20px;border: 0px solid red;height: 320px;width: 220px" >
+
+                    <a th:href="@{/learn_show(courseid=${q.mkcsid})}" >
+                        <div style="" >
+                            <img th:src="@{'/img/'+${q.mkcimg}}" height="120px" width="90%" style="border-radius: 10px;">
+                            <div class="course-card-content" style="word-wrap: break-word;word-break: break-all;overflow: hidden;margin-top: -10px;margin-left: 10px;width: 190px;">
+                                <h3 style="font-size: 17px;font-weight: bold;color: black;" th:text="${q.mkctitle}"></h3>
+                                <div style="font-size: 12px;margin-top: 28px" >
+							<span style="font-size: 12px;">
+								[[${q.mkdfname}]]
+							<i class="glyphicon glyphicon-user" style="margin-left: 20px">
+							</i>
+								[[${q.mkclearned}]]
+							</span>
+                                    <p style="font-size: 12px;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;" th:text="${q.mkcontent}"></p>
+                                    <div>
+                                        <div>
+                                            <span style="font-size: 12px;font-weight: bold">免费</span>
+                                            <div style="float: right;">
+                                                <a href="javascirpt:;">
+                                                <i style="font-size: 16px;margin-top: 2px" class="glyphicon glyphicon-star-empty"></i>
+                                                <span style="font-size: 14px">收藏</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+            <!-- 免费好课-end -->
+        </div>
+    </div>
+    <!-- 课程列表-end -->
+
+    <!-- 分页-start -->
+    <div class="page-box clearfix" id="fystart"  >
+        <div class="page clearfix">
+            <div style="float:left;margin-left: 350px" >
+                <a class="page-next" href="javascript:void(0);" onclick="_queryPage('1')">首 页</a>
+                <a class="page-next" href="javascript:void(0);" onclick="_queryPage('${page.pageNum-1}')">上一页</a>
+                <span th:each="x:${#numbers.sequence(1,session.flselect.data.pages)}">
+                    <span th:if="${x}==1">
+                    <a class="page-cur" th:id="${x}" onclick="fls('fy',this)" href="javascript:void(0);">[[${x}]]</a>
+                    </span>
+                     <span th:if="${x}!=1">
+                        <a class="page-num" th:id="${x}" onclick="fls('fy',this)" href="javascript:void(0);">[[${x}]]</a>
+                    </span>
+                </span>
+
+                <!--<a class="page-cur" href="javascript:void(0);">1</a>-->
+                <!--<a class="page-num" href="javascript:void(0);">3</a>-->
+                <a class="page-next" href="javascript:void(0);" onclick="_queryPage('${page.pageNum+1}')">下一页</a>
+                <a class="page-next" href="javascript:void(0);" onclick="_queryPage('${page.pageTotalCount!}')">尾 页</a>
+            </div>
+        </div>
+    </div>
+    <!-- 分页-end -->
+
+</div>
+
+
+
+<div th:replace="tail::tail">尾</div>
+
+</body>
 </html>

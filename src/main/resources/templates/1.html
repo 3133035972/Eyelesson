@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="utf-8">
+<html lang="utf-8" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,282 +7,262 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
     <title>个人主页</title>
-    <link href="res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
     <link rel="stylesheet" type="text/css" href="res/font-awesome/css/font-awesome.min.css">
-    <script type="text/javascript" src="res/js/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="res/js/jquery.form.js"></script>
+    <link rel="stylesheet" type="text/css" href="res/css/base.css">
+    <link rel="stylesheet" type="text/css" href="res/css/common-less.css">
+    <link rel="stylesheet" type="text/css" href="res/css/moco.min.css">
+    <link rel="stylesheet" type="text/css" href="res/css/common1.css">
+    <link rel="stylesheet" type="text/css" href="res/css/bootstrap1.min.css">
+    <link rel="stylesheet" type="text/css" href="res/css/profile-less.css">
+    <script type="text/javascript" src="res/js/jquery-3.1.1.js"></script>
     <script type="text/javascript" src="res/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="res/js/oc.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="res/css/allcourse-less.css">
-    <link rel="stylesheet" type="text/css" href="res/css/note-less.css">
-    <style type="text/css">
-
-        /**
-* 个人中心
-*/
-        .tab-content ul{
-            list-style: none;
-            height: 30px;
-            padding: 0px;
-        }
-        .tab-content ul li{
-            width: 100px;
-            float: left;
-            height: 40px;
-        }
-
-        .tab-content ul li a{
-            text-align: center;
-            line-height: 40px;
-            font-size: 18px;
-        }
-
-        .custdiv ul li{
-            width: 100px;
-            height: 40px;
-            margin: 10px 20px;
-        }
-
-    </style>
+    <link rel="stylesheet" type="text/css" href="res/css/3.css"/>
 </head>
 
 <body>
 
-<div class="bg-other user-head-info">
-    <div class="user-info clearfix">
-        <div class="user-pic" data-is-fans="0" data-is-follows="">
-            <!-- 用户图片 -->
-            <div class="user-pic-bg" style="border: 0px solid red;">
-                <img src="res/i/header.jpg" alt="wdawd" class="img-circle" style="width: 141px;height: 140px;" >
-            </div><!--user-pic-big end-->
+<!--头部开始-->
+<!--头部结束-->
+<div id="main">
+
+    <div class="settings-cont clearfix">
+        <div class="setting-left l">
+            <div class="avator-wapper">
+                <div class="avator-mode">
+                    <img class="avator-img" src="" data-portrait="5e02b8f50001e4bb04050408" width="92" height="92">
+                    <div class="update-avator" style="bottom: -30px;">
+                        <p><a href="javascript:void(0);" class="js-avator-link">更换头像</a></p>
+                    </div>
+                </div>
+                <div class="des-mode">
+                    <p>qq_慕无忌2087832</p>
+                    <span>ID: 7874633</span>
+                    <dl class="js-auth-list clearfix auth-list">
+
+                        <dd><i class="fa fa-user-circle-o"></i><div class="icon-tips hide" style="display: none;"><div class="triangle_border_up"><span></span></div>还未实名认证</div></dd>
+
+                        <dd><i class="fa fa-graduation-cap"></i><div class="icon-tips hide" style="display: none;"><div class="triangle_border_up"><span></span></div>还未学籍认证</div></dd>
+
+                        <dd class="active"><i class="fa fa-mobile"></i><div class="icon-tips hide" style="display: none;"><div class="triangle_border_up"><span></span></div>你已绑定手机</div></dd>
+                        <dd><i class="fa fa-envelope-o"></i><div class="icon-tips hide" style="display: none;"><div class="triangle_border_up"><span></span></div>还未绑定邮箱</div></dd>
+                    </dl>
+                </div>
+            </div>
+            <iframe src="about:blank" id="uploadtarget" name="uploadtarget" frameborder="0" style="display:none;"></iframe>
+            <div class="list-wapper">
+                <h2>账户管理</h2>
+                <div class="line"></div>
+                <ul class="menu">
+                    <li>
+                        <a href="#userbinding" aria-controls="userbinding" role="tab" data-toggle="tab" class="on">账号绑定
+                            <span class="arr"><i class="fa fa-angle-right"></i></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#userinfo" aria-controls="userinfo" role="tab" data-toggle="tab" >个人信息<span class="arr"><i class="fa fa-angle-right"></i></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#Record" aria-controls="Record" role="tab" data-toggle="tab">操作记录<span class="arr"><i class="fa fa-angle-right"></i></span></a>
+                    </li>
+                    <li>
+                        <a href="#realname" aria-controls="realname" role="tab" data-toggle="tab">实名认证<span class="arr"><i class="fa fa-angle-right"></i></span></a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="user-info-right">
-            <h3 class="user-name clearfix">
-                qq_慕无忌2087832
-            </h3>
-            <!--25-->
-            <p class="about-info">
-                <span>男</span>
+        <!-- 左侧开始了 在这里循环吧 -->
+        <div class="setting-right">
 
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="userbinding">
 
-                <span>
+                    <div class="setting-right-wrap wrap-boxes settings">
 
-							</span>
-
-            </p>
-        </div>
-        <div class="user-sign hide">
-            <p class="user-desc">这位同学很懒，木有签名的说～</p>
-        </div>
-        <div class="study-info clearfix">
-            <div class="item follows">
-                <div class="u-info-learn" title="学习时长4小时32分" style="cursor:pointer;">
-                    <em>4h</em>
-                    <span>学习时长 </span>
-                </div>
-            </div>
-            <div class="item follows">
-                <a href='/u/index/experience'><em>235</em></a>
-                <span>经验</span>
-            </div>
-            <div class="item follows">
-                <a href='/u/index/credit'><em>0</em></a>
-
-                <span>积分</span>
-            </div>
-            <div class="item follows">
-                <a href='/u/index/follows'><em>0</em></a>
-                <span>关注</span>
-            </div>
-            <div class="item follows">
-                <a href='/u/index/fans'><em>0</em></a>
-                <span>粉丝</span>
-            </div>
-            <div class="item follows"><a class="btn btn-primary" href="collect.html">个人设置</a>
-
-            </div>
-        </div><!--.study-info end-->
-    </div><!-- .user-info end -->
-</div><!-- .big-pic end -->
-
-
-<div class="wrap">
-
-    <div class="slider" style="position: absolute; left: 24px; top: 0px;">
-        <ul>
-
-
-
-            <li>
-                <a href="#mycourse" aria-controls="mycourse" role="tab" data-toggle="tab">
-                    <i class="imv2-war"></i><span>我的课程</span><b class="icon-drop_right"></b>
-                </a>
-            </li>
-            <li>
-                <a href="#mycollection" aria-controls="mycollection" role="tab" data-toggle="tab">
-                    <i class="imv2-tick"></i><span>收藏</span><b class="icon-drop_right"></b>
-                </a>
-            </li>
-            <!-- 只能自己看的 -->
-
-            <li>
-                <a href="#mynote" aria-controls="mynote" role="tab" data-toggle="tab" class="active">
-                    <i class="imv2-nav_note"></i><span>笔记</span><b class="icon-drop_right"></b>
-                </a>
-            </li>
-
-            <li>
-                <a href="#myatpic" aria-controls="myatpic" role="tab" data-toggle="tab">
-                    <i class="icon-yuanwen"></i><span>猿问</span><b class="icon-drop_right"></b>
-                </a>
-            </li>
-
-            <li>
-                <a href="#remember" aria-controls="remember" role="tab" data-toggle="tab">
-                    <i class="icon-blog"></i><span>手记</span><b class="icon-drop_right"></b>
-                </a>
-            </li>
-
-            <li>
-                <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
-                    <i class="imv2-feather-o"></i><span>专栏</span><b class="icon-drop_right"></b>
-                </a>
-            </li>
-
-
-        </ul>
-    </div>
-    <div class="u-container">
-
-        <div class="tab-content">
-
-            <!-- 我的课程 -->
-            <div role="tabpanel" class="tab-pane" id="mycourse">
-
-
-                <div class="nav">
-                    <div class="tool-left l">
-                        <a href="/u/index/allfollows" class="sort-item active">全部</a>
-                        <a href="/u/7874633/courses?sort=pathfollow" class="sort-item ">学习路线</a>
-                        <a href="/u/7874633/courses?sort=follow" class="sort-item ">免费课程</a>
-                        <a href="/u/7874633/szcourses/collect" class="sort-item ">实战课程</a>
-                        <a href="/u/7874633/courses?sort=mfollow" class="sort-item ">微课</a>
-                    </div>
-                </div>
-
-
-
-            </div>
-
-            <!-- 我的收藏 -->
-            <div role="tabpanel" class="tab-pane" id="mycollection">
-
-
-                <div class="nav">
-                    <div class="tool-left l">
-                        <a href="/u/index/allfollows" class="sort-item active">全部</a>
-                        <a href="/u/7874633/courses?sort=pathfollow" class="sort-item ">学习路线</a>
-                        <a href="/u/7874633/courses?sort=follow" class="sort-item ">免费课程</a>
-                        <a href="/u/7874633/szcourses/collect" class="sort-item ">实战课程</a>
-                        <a href="/u/7874633/courses?sort=mfollow" class="sort-item ">微课</a>
-                    </div>
-                </div>
-
-                <div class="all-course-main">
-                    <div class="not-conts">
-                        没有任何课程，可以先<a href="//www.imooc.com" class="find-course">去找找课程</a>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- 我的笔记 -->
-            <div role="tabpanel" class="tab-pane" id="mynote">
-
-                <div class="nav">
-                    <a href="javascript:;" data-order="0" class="active js-order">笔记列表</a>
-                    <a href="javascript:;" data-order="1" class="js-order">最近编辑</a>
-
-                    <div class="note-search-input clearfix">
-                        <div class="search-btn">搜索</div>
-                        <input type="text" class="js-input-text" placeholder="输入笔记内容关键字">
-                    </div>
-
-                </div>
-
-                <!-- <div class="search-container" id="searchContainer" style="display: none;">
-                    <div class="search-intro">
-                        <div class="search-close js-search-close">关闭搜索</div>
-                        <p>全部笔记中包含关键字“<span class="g1"></span>”共<span class="g2">0</span>条</p>
-                    </div>
-
-                    <div id="searchlist" class="searchlist"></div>
-                    <div class="paginationwrap">
-                        <div class="pagination js-search-pagination clearfix"></div>
-                    </div>
-                </div> -->
-
-                <div class="container" id="container">
-                    <div class="js-order-title">
-                        <div class="note-type">
-                            <a class="js-note-type active" data-type="1" href="javascript:;">免费课程</a>
-                            <a class="js-note-type " data-type="3" href="javascript:;">就业班</a>
-                            <a class="js-note-type " data-type="2" href="javascript:;">实战课程</a>
+                        <div class="page-settings">
+                        <div class="oplog-tip">
+                            上次登录时间：2019-12-24  19:21:40&nbsp;&nbsp;&nbsp;地点：  <a href="/user/oplog">查看最近操作记录</a>
+                            <span class="tip-close pull-right js-tip-close">×</span>
                         </div>
-                        <div class="note-count">共 <span class="js-total">3</span> 条笔记</div>
+                        <div class="common-title">
+                            账号绑定 <span class="title-tips">完成<b class="color-red">3/4</b></span>
+                            <a href="/help/cate/17" class="pull-right" target="_blank"><i class="fa fa-question-circle-o"></i>常见问题</a>
+                        </div>
+                        <div class="line"></div>
+                        <div class="setting">
+                            <div class="contentBox">
+                                <div class="bingd">
+                                    <div class="itemBox">
+                                        <div class="left">  <i class="fa fa-envelope-o"></i></div>
+                                        <div class="center">
+                                            <p><span class="font1">邮箱</span>
+                                                <span class="font3">
+                            </span> <span class="font4">未绑定（绑定邮箱可得一积分）
+
+                            </span>
+                                            </p>
+                                            <p class="font2">可用邮箱加密码登录慕课网，可用邮箱找回密码</p>
+                                        </div>
+                                        <div class="right">
+                                            <a href="javascript:void(0);" class="binding js-bindemail moco-btn moco-btn-normal">立即绑定</a>
+                                        </div>
+                                    </div>
+                                    <div class="itemBox">
+                                        <div class="left">  <i class="fa fa-mobile"></i></div>
+                                        <div class="center">
+                                            <p> <span class="font1">手机</span> <span class="font4" id="jsPhone">131******27</span></p>
+                                            <p class="font2">可用手机号加密码登录慕课网，可通过手机号找回密码 <a class="font2" style="text-decoration: underline;" href="//www.imooc.com/help/detail/78" target="_blank">无法绑定</a></p>
+                                        </div>
+                                        <div class="right">
+                                            <a href="javascript:void(0);" class="change js-operate-phone moco-btn moco-btn-normal" changetype="phone">操作</a>
+                                            <input type="hidden" id="account" value="131******27">
+                                        </div>
+                                    </div>
+
+                                    <div class="itemBox">
+                                        <div class="left">  <i class="fa fa-lock"></i></div>
+                                        <div class="center">
+                                            <p> <span class="font1">密码</span> 已设置</p>
+                                            <p class="font2">用于保护账号信息和登录安全</p>
+                                        </div>
+                                        <div class="right">
+                                            <a href="javascript:void(0);" class="moco-btn moco-btn-normal js-changePWD">修改</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="itemBox bb0 h380">
+                                        <div class="left">  <i class="fa fa-external-link"></i></div>
+                                        <div class="center">
+                                            <p class="font1">社交账号</p>
+                                            <p class="font2">绑定第三方账号，可以直接登录，还可以将内容同步到以下平台，与更多好友分享</p>
+                                            <div class="accountBox">
+                                                <div class="inner-i-box">
+                                                    <i class="fa fa-weibo fa-5x"></i>
+                                                    <p class="mr87 bind-name">微博</p>
+                                                    <p class="mr87 red">未绑定</p>
+                                                    <a href="/passport/user/tplogin?tp=weibo&amp;bind=1" aria-role="button" hidefocus="true" class="moco-btn-normal rlf-btn-green btn js-bind mr87">添加绑定</a>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="right"> </div>
+                                        <div class="cb">    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="js-order-title search-intro" style="display:none">
-                        最近 60 天，写了 <span class="js-total">3</span> 条笔记
-                    </div>
-                    <div id="notelist" class="note-course-list clearfix">         <div class="note-item-wrap js-course-note" data-type="1" data-cid="1059">             <div class="note-pic">                 <img class="course-banner" src="">             </div>             <div class="note-content">                 <h3>Springboot 微信小程序 – 微信登录功能实战</h3>                 <div class="note-course-type default">免费课程</div>                 <div class="note-course-count">笔记 3 条</div>                 <div class="note-edit-time">编辑时间：2019-12-12 16:37:01</div>             </div>         </div> </div>
-                    <div class="paginationwrap">
-                        <div class="pagination js-pagination clearfix"></div>
-                    </div>
+                    <script type="text/javascript">
+                        var hasPass;
+                        hasPass=true;</script>
+
+
                 </div>
-
-
-
 
             </div>
+            <div role="tabpanel" class="tab-pane" id="userinfo">
 
-            <!-- 我的问题 -->
-            <div role="tabpanel" class="tab-pane" id="myatpic">
-
-                <div class="nav">
-                    <a href="/u/7874633/bbs" class="active">我的提问</a>
-                    <a href="/u/7874633/bbs?sort=reply">我的回答</a>
-                    <a href="/u/7874633/bbs?sort=follow">我的关注</a>
-                </div>
-
-
-            </div>
-            <!-- 笔记 -->
-            <div role="tabpanel" class="tab-pane" id="remember">
-
-                <div class="nav">
-                    <a href="/u/7874633/bbs" class="active">我的文章</a>
-                    <a href="/u/7874633/bbs?sort=reply">我的收藏</a>
-                    <a href="/u/7874633/bbs?sort=follow">我的推荐</a>
-                    <a href="/u/7874633/bbs?sort=follow">我的评论</a>
-                </div>
-
-                <div class="all-course-main">
-                    <div class="not-conts">
-                        你还没有任何原创文章，快去<a href="//www.imooc.com" class="find-course">发表文章吧</a>
+                <div id="setting-profile" class="setting-wrap setting-profile">
+                    <div class="edit-info" style="display: none;">
+                        <form class="js-wapper-form">
+                            <div class="moco-form-group">
+                                <label  class="moco-control-label">昵称：</label>
+                                <div class="moco-control-input">
+                                    <input type="text" name="nickname" id="nick" autocomplete="off" data-validate="require-nick" class="moco-form-control" value="qq_慕无忌2087832" placeholder="请输入昵称">
+                                    <div class="rlf-tip-wrap errorHint color-red"></div>
+                                </div>
+                            </div>
+                            <div class="moco-form-group wlfg-wrap">
+                                <label  class="moco-control-label h16 lh16">性别：</label>
+                                <div class="moco-control-input rlf-group rlf-radio-group">
+                                    <label><input type="radio" hidefocus="true" value="0" name="sex">保密</label>
+                                    <label><input type="radio" hidefocus="true" value="1" checked="checked" name="sex">男</label>
+                                    <label><input type="radio" hidefocus="true" value="2" name="sex">女</label>
+                                    <div class="rlf-tip-wrap errorHint color-red"></div>
+                                </div>
+                            </div>
+                            <div class="moco-form-group wlfg-wrap">
+                                <label  class="moco-control-label">个性签名：</label>
+                                <div class="moco-control-input">
+                                    <div class="pr">
+                                        <textarea name="aboutme" id="aboutme" rows="5" class="noresize js-sign moco-form-control"></textarea>
+                                        <p class="numCanInput js-numCanInput ">还可以输入128个字符</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="common-title">
+                        个人信息
+                        <a href="javascript: void(0);" class="pull-right js-edit-info"><i class="fa fa-pencil"></i>编辑</a>
+                    </div>
+                    <div class="line"></div>
+                    <div class="info-wapper">
+                        <div class="info-box clearfix">
+                            <label class="pull-left">昵称</label><div class="pull-left">qq_慕无忌2087832</div>
+                        </div>
+                        <div class="info-box clearfix">
+                            <label class="pull-left">职位</label><div class="pull-left">未设置</div>
+                        </div>
+                        <div class="info-box clearfix">
+                            <label class="pull-left">城市</label>
+                            <div class="pull-left">
+                                未设置
+                            </div>
+                        </div>
+                        <div class="info-box clearfix">
+                            <label class="pull-left">性别</label><div class="pull-left">
+                            男</div>
+                        </div>
+                        <div class="info-box clearfix">
+                            <label class="pull-left">个性签名</label><div class="pull-left">未设置</div>
+                        </div>
                     </div>
                 </div>
 
+            </div>
+            <div role="tabpanel" class="tab-pane" id="Record">
+                aaaa
+            </div>
+            <div role="tabpanel" class="tab-pane" id="realname">
 
+                <div class="page-settings">
+                    <div class="common-title">
+                        实名认证
+                    </div>
+                    <div class="line"></div>
+                    <div class="setting ">
+                        <div class="contentBox">
+                            <div class="auth-box">
+                                <a href="javascript:void(0);" class="auth-start js-start">开始认证</a>
+                            </div>
+
+                            <dl class="auth-des">
+                                <dt>认证须知</dt>
+                                <dd>1、实名认证可以提升您在慕课网的个人信息及虚拟财产的安全等级，同时也能够更好的体验慕课网的各项虚拟服务；</dd>
+                                <dd>2、实名认证通过后，将无法修改和删除，请谨慎填写；</dd>
+                                <dd>3、实名认证通过后，系统将自动发放10个积分作为奖励；<a class="red" href="//www.imooc.com/u/7874633/credit" target="_blank">查看积分</a></dd>
+                                <dd>4、我们会确保你所提供的信息均处于严格的保密状态，不会泄露；</dd>
+                                <dd>5、如果多次认证不通过，请联系邮箱 user@imooc.com</dd>
+                                <dd style="font-weight:bold;">6、如存在恶意乱填写姓名，身份证号码，及上传与身份证证件无关图片者，一经发现将冻结慕课网账号。</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
 
             </div>
-
         </div>
 
-    </div><!-- .container end -->
+    </div>
+
+
 </div>
 
+</div>
 
-
+<!--尾部开始-->
+<!--尾部结束-->
 </body>
 
 </html>

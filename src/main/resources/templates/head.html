@@ -26,15 +26,14 @@
 
 <body>
 <div th:fragment="head">
-
     <!-- 头部-start -->
     <div class="f-header">
         <div class="f-header-box clearfix">
             <a href=".." class="logo" title="网校在线学习平台"></a>
             <nav class="header-nav">
                 <a href="/Mk_Use/index" class="header-nav-item">首 页</a>
-                <a href="list.html" class="header-nav-item">免费课程</a>
-                <a href="list.html" class="header-nav-item">实战课程</a>
+                <a href="/Mk_Use/list" class="header-nav-item">免费课程</a>
+                <a href="/Mk_Use/szlist" class="header-nav-item">实战课程</a>
                 <a href="list.html" class="header-nav-item">猿 问</a>
 
                 <div style="border: 1px solid white;width: 220px;height: 35px;margin-top: -5px;margin-left: 380px;background: white;border-radius: 10px">
@@ -50,14 +49,14 @@
             <nav class="header-nav" style="float:right">
                 <a href="#" class="header-nav-item" style="margin-left:0px;font-size:14px;">管理后台</a>
                 <!--<th:block th:text="" />-->
-                <span id="isshow" th:if="${session.msgss==null}">
+                <span id="isshow" th:if="${session.users==null}">
 					<a href="#myModal" class="header-nav-item" data-toggle="modal" onclick="login();"
                        style="margin-right:0px;font-size:14px;">登录</a>
 					<a href="#myModal" class="header-nav-item" data-toggle="modal" onclick="registe()"
                        style="margin-left:0px;font-size:14px;">注册</a>
 				</span>
 
-                <span id="isshow2" style="width: 400px" th:if="${session.msgss!=null}">
+                <span id="isshow2" style="width: 400px" th:if="${session.users!=null}">
 					<a href="javascript:;" class="header-nav-item" data-toggle="modal"
                        style="margin-right:0px;">
 							<i class="glyphicon glyphicon-shopping-cart" style="font-size: 20px"></i>
@@ -72,7 +71,7 @@
 					</a>
 					<a id="userdetail" href="javascript:;" class="header-nav-item"
                        data-toggle="modal" style="margin-left:0px;height: 50px">
-						<img th:src="${session.msgss.mkuimg}" class="img-circle" style="height: 30px;width: 30px">
+						<img th:src="@{'/img/'+${session.users.mkuimg}}" class="img-circle" style="height: 30px;width: 30px">
 					</a>
 				</span>
 
@@ -81,18 +80,19 @@
     </div>
 
     <!-- 鼠标放头像悬浮 -->
-    <div id="xuanfu" th:if="${session.msgss!=null}">
-        <a href="javascript:;" style="width:300px;position: absolute;top: 10px;left: 20px">
+    <div id="xuanfu" th:if="${session.users!=null}">
 
-            <img th:src="${session.msgss.mkuimg}" class="img-circle" style="height: 80px;width: 80px;">
+        <a th:href="@{/Mk_Use/useshow(mkuid=${session.users.mkuid})}" style="width:300px;position: absolute;top: 10px;left: 20px">
+
+            <img th:src="@{'/img/'+${session.users.mkuimg}}" class="img-circle" style="height: 80px;width: 80px;">
 
             <label style="font-size: 25px;margin-left: 10px;margin-top: -40px"
-                   th:text="${session.msgss.mkuname}"></label>
+                   th:text="${session.users.mkuname}"></label>
             <p style="font-size: 12px;margin-top: -30px;margin-left: 100px">积分<label
-                    th:text="${session.msgss.mkuintegral}"></label></p>
+                    th:text="${session.users.mkuintegral}"></label></p>
         </a>
 
-        <a href="javascript:;"
+        <a th:href="@{/Mk_Use/useshow(mkuid=${session.users.mkuid})}"
            style="border:3px solid #F8F8F8;height: 40px;width:45%;text-align: center;background:#F8F8F8;position: absolute;top: 110px;left: 10px"
            onmousemove="bigImg(this)" onmouseout="normalImg(this)">
 					<span style="line-height: 40px;">
@@ -101,7 +101,7 @@
 					</span>
         </a>
 
-        <a href="javascript:;"
+        <a href="/Ordercenter.html"
            style="border: 1px solid #F8F8F8;height: 40px;width:45%;text-align: center;background:#F8F8F8;position: absolute;top: 110px;left: 150px"
            onmousemove="bigImg(this)" onmouseout="normalImg(this)">
 					<span style="line-height: 40px;">
@@ -119,7 +119,7 @@
 					</span>
         </a>
 
-        <a href="javascript:;"
+        <a href="/collect.html"
            style="border: 1px solid #F8F8F8;height: 40px;width:45%;text-align: center;background:#F8F8F8;position: absolute;top: 160px;left: 150px"
            onmousemove="bigImg(this)" onmouseout="normalImg(this)">
 					<span style="line-height: 40px;">
@@ -166,7 +166,6 @@
         function normalImg(x) {
             /*$('.xuan').css('background','#F8F8F8')*/
             x.style.background = '#F8F8F8'
-
         }
 
 
@@ -298,13 +297,22 @@
         /* 登录 */
         function loginFormOne(cc) {
             var aa;
+            /* 账号 */
+            var zh;
+            /* 密码 */
+            var ma;
             if (cc == "loginForm") {
                 aa = $("#loginForm").serialize();
+                zh="mkuphone"
+                ma="mkupassword";
             } else {
                 aa = $("#phoneloginForm").serialize();
+                zh="dlmkuphone";
+                ma="dlyzm";
             }
 
-            if($("#dlmkuphone").val()=="" || $("#dlyzm").val()==""){
+
+            if($("#"+zh).val()=="" || $("#"+ma).val()==""){
                 $(".msg").text("请填写信息在登录")
             }else{
                 if($("#dlyzm").val()!=yzm){
@@ -341,7 +349,6 @@
     </script>
     <!-- 头部-end -->
 
-
     <!-- 登录注册-start -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
          style="position:fixed; top:25%;width:384px;left: 40%;">
@@ -368,7 +375,7 @@
                           style="padding: 0px 20px;margin-left:25px;width: 300px;" method="post">
 
                         <div class="form-group">
-                            <input type="text" class="form-control"  name="mkuphone"
+                            <input type="text" class="form-control"c id="mkuphone" name="mkuphone"
                                    placeholder="请输入登录手机号/邮箱">
                         </div>
 
@@ -395,8 +402,15 @@
                             <div class="header-login-btn" style="border-radius: 50px;">登 录</div>
                         </a>
 
-                        <div style="width: 90px;height: 25px;margin-top: 10px">
+                        <div style="width: 120px;height: 22px;margin-top: 10px;border-right: 1px solid #cccccc;">
                             <a href="javascript:void(0)" style="color: red" onclick="pathonLogin()">手机短信登录</a>
+                        </div>
+
+                        <div>
+                            <!-- 微博登录 -->
+                            <a href="/Mk_Use/app/sinaLogin">
+                                <img style="margin-top: -55px;margin-left: 140px" src="/res/indeximg/LOGO_16x16.png">
+                            </a>
                         </div>
 
                         <div style="height: 25px;margin-top: 5px;margin-left: 40px">
@@ -426,7 +440,7 @@
                         <div class="form-group">
                             <label>
                                 <input type="checkbox" value="None" id="checkbox1" name="check">
-                                <span class="text" style="color: #787D82;font-size: 14px;">7天内自动登录</span>
+                                <span class="text" sloginFormOnetyle="color: #787D82;font-size: 14px;">7天内自动登录</span>
                             </label>
                         </div>
 
@@ -439,6 +453,7 @@
                         <div style="width: 90px;height: 25px;margin-top: 10px">
                             <a href="javascript:;" style="color: red" onclick="login()">账号密码登录</a>
                         </div>
+
 
                         <div style="height: 25px;margin-top: 5px;margin-left: 40px">
                         <span style="font-size: 12px;">登录即同意目课网<a href="javascript:;"
@@ -456,7 +471,9 @@
                             <input type="text" class="form-control" id="zcmkuphone" name="mkuphone" placeholder="请输入手机号">
                         </div>
 
+
                         <div class="form-group help">
+
 
                             <input type="text" class="form-control" id="zcyzm" style="width: 200px"
                                    placeholder="请输入短信验证码">

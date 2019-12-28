@@ -46,6 +46,7 @@
 				$(function () {
 					shownote();
 				})
+			window.onbeforeunload=close();
 		</script>
 		<style type="text/css">
 
@@ -82,8 +83,6 @@
 		<!-- 头部-start -->
 		<div th:replace="head::head"></div>
 		<!-- 头部-end -->
-		
-
 		<!-- 播放器 页面中间的内容 -->
 		<div class="f-main clearfix">
 			<div class="main-course-left">
@@ -107,7 +106,7 @@
 					                <div class="psVideo-progress">
 					                    <span class="psVideo-timeBar"></span>
 					                </div>
-					                <div class="psVideo-play-btn psVideo-stop"></div>
+					                <div class="psVideo-play-btn psVideo-stop" th:onclick="play()"></div>
 					                <div class="psVideo-time">
 					                    <span id="currentTime">00:00</span>
 					                    <span>/</span>
@@ -157,10 +156,24 @@
 					                </div>
 					            </div>
 					        </div>
-					    </div>	
-						
+					    </div>
 						</div>
-										
+						<div id="auth" th:if="${son.mksid!=null}">
+							<div class="comment-header">
+								<a th:href="@{/Mk_Use/useshow(mkuid=${son.mksid})}">
+									<img class="lecturer-uimg" th:src="@{'img/'+${son.mksimg}}" >
+								</a>
+							</div>
+							<p class="v-teachers-info" th:text="${son.mkskill}">创业公司技术总监, 9年开发和技术管理经验。SUN认证SCJP、PMP、MCP认证。主要从事后端技术和架构领域，有丰富的电商平台与物流平台核心系统的架构设计和开发经验。</p>
+						</div>
+						<div  th:if="${son.mksid==null}">
+							<div class="comment-header">
+								<a th:href="@{/Mk_Use/useshow(mkuid=${son.mkuid})}">
+									<img class="lecturer-uimg" th:src="@{'img/'+${son.mkuimg}}" >
+								</a>
+							</div>
+							<p id="v-teachers-info" th:text="${son.mkuintroduce}"></p>
+						</div>
 						<div class="course-menu" style="position: relative">
 							<a  href="#ping" aria-controls="ping" role="tab" data-toggle="tab"><span class="menu-item  cur">评论</span></a>
 							<a  href="#wen" aria-controls="wen" role="tab" data-toggle="tab"><span class="menu-item">问答</span></a>
@@ -181,7 +194,7 @@
 								<form>
 									<div class="form-group">
 											<textarea class="form-control" id="harcomment" rows="3" placeholder="想说啥就说啥!"></textarea>
-										<p style="color: red;" id="comment">请输入内容!</p>
+										<p style="color: red;" id="comment"></p>
 									</div>
 								</form>
 							</div>
@@ -201,7 +214,11 @@
 							<span th:if="${pageinfo!=null}">
 								<div th:each="pl:${pageinfo.list}">
 								<div class="comment clearfix">
-									<div class="comment-header"><img class="lecturer-uimg" th:src="@{'img/'+${pl.mkuimg}}"></div>
+									<div class="comment-header">
+										<a th:href="@{/Mk_Use/useshow(mkuid=${pl.mkuid})}">
+											<img class="lecturer-uimg" th:src="@{'img/'+${pl.mkuimg}}">
+										</a>
+										</div>
 										<input type="hidden" id="pmkcstid" th:value="${pl.mkcstid}"/>
 									<div class="comment-main">
 										<div class="user-name" th:text="${pl.mkuname}">我是张三</div>
@@ -253,17 +270,20 @@
 								<div th:each="list : ${wenall.list}">
 								<div class="comment clearfix">
 									<div class="comment-header">
-										<img class="lecturer-uimg" th:src="@{'img/'+${list.mkuimg}}">
+										<a th:href="@{/Mk_Use/useshow(mkuid=${list.mkuid})}">
+											<img class="lecturer-uimg" th:src="@{'img/'+${list.mkuimg}}">
+										</a>
+
 									</div>
 									<div class="comment-main">
 										<div>
-											<a th:href="@{/findNode(mkatpid=${list.mkatpid})}" class="user-name"  th:text="${list.mkatitle}"></a>
+											<a th:href="@{/findNode(mkatpid=${list.mkatpid})}" target="_blank" class="user-name"  th:text="${list.mkatitle}"></a>
 										</div>
 										<div class="comment-content">
 											<div class="replycont qa-body clearfix">
 												<div class="l replydes" style="margin-top: -15px;" th:if="${list.containsKey('uname')==true}">
 												<span class="replysign">最赞回答 /
-													<a href="/u/6770146/courses" target="_blank" title="不朽的战斗机" class="nickname" th:text="${list.uname}">不朽的战斗机</a></span>
+													<a th:href="@{/Mk_Use/useshow(mkuid=${list.uid})}" target="_blank"  class="nickname" th:text="${list.uname}">不朽的战斗机</a></span>
 													<div class="replydet" th:text="${list.mkatpcontent}">点同学笔记看看有吗</div>
 												</div>
 											</div>
@@ -360,7 +380,7 @@
 									<textarea id="editor" autofocus></textarea>
 									<input type="hidden"  id="mkcsid" th:value="${son.mkcstid}"/>
 									<!--从shiro获取用户id-->
-									<input type="hidden" id="mkuid" value="1">
+									<input type="hidden" id="mkuid" th:value="${session.msgss.mkuid}">
 									<div style="width: 200px; float: left">
 										<p class="note-panel-error-tip error-tip" style="color: red;" id="Tips"></p>
 									</div>
@@ -435,7 +455,7 @@
 																	<i class="fa fa-trash" aria-hidden="true"></i>
 																	<em>删除</em>
 																</a>
-																<a th:href="@{/CourseNodeAll(mkuid=1,mkcsid=${son.mkcsid})}" target="_blank" class="post-action">查看全文</a>
+																<a th:href="@{/CourseNodeAll(mkuid=${session.msgss.mkuid},mkcsid=${son.mkcsid})}" target="_blank" class="post-action">查看全文</a>
 															</div>
 															<span title="55分钟前" class="r timeago" id="ajaxtime">55分钟前</span>
 														</div>
@@ -451,7 +471,7 @@
 										</ul>
 									</div>
 									<div class="panel-btn-wrap" th:if="${onenote!=null}">
-										<a th:href="@{/CourseNodeAll(mkuid=1,mkcsid=${son.mkcsid})}" class="moco-btn moco-btn-gray-l" target="_blank">查看更多我的笔记</a>
+										<a th:href="@{/CourseNodeAll(mkuid=${session.msgss.mkuid},mkcsid=${son.mkcsid})}" class="moco-btn moco-btn-gray-l" target="_blank">查看更多我的笔记</a>
 									</div>
 									<div class="panel-btn-wrap" th:if="${onenote==null}">
 										<a class="moco-btn moco-btn-gray-l" target="_blank">您还没有发布过笔记</a>
@@ -468,10 +488,10 @@
 						<div style="width: 393px; height: 285px;margin-top: 5px;">
 
 							<textarea id="editor1" autofocus></textarea>
-
+							<!--当前课节的id-->
 							<input type="hidden"  id="mkaskcstid" th:value="${son.mkcstid}"/>
 							<!--从session获取用户id-->
-							<input type="hidden" id="mkaskuid" value="1">
+							<input type="hidden" id="mkaskuid" th:value="${session.msgss.mkuid}">
 							<div style="width: 200px; float: left">
 								<p class="note-panel-error-tip error-tip" style="color: red;" id="WTips"></p>
 							</div>
@@ -581,7 +601,6 @@
 			</div>
 			<!-- 章节-end -->
 		</div>
-		
 		<!-- 页脚-start -->
 		<div th:replace="tail::tail">尾</div>
 		<!-- 页脚-end-->

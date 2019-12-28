@@ -6,7 +6,7 @@
 	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
 		<meta name="keywords" content="">
 		<meta name="description" content="">
-		<title>在线网校学习平台</title>
+		<title>目课学习平台</title>
 
 		<link href="res/css/moco.min.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" type="text/css" href="res/font-awesome/css/font-awesome.min.css">
@@ -14,7 +14,7 @@
 		<link href="res/css/reset.css" rel="stylesheet" type="text/css"/>
 		<script type="text/javascript" src="res/js/jquery-1.11.3.min.js"></script>
 		<script type="text/javascript" src="res/js/bootstrap.min.js"></script>
-		
+		<link rel="stylesheet" type="text/css" href="res/css/pic-viewer-less.css">
 		<!--[if lt IE 9]>
 		  <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 		  <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
@@ -28,6 +28,7 @@
 	</head>
 
 	<body>
+		<input type="hidden" id="uid" th:if="${session.msgss!=null}" th:value="${session.msgss.mkuid}"/>
 		<!-- 头部-start -->
 		<div th:replace="head::head"></div>
 		<!-- 头部-end -->
@@ -38,9 +39,12 @@
 					<div class="course-title" th:text="${commentlist.mkctitle}">带您完成神秘的涟漪按钮效果-入门篇</div>
 
 					<div class="course-meta">
-						<a th:href="@{/video(mkcstid=${commentlist.mkcstid})}" class="learn-btn" th:if="${commentlist.containsKey('mkprid')==true}" >继续学习</a>
+						<a th:if="${commentlist.containsKey('mkcstid')==false}" class="learn-btn" >暂无章节学习</a>
+						<span th:if="${commentlist.containsKey('mkcstid')==true}">
+							<a th:href="@{/video(mkcstid=${commentlist.mkcstid})}" class="learn-btn" th:if="${commentlist.containsKey('mkprid')==true}" >继续学习</a>
+							<a th:href="@{/video(mkcstid=${commentlist.mkcstid})}" class="learn-btn" th:if="${commentlist.containsKey('mkprid')==false}" >开始学习</a>
+						</span>
 
-						<a th:href="@{/video(mkcstid=${commentlist.mkcstid})}" class="learn-btn" th:if="${commentlist.containsKey('mkprid')==false}" >开始学习</a>
 
 						<div class="static-item" th:if="${commentlist.containsKey('mkprid')}" >
 							<div class="meta">上次学到</div>
@@ -64,8 +68,8 @@
 						</a>
 					</div>
 
-					<div class="course-brief" th:text="${commentlist.mkcontent}">
-						简介：安卓声音录制与播放功能实现，包括录制到文件、播放文件，可以实现类似于微信的语音消息发送与播放，还包括录制到字节流，从字节流播放，可以实现视频直播/实时对讲功能中的声音录制和播放。 Android大牛齐聚之地，这里总有人为你答疑解惑！慕课网Android讨论群 556384357
+					<div class="course-brief">
+						简介：<span th:text="${commentlist.mkteacherlearwhat}">安卓声音录制与播放功能实现，包括录制到文件、播放文件，可以实现类似于微信的语音消息发送与播放，还包括录制到字节流，从字节流播放，可以实现视频直播/实时对讲功能中的声音录制和播放。 Android大牛齐聚之地，这里总有人为你答疑解惑！慕课网Android讨论群 556384357</span>
 					</div>
 
 					<div class="course-menu">
@@ -76,7 +80,7 @@
 				</div>
 				<!-- 基本信息-end -->
 				<!-- 课程章节 - start -->
-				<div th:each="fu:${listfu}">
+				<div th:if="${listfu.size()>0}" th:each="fu:${listfu}">
 						<div class="chapter">
 							<a href="javascript:void(0);" class="js-open">
 								<h3>
@@ -94,7 +98,17 @@
 							</ul>
 						</div>
 					</div>
-				<!-- 课程章节 - end -->		
+				<!-- 课程章节 - end -->
+				<div th:if="${listfu.size()==0}">
+
+					<div id="course_note">
+						<div class="no-data">
+							<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+							此课程暂无章节
+						</div>
+					</div>
+
+				</div>
 			</div>
 			
 			<!-- 教师信息&推荐课程 - start -->

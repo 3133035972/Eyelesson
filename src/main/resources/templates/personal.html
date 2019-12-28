@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="utf-8">
+<html lang="utf-8" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,15 +7,33 @@
 	<meta name="keywords" content="">
 	<meta name="description" content="">
 	<title>个人主页</title>
-	<link href="res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-	<link rel="stylesheet" type="text/css" href="res/font-awesome/css/font-awesome.min.css">
-	<link href="res/css/reset1.css" rel="stylesheet" type="text/css"/>
-	<script type="text/javascript" src="res/js/jquery-1.11.3.min.js"></script>
-	<script type="text/javascript" src="res/js/jquery.form.js"></script>
-	<script type="text/javascript" src="res/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="res/js/oc.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="res/css/allcourse-less.css">
-	<link rel="stylesheet" type="text/css" href="res/css/note-less.css">
+	<link href="/res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" type="text/css" href="/res/font-awesome/css/font-awesome.min.css">
+	<link href="/res/css/reset1.css" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript" src="/res/js/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="/res/js/jquery.form.js"></script>
+	<script type="text/javascript" src="/res/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/res/js/oc.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/res/css/allcourse-less.css">
+	<link rel="stylesheet" type="text/css" href="/res/css/note-less.css">
+	<link rel="stylesheet" type="text/css" href="/res/css/money-less.css">
+    <link rel="stylesheet" type="text/css" href="/res/index/head.css"/>
+	<link rel="stylesheet" type="text/css" href="/res/css/time-less.css">
+	<link rel="stylesheet" type="text/css" href="/res/css/szqu-less.css"/>
+	<link rel="stylesheet" type="text/css" href="/res/css/note-less.css">
+	<link rel="stylesheet" type="text/css" href="/res/css/moco.min.css">
+    <!--    编辑器的-->
+    <link rel="stylesheet" type="text/css" href="/res/simditor/site/assets/styles/simditor.css" />
+    <script type="text/javascript" src="/res/simditor/site/assets/scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="/res/simditor/site/assets/scripts/module.js"></script>
+    <script type="text/javascript" src="/res/simditor/site/assets/scripts/hotkeys.js"></script>
+    <script type="text/javascript" src="/res/simditor/site/assets/scripts/uploader.js"></script>
+    <script type="text/javascript" src="/res/simditor/site/assets/scripts/simditor.js"></script>
+	<link rel="icon" type="image/png" href="/res/i/ico.png" sizes="16x16">
+	<script type="text/javascript" src="/res/js/my.js"></script>
+	<script type="text/javascript">
+		CONETXT_PATH = '';
+	</script>
 	<style type="text/css">
 
 		/**
@@ -27,7 +45,7 @@
 			padding: 0px;
 		}
 		.tab-content ul li{
-			width: 100px;
+			/**width: 100px;**/
 			float: left;
 			height: 40px;
 		}
@@ -44,10 +62,498 @@
 			margin: 10px 20px;
 		}
 
+        .simditor .simditor-wrapper {
+            height: 200px;
+            position: relative;
+            background: #ffffff;
+            overflow:auto;
+        }
 	</style>
 </head>
 
 <body>
+
+<!-- 头部-start -->
+<div class="f-header">
+    <div class="f-header-box clearfix">
+        <a href=".." class="logo" title="网校在线学习平台"></a>
+        <nav class="header-nav">
+            <a href="/Mk_Use/index" class="header-nav-item">首 页</a>
+            <a href="list.html" class="header-nav-item">免费课程</a>
+            <a href="list.html" class="header-nav-item">实战课程</a>
+            <a href="list.html" class="header-nav-item">猿 问</a>
+
+            <div style="border: 1px solid white;width: 220px;margin-top: -5px;margin-left: 380px;background: white;border-radius: 10px">
+                <input type="text" placeholder="请输入关键字..."
+                       style="width: 200px;border: 5px solid white;border-radius: 10px"/>
+                <a href="javascript:;"
+                   style="border: 0px solid red;width: 20px;position: absolute;top: 32px;left:860px">
+                    <i class="glyphicon glyphicon-search" style="font-size: 20px"></i>
+                </a>
+            </div>
+        </nav>
+
+        <nav class="header-nav" style="float:right">
+            <a href="#" class="header-nav-item" style="margin-left:0px;font-size:14px;">管理后台</a>
+            <!--<th:block th:text="" />-->
+            <span id="isshow" th:if="${session.msgss==null}">
+					<a href="#myModal" class="header-nav-item" data-toggle="modal" onclick="login();"
+                       style="margin-right:0px;font-size:14px;">登录</a>
+					<a href="#myModal" class="header-nav-item" data-toggle="modal" onclick="registe()"
+                       style="margin-left:0px;font-size:14px;">注册</a>
+				</span>
+
+            <span id="isshow2" style="width: 400px" th:if="${session.msgss!=null}">
+					<a href="javascript:;" class="header-nav-item" data-toggle="modal"
+                       style="margin-right:0px;">
+							<i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
+					</a>
+					<a href="javascript:;" class="header-nav-item" data-toggle="modal"
+                       style="margin-right:0px;">
+							<i class="fa fa-bell fa-lg" aria-hidden="true"></i>
+					</a>
+					<a href="javascript:;" class="header-nav-item" data-toggle="modal"
+                       style="margin-right:0px;font-size:14px;">
+							我的课程
+					</a>
+					<a id="userdetail" href="javascript:;" class="header-nav-item"
+                       data-toggle="modal" style="margin-left:0px;height: 50px">
+						<img th:src="@{'/img/'+${session.msgss.mkuimg}}" class="img-circle" style="height: 30px;width: 30px">
+					</a>
+				</span>
+
+        </nav>
+    </div>
+</div>
+
+<!-- 鼠标放头像悬浮 -->
+<div id="xuanfu" th:if="${session.msgss!=null}">
+    <a href="javascript:;" style="width:300px;position: absolute;top: 10px;left: 20px">
+
+        <img th:src="@{'/img/'+${session.msgss.mkuimg}}" class="img-circle" style="height: 80px;width: 80px;">
+
+        <label style="font-size: 25px;margin-left: 10px;margin-top: -40px"
+               th:text="${session.msgss.mkuname}"></label>
+        <p style="font-size: 12px;margin-top: -30px;margin-left: 100px">积分<label
+                th:text="${session.msgss.mkuintegral}"></label></p>
+    </a>
+
+    <a href="javascript:;"
+       style="border:3px solid #F8F8F8;height: 40px;width:45%;text-align: center;background:#F8F8F8;position: absolute;top: 110px;left: 10px"
+       onmousemove="bigImg(this)" onmouseout="normalImg(this)">
+					<span style="line-height: 40px;">
+                        <i class="glyphicon glyphicon-book"></i>
+						我的课程
+					</span>
+    </a>
+
+    <a href="javascript:;"
+       style="border: 1px solid #F8F8F8;height: 40px;width:45%;text-align: center;background:#F8F8F8;position: absolute;top: 110px;left: 150px"
+       onmousemove="bigImg(this)" onmouseout="normalImg(this)">
+					<span style="line-height: 40px;">
+                        <i class="glyphicon glyphicon-list-alt"></i>
+						订单中心
+					</span>
+    </a>
+
+    <a href="javascript:;"
+       style="border: 1px solid #F8F8F8;height: 40px;width:45%;text-align: center;background:#F8F8F8;position: absolute;top: 160px;left: 10px"
+       onmousemove="bigImg(this)" onmouseout="normalImg(this)">
+					<span style="line-height: 40px;">
+                        <i class="glyphicon glyphicon-hourglass"></i>
+						积分商城
+					</span>
+    </a>
+
+    <a href="javascript:;"
+       style="border: 1px solid #F8F8F8;height: 40px;width:45%;text-align: center;background:#F8F8F8;position: absolute;top: 160px;left: 150px"
+       onmousemove="bigImg(this)" onmouseout="normalImg(this)">
+					<span style="line-height: 40px;">
+                        <i class="glyphicon glyphicon-cog"></i>
+						个人设置
+					</span>
+    </a>
+
+    <a href="/Mk_Use/logout"
+       style="height: 20px;width:20%;text-align: center;position: absolute;top: 240px;left: 20px">
+					<span style="line-height: 40px;font-size: 12px">
+						安全退出
+					</span>
+    </a>
+
+</div>
+
+<script type="text/javascript">
+
+    /* 头像 鼠标悬浮事件 移入 */
+    $("#userdetail").mouseover(function () {
+        $("#xuanfu").show();
+    });
+    /* 头像 鼠标悬浮事件 移出 */
+    $("#userdetail").mouseout(function () {
+        $("#xuanfu").hide();
+    })
+
+    /* 头像 鼠标悬浮事件 移入 */
+    $("#xuanfu").mouseover(function () {
+        $("#xuanfu").show();
+    });
+
+    /* 头像 鼠标悬浮事件 移出 */
+    $("#xuanfu").mouseout(function () {
+        $("#xuanfu").hide();
+    })
+
+    function bigImg(x) {
+        /*$('.xuan').css('background','#C8C8C8')*/
+        x.style.background = '#C8C8C8'
+    }
+
+    function normalImg(x) {
+        /*$('.xuan').css('background','#F8F8F8')*/
+        x.style.background = '#F8F8F8'
+
+    }
+
+
+    var yzm = "";
+
+    /*获取手机验证码*/
+    function sendCodes(a,c) {
+        var phone;
+        //随后使用ajax方式提交
+        if (c=='zcmkuphone'){
+            phone = $("#zcmkuphone").val();
+        }else{
+            phone = $("#zlmkuphone").val();
+        }
+
+        if (phone!=""){
+            $.ajax({
+                url:"/Mk_Use/phone",
+                data:{"phone":phone},
+                type:'post',
+                success:function(data){
+                    alert(data)
+                    if (data!='0'){
+                        yzm=data;
+                        /* 倒计时 */
+                        timer(a);
+                    }else{
+                        $(".msg").text("手机号已被注册")
+                    }
+                },error:function (xhr,msg) {
+                    alert("数据错误")
+                }
+            })
+        }else {
+            $(".msg").text("请输入手机号")
+        }
+    }
+    var wait = 60
+
+    /* 验证码倒计时 */
+    function timer(b) {
+        if (wait == 0) {
+            $(b).text("重新验证码")
+            $(b).removeAttr("disabled");
+            $(b).css("border-color", "1e9fff").css("background", "#ffffff").css("cursor", "pointer").css("color", "#1481b8");
+            wait = 60;
+        } else {
+            $(b).attr("disabled", "true");
+            $(b).css("border-color", "fbfbfb").css("background", "white").css("cursor", "not-allowed").css("color", "black").css("font-size", "12px");
+            $(b).text(wait + "秒后重发");
+            wait--;
+            setTimeout(function () {
+                timer(b)
+            }, 1000);
+        }
+    }
+
+    /* 关闭登录注册窗口 */
+    function closemyModal() {
+        /* 隐藏遮罩层 */
+        $(".modal-backdrop").hide()
+        /* 隐藏登录窗口 */
+        $("#myModal").hide()
+        $(".form-control").text("");
+    }
+
+    /* 显示登录 */
+    function login() {
+        $('#registeTitle').css('color', '#000');
+        $('#registeForm').hide();
+        $('#phoneloginForm').hide();
+        $(".msg").text("");
+        $('#loginTitle').css('color', '#337Ab7');
+        $('#loginForm').show();
+        $(".modal-backdrop").css('display', 'block')
+
+
+    }
+
+    /* 显示手机号登录 */
+    function pathonLogin() {
+        $('#phoneloginForm').show();
+        $('#loginTitle').css('color', '#337Ab7');
+        $('#loginForm').hide();
+        $(".msg").text("");
+    }
+
+    /* 显示注册 */
+    function registe() {
+        $('#registeTitle').css('color', '#337Ab7');
+        $('#registeForm').show();
+        $('#loginTitle').css('color', '#000');
+        $('#loginForm').hide();
+        $('#phoneloginForm').hide();
+        $(".msg").text("");
+    }
+
+    /* 注册 */
+    function zhucelogin() {
+        if($("#zcmkuphone").val()=="" || $("#zcyzm").val()=="" || $("#zcmkupassword").val()==""){
+            $(".msg").text("请填写信息在注册")
+        }else{
+
+            if ($("#zcyzm").val()!=yzm){
+                $(".msg").text("请输入正确的验证码")
+            } else{
+                $.ajax({
+                    url: '/Mk_Use/insertUser',
+                    data: $("#registeForm").serialize(),
+                    type: 'post',
+                    success: function (data) {
+                        alert(data)
+                        if (data == '1') {
+                            $(".msg").text("手机号已存在,请重新输入")
+                        } else {
+                            alert("注册成功,请登录")
+                            window.location = 'http://localhost:8080/Mk_Use/index'
+                        }
+                    },
+                    error: function (xhr, msg) {
+                        alert('出错')
+                    }
+
+                })
+            }
+        }
+    }
+
+    /* 登录 */
+    function loginFormOne(cc) {
+        var aa;
+        /* 账号 */
+        var zh;
+        /* 密码 */
+        var ma;
+        if (cc == "loginForm") {
+            aa = $("#loginForm").serialize();
+            zh="mkuphone"
+            ma="mkupassword";
+        } else {
+            aa = $("#phoneloginForm").serialize();
+            zh="dlmkuphone";
+            ma="dlyzm";
+        }
+
+
+
+        if($("#"+zh).val()=="" || $("#"+ma).val()==""){
+            $(".msg").text("请填写信息在登录")
+        }else{
+            if($("#dlyzm").val()!=yzm){
+                $(".msg").text("请输入正确的验证码")
+            }else{
+                $.ajax({
+                    url: '/Mk_Use/selectOne',
+                    data: aa,
+                    type: 'post',
+                    success: function (data) {
+                        if (data.length == 0) {
+                            $(".msg").text("输入错误,请重新输入")
+                        } else {
+                            /*/!* 显示个人窗口 *!/
+                            $("#isshow2").css('display','block')
+                            /!* 隐藏登录注册 *!/
+                            $("#isshow").css("display",'none')
+                            /!* 隐藏遮罩层 *!/
+                            $(".modal-backdrop").css('display','none')
+                            /!* 隐藏登录窗口 *!/
+                            $("#myModal").css('display','none')*/
+                            window.location = 'http://localhost:8080/Mk_Use/index'
+                        }
+                    },
+                    error: function (xhr, msg) {
+                        alert("出错")
+                    }
+
+                })
+            }
+        }
+    }
+
+</script>
+<!-- 头部-end -->
+
+<!-- 登录注册-start -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+     style="position:fixed; top:25%;width:384px;left: 40%;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" dataclose-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="font-size:18px;">×</span>
+                </button>
+                <h4 class="modal-title" id="loginTitle" style="float: left; color: #337Ab7;cursor: pointer; "
+                    onclick="login();">登录</h4>
+                <h4 class="modal-title" id="registeTitle" style="float: left;margin-left: 20px;cursor: pointer;"
+                    onclick="registe();">注册</h4>
+                <div class="clearfix"></div>
+                <!-- 关闭按钮 -->
+                <a href="javascript:void(0)" onclick="closemyModal()"
+                   style="width: 20px;height: 20px;position: absolute;top: 20px;left: 320px;"
+                   class="glyphicon glyphicon-remove"></a>
+            </div>
+
+            <div class="modal-body">
+                <!-- 登录 -->
+                <form id="loginForm" action="/Mk_Use/selectOne" class="form-horizontal"
+                      style="padding: 0px 20px;margin-left:25px;width: 300px;" method="post">
+
+                    <div class="form-group">
+                        <input type="text" class="form-control"c id="mkuphone" name="mkuphone"
+                               placeholder="请输入登录手机号/邮箱">
+                    </div>
+
+                    <div class="form-group help">
+                        <input type="password" class="form-control" id="mkupassword" name="mkupassword"
+                               placeholder="请输入密码">
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" value="None" id="checkbox1" name="check">
+                            <span class="text" style="color: #787D82;font-size: 14px;">7天内自动登录</span>
+                        </label>
+                        <a href="javascript:;"
+                           style="color: #9199a1;margin-top: -25px;margin-left:30px;width: 65px">找回密码</a>
+                        <div style="border-right: 1px solid #9199a1;margin-top: -23px;margin-left: 200px;width: 20px;height: 15px;"></div>
+                        <a href="javascript:;" style="color: #9199a1; position: absolute;top: 115px;left: 280px">无法登录</a>
+                        <!--<a href="javascript:;" style="color: #9199a1;margin-top:-100px;margin-left: 250px;width: 65px;height: 15px">无法登录</a>-->
+                    </div>
+
+                    <p class="msg"></p>
+
+                    <a href="javascript:void(0)" onclick="loginFormOne('loginForm')">
+                        <div class="header-login-btn" style="border-radius: 50px;">登 录</div>
+                    </a>
+
+                    <div style="width: 90px;height: 25px;margin-top: 10px">
+                        <a href="javascript:void(0)" style="color: red" onclick="pathonLogin()">手机短信登录</a>
+                    </div>
+
+                    <div style="height: 25px;margin-top: 5px;margin-left: 40px">
+                        <span style="font-size: 12px;">登录即同意目课网<a href="javascript:;"
+                                                                  style="color: red;font-size: 12px;color: #37f;margin-top: -18px;margin-left:0px">《私密政策》</a></span>
+                    </div>
+
+                </form>
+
+                <!-- 手机号登录 -->
+                <form id="phoneloginForm" class="form-horizontal"
+                      style="padding: 0px 20px;margin-left:25px;width: 300px;display: none">
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="dlmkuphone" name="mkuphone" placeholder="请输入登录手机号">
+                    </div>
+
+                    <div class="form-group help">
+                        <input type="text" class="form-control" id="dlyzm" style="width: 200px"
+                               placeholder="请输入短信验证码">
+                        <p style="margin-top: -25px;margin-left: 215px;width: 100px">
+                            <a href="javascript:void(0)" style="font-size: 12px;color:#1481b8!important;"
+                               onclick="sendCodes(this,'dlmkuphone')">获取验证码</a>
+                        </p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" value="None" id="checkbox1" name="check">
+                            <span class="text" sloginFormOnetyle="color: #787D82;font-size: 14px;">7天内自动登录</span>
+                        </label>
+                    </div>
+
+                    <p class="msg"></p>
+
+                    <a href="javascript:void(0)" onclick="loginFormOne('phoneloginForm')">
+                        <div class="header-login-btn" style="border-radius: 50px">登 录</div>
+                    </a>
+
+                    <div style="width: 90px;height: 25px;margin-top: 10px">
+                        <a href="javascript:;" style="color: red" onclick="login()">账号密码登录</a>
+                    </div>
+
+                    <div style="height: 25px;margin-top: 5px;margin-left: 40px">
+                        <span style="font-size: 12px;">登录即同意目课网<a href="javascript:;"
+                                                                  style="color: red;font-size: 12px;color: #37f;margin-top: -18px;margin-left:0px">《私密政策》</a></span>
+                    </div>
+
+                </form>
+
+
+                <!-- 注册 -->
+                <form id="registeForm" class="form-horizontal"
+                      style="padding: 0px 20px;margin-left:25px;width: 300px;display: none">
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="zcmkuphone" name="mkuphone" placeholder="请输入手机号">
+                    </div>
+
+
+                    <div class="form-group help">
+
+
+                        <input type="text" class="form-control" id="zcyzm" style="width: 200px"
+                               placeholder="请输入短信验证码">
+
+                        <p style="margin-top: -25px;margin-left: 215px;width: 100px">
+                            <a href="javascript:void(0)" style="font-size: 12px;color:#1481b8!important;"
+                               onclick="sendCodes(this,'zcmkuphone')">获取验证码</a>
+                        </p>
+
+                    </div>
+
+                    <div class="form-group help">
+                        <input type="password" class="form-control" id="zcmkupassword" name="mkupassword" placeholder="请输入密码">
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" value="None" id="checkbox1" name="check">
+                            <span class="text" style="color: #787D82;font-size: 14px;">
+										同意&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&
+										<a href="javascript:;"
+                                           style="color: red;font-size: 12px;color: #37f;margin-top: -24px;margin-left:-120px">《慕课网注册协议》</a>
+										<a href="javascript:;"
+                                           style="color: red;font-size: 12px;color: #37f;margin-top:-198px;margin-left:0  px">《隐私政策》</a>
+									</span>
+                        </label>
+                    </div>
+
+                    <p class="msg"></p>
+
+                    <a href="javascript:void(0)" onclick="zhucelogin()">
+                        <div class="header-login-btn" style="border-radius: 50px">注册</div>
+                    </a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- 中间部分 -->
 <div class="bg-other user-head-info">
@@ -55,53 +561,48 @@
 		<div class="user-pic" data-is-fans="0" data-is-follows="">
 			<!-- 用户图片 -->
 			<div class="user-pic-bg" style="border: 0px solid red;">
-				<img src="res/i/header.jpg" alt="wdawd" class="img-circle" style="width: 141px;height: 140px;" >
+				<img th:src="@{'/img/'+${users.mkuimg}}" alt="wdawd" class="img-circle" style="width: 141px;height: 140px;" >
 			</div><!--user-pic-big end-->
 		</div>
 		<div class="user-info-right">
-			<h3 class="user-name clearfix">
+			<h3 class="user-name clearfix" th:text="${users.mkuname}">
 				qq_慕无忌2087832
 			</h3>
 			<!--25-->
 			<p class="about-info">
-				<span>男</span>
-
-
+				<span th:text="${users.mkusex}">男</span>
 				<span>
-
 				</span>
 
 				<a class="more-user-info"><i class="fa fa-angle-down" aria-hidden="true"></i>更多信息</a>
 			</p>
 		</div>
 		<div class="user-sign hide">
-			<p class="user-desc">这位同学很懒，木有签名的说～</p>
+			<p class="user-desc" th:if="${users.mkusign!=null}"><span th:text="${users.mkusign}">这位同学很懒，木有签名的说～</span></p>
+			<p class="user-desc" th:if="${users.mkusign==null}"><span>这位同学很懒，木有签名的说～</span></p>
 		</div>
 		<div class="study-info clearfix">
 			<div class="item follows">
 				<div class="u-info-learn" title="学习时长4小时32分" style="cursor:pointer;">
-					<em>4h</em>
+					<em th:if="${users.containsKey('learn')==true}" th:text="${users.learn}+'h'">4h</em>
+					<em th:if="${users.containsKey('learn')==false}">0h</em>
 					<span>学习时长 </span>
 				</div>
 			</div>
 			<div class="item follows">
-				<a href='/u/index/experience'><em>235</em></a>
-				<span>经验</span>
-			</div>
-			<div class="item follows">
-				<a href='/u/index/credit'><em>0</em></a>
+				<a href='/u/index/credit'><em th:text="${users.mkuintegral}">0</em></a>
 
 				<span>积分</span>
 			</div>
 			<div class="item follows">
-				<a href='/u/index/follows'><em>0</em></a>
+				<a href='/u/index/follows'><em th:text="${users.follor}">0</em></a>
 				<span>关注</span>
 			</div>
 			<div class="item follows">
-				<a href='/u/index/fans'><em>0</em></a>
+				<a href='/u/index/fans'><em th:text="${users.mkfollowcount}">0</em></a>
 				<span>粉丝</span>
 			</div>
-			<div class="item follows"><div class="item follows"><a href="/user/setbindsns" class="set-btn"><i class="fa fa-cog" aria-hidden="true"></i>个人设置</a></div>
+			<div class="item follows"><div class="item follows"><a th:href="@{/Mk_Use/userSetup(mkuid=1)}" class="set-btn"><i class="fa fa-cog" aria-hidden="true"></i>个人设置</a></div>
 
 			</div>
 		</div><!--.study-info end-->
@@ -111,42 +612,41 @@
 
 <div class="wrap">
 
+	<input type="hidden" id="uid" value="1"/>
+
 	<div class="slider" style="position: absolute; left: 24px; top: 0px;">
 		<ul>
 			<li>
-				<a href="#mycourse" aria-controls="mycourse" role="tab" data-toggle="tab">
+				<a href="#mycourse" aria-controls="mycourse" role="tab" data-toggle="tab" id="myco">
 					<i class="fa fa-play-circle"></i><span>我的课程</span><b class="icon-drop_right"></b>
 				</a>
 			</li>
 			<li>
-				<a href="#mycollection" aria-controls="mycollection" role="tab" data-toggle="tab">
+				<a href="#mycollection" aria-controls="mycollection" role="tab" data-toggle="tab" id="myc">
 					<i class="fa fa-star"></i><span>收藏</span><b class="icon-drop_right"></b>
 				</a>
 			</li>
 			<!-- 只能自己看的 -->
 
-			<li>
-				<a href="#mynote" aria-controls="mynote" role="tab" data-toggle="tab" class="active">
-					<i class="fa fa-pencil"></i><span>笔记</span><b class="icon-drop_right"></b>
-				</a>
-			</li>
+<!--			<li>-->
+<!--				<a href="#mynote" aria-controls="mynote" role="tab" data-toggle="tab" class="active">-->
+<!--					<i class="fa fa-pencil"></i><span>笔记</span><b class="icon-drop_right"></b>-->
+<!--				</a>-->
+<!--			</li>-->
 
 			<li>
-				<a href="#myatpic" aria-controls="myatpic" role="tab" data-toggle="tab">
-					<!-- 图标 -->
-					<i class="fa fa-question-circle"></i><span>猿问</span><b class="icon-drop_right"></b>
-				</a>
-			</li>
-
-			<li>
-				<a href="#remember" aria-controls="remember" role="tab" data-toggle="tab">
+				<a href="#mynote" aria-controls="mynote" role="tab" data-toggle="tab" class="active" id="myn">
 					<!-- 图标 -->
 					<i class="fa fa-pencil-square-o"></i><span>笔记</span><b class="icon-drop_right"></b>
 				</a>
 			</li>
 
-
-
+			<li>
+				<a href="#myatpic" aria-controls="myatpic" role="tab" data-toggle="tab" id="mya">
+					<!-- 图标 -->
+					<i class="fa fa-question-circle"></i><span>猿问</span><b class="icon-drop_right"></b>
+				</a>
+			</li>
 
 		</ul>
 	</div>
@@ -161,24 +661,355 @@
 				<div class="nav">
 					<div class="tool-left l">
 						<a href="#allcourse" aria-controls="allcourse" role="tab" data-toggle="tab" class="sort-item active">全部</a>
-						<a href="#moneycourse" aria-controls="moneycourse" role="tab" data-toggle="tab" class="sort-item ">实战课程</a>
-						<a href="#courses" aria-controls="courses" role="tab" data-toggle="tab" class="sort-item ">免费课程</a>
+						<a href="#moneycourse" aria-controls="moneycourse" role="tab" data-toggle="tab" class="sort-item ">免费课程</a>
+						<a href="#courses" aria-controls="courses" role="tab" data-toggle="tab" class="sort-item ">实战课程</a>
 					</div>
 				</div>
 
-				<div class="tab-content">
+				<div class="tab-content active">
 					<div role="tabpanel" class="tab-pane active" id="allcourse">
-						全部的东西
+					<!--全部的课程-->
+
+						<div class="all-course-main" th:if="${usercouall.list.size()>0}">
+							<div class="allcourse-content js-course-list ">
+								<!-- 课表循环开始 -->
+								<div class="courseitem" th:each="uall:${usercouall.list}">
+									<div class="img-box">
+										<a th:href="@{/learn_show(courseid=${uall.mkcsid})}" target="_blank">
+											<img width="200" height="116" alt="" th:src="@{'/img/'+${uall.mkcimg}}">
+										</a>
+									</div>
+									<div class="info-box">
+										<div class="title">
+											<span th:if="${uall.mkcmoney==0}" th:text="'免费课程'">免费课程</span>
+											<span th:if="${uall.mkcmoney!=0}" th:text="'实战课程'">免费课程</span>
+											<a href="//www.imooc.com/learn/1059" class="hd" target="_blank" th:text="${uall.mkctitle}">Springboot 微信小程序 – 微信登录功能实战</a>
+										</div>
+										<div class="study-info">
+											<span class="i-left span-common">已学12%</span>
+											<span class="i-mid span-common">用时 1小时10分</span>
+											<span class="i-right span-common" th:text="'学习至 '+${uall.mkcsname}">学习至2.04 小程序调用后台接口</span>
+										</div>
+										<div class="catog-points">
+											    <span class="span-common">
+											        <a th:href="@{/CourseNodeAll(mkuid=${uall.mkuid},mkcsid=${uall.mkcsid})}">笔记
+														<i th:if="${uall.containsKey('notenum')==true}" th:text="${uall.notenum}" >0</i>
+														<i th:if="${uall.containsKey('notenum')==false}">0</i>
+													</a>
+											    </span>
+												<span class="i-right span-common">
+													<!--问答按钮-->
+													 <a  th:onclick="'javascript:wenanswer('+${uall.mkcsid}+')'" href="#wenanswcard" aria-controls="wenanswcard" role="tab" data-toggle="tab" >问答
+														<i th:if="${uall.containsKey('asknum')==true}" th:text="${uall.asknum}" >0</i>
+														<i th:if="${uall.containsKey('asknum')==false}">0</i>
+													</a>
+											    </span>
+											<a th:href="@{/video(mkcstid=${uall.mkcstid})}" target="_blank" class="btn-red continute-btn">继续学习</a>
+										</div>
+                                        <div class="share-box clearfix course-one" data-courseid="1161" data-uid="7874633">
+                                            <div class="show-btn"><i class="fa fa-angle-down" aria-hidden="true"></i></div>
+                                            <div class="share-box-con">
+                                                <a href="javascript:;" title="删除" data-type="all" class="del"><i class="icon icon-notdisplay"></i></a>
+                                            </div>
+                                        </div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!--如果有分页就只显示分页 没有分页就显示实战课程-->
+						<!--循环分页-->
+						<div class="qa-comment-page" th:if="${usercouall.list.size()>0}">
+							<div class="page">
+								<span th:if="${usercouall.hasPreviousPage}==false" class="disabled_page">首页</span>
+								<a th:if="${usercouall.hasPreviousPage}" th:href="@{/Mk_Use/useshow(mkuid=1,pagenum=${usercouall.navigateFirstPage})}">首页</a>
+								<span th:if="${usercouall.hasPreviousPage}==false" class="disabled_page">上一页</span>
+								<a th:if="${usercouall.hasPreviousPage}" th:href="@{/Mk_Use/useshow(mkuid=1,pagenum=${usercouall.prePage})}">上一页</a>
+								<!--循环分页数-->
+								<th:block th:each="i :${#numbers.sequence(1, usercouall.pages)}">
+									<!-- 当前页样式为on-->
+									<a th:href="@{/Mk_Use/useshow(mkuid=1,pagenum=${i})}" th:class="${usercouall.pageNum == i}? 'active text-page-tag' :'text-page-tag'">
+										<th:block th:text="${i}"></th:block>
+									</a>
+								</th:block>
+								<span th:if="${usercouall.hasNextPage}==false" class="disabled_page">下一页</span>
+								<a th:if="${usercouall.hasNextPage}" th:href="@{/Mk_Use/useshow(mkuid=1,pagenum=${usercouall.nextPage})}">下一页</a>
+								<span th:if="${usercouall.hasNextPage}==false" class="disabled_page">首页</span>
+								<a th:if="${usercouall.hasNextPage}" th:href="@{/Mk_Use/useshow(mkuid=1,pagenum=${usercouall.navigateLastPage})}">尾页</a>
+							</div>
+						</div>
+
+						<div class="not-conts" th:if="${usercouall.list.size()==0}">
+							没有任何课程，可以先<a href="//www.imooc.com" class="find-course">去找找课程</a>
+						</div>
+
+						<div class="recomment-body" th:if="${usercouall.list.size()==0}">
+							<div class="js-load-recommentcourse">
+								<h4>实战推荐</h4>
+								<ul id="js-load-recommentcourse">
+									<li th:each="s:${shizhan}">
+										<a th:href="@{/learn_show(courseid=${s.mkcsid})}" class="recommend-item">
+											<div class="img l">
+												<img width="216" height="120" th:src="@{'/img/'+${s.mkcimg}}">
+											</div>
+											<div class="content">
+												<p class="title" th:text="${s.mkctitle}">微信小程序入门与实战 常用组件API开发技巧项目实战</p>
+												<div class="info">
+													<span th:text="'¥ '+${s.mkcmoney}">¥ 149.00</span>
+													<span th:text="${s.mkdfname}">初级</span>
+													<span class="fa fa-user-o"></span>
+													<span th:text="${s.mkclearned}">19158</span>
+												</div>
+											</div></a>
+									</li>
+								</ul>
+							</div>
+						</div>
+
 					</div>
 					<div role="tabpanel" class="tab-pane" id="moneycourse">
-						实战课程
+
+						<div class="new-course-main">
+
+							<div class="freecourse-body">
+
+								<div class="js-course-list my-space-course study-tl">
+
+									<div class="clearfix tl-item  tl-item-first" th:if="${usernotpay.list.size()>0}">
+										<span class="time" aria-hidden="true"></span>
+										<div class="course-list course-list-m">
+											<!--这里显示的是最新的时间  循环在li这里-->
+											<span class="time-title">2019 <em>12月20日</em></span>
+											<ul class="clearfix">
+												<li class="course-one" th:each="nopay:${usernotpay.list}">
+													<div class="course-list-img l">
+														<a th:href="@{/learn_show(courseid=${nopay.mkcsid})}" target="_blank">
+															<img alt="Springboot + ElasticSearch 构建博客检索系统" th:src="@{'/img/'+${nopay.mkcimg}}" width="200" height="116">
+														</a>
+													</div>
+													<div class="course-list-cont">
+														<h3 class="study-hd">
+															<a href="/learn/1161" target="_blank" th:text="${nopay.mkctitle}">Springboot + ElasticSearc...</a>
+															<span class="i-new"></span>
+
+															<div class="share-box clearfix">
+																<div class="show-btn">
+																	<i class="fa fa-angle-down"></i>
+																</div>
+																<!--鼠标移动到这里然后显示-->
+																<div class="share-box-con courses-r">
+																	<div class="justspace">
+																		<a href="javascript:;" title="收藏" class="free-follow custom_f">
+																			<i class="icon icon-star_outline"></i>
+																		</a>
+																		<a href="javascript:;" title="删除" class="del">
+																			<i class="fa fa-angle-down"></i>
+																		</a>
+																	</div>
+																</div>
+															</div>
+														</h3>
+														<div class="study-points">
+															<span class="i-left span-common">已学0%</span>
+															<span class="i-mid span-common" th:text="'用时 '+${nopay.mkprduration}+'分'">用时 0分</span>
+															<span class="i-right span-common" th:text="'学习至'+${nopay.mkcsname}">学习至1-1 课程导学</span>
+														</div>
+														<div class="catog-points">
+															<a th:href="@{/video(mkcstid=${nopay.mkcstid})}" target="_blank" class="btn-red continute-btn">继续学习</a>
+															<div class="moco-ico-btn js-add-to-plan" data-type="1" data-tid="1161" style="margin-right: 32px;">
+
+															</div>
+															<span class="i-left span-common">
+																<a th:href="@{/CourseNodeAll(mkuid=${nopay.mkuid},mkcsid=${nopay.mkcsid})}">笔记
+																	<i th:if="${nopay.containsKey('notenum')==true}" th:text="${nopay.notenum}">1</i>
+																	<i th:if="${nopay.containsKey('notenum')==false}">0</i>
+																</a>
+															</span>
+															<span class="i-mid span-common">
+																<a href="/u/7874633/course/1161/codes?frm=allcourses"></a>
+															</span>
+															<span class="i-right span-common">
+																<!--问答按钮-->
+																<a  th:onclick="'javascript:wenanswer('+${nopay.mkcsid}+')'" href="#wenanswcard" aria-controls="wenanswcard" role="tab" data-toggle="tab">问答
+																	<i th:if="${nopay.containsKey('asknum')==true}" th:text="${nopay.asknum}">0</i>
+																	<i th:if="${nopay.containsKey('asknum')==false}" >0</i>
+																</a>
+															</span>
+														</div>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</div>
+
+									<div class="not-conts" th:if="${usernotpay.list.size()==0}">
+										没有任何课程，可以先<a href="//www.imooc.com" class="find-course">去找找课程</a>
+									</div>
+
+									<div class="recomment-body" th:if="${usernotpay.list.size()==0}">
+										<div class="js-load-recommentcourse">
+											<h4>实战推荐</h4>
+											<ul id="js-load-recommentcourse">
+												<li th:each="s:${shizhan}">
+													<a th:href="@{/learn_show(courseid=${s.mkcsid})}" class="recommend-item">
+														<div class="img l">
+															<img width="216" height="120" th:src="@{'/img/'+${s.mkcimg}}">
+														</div>
+														<div class="content">
+															<p class="title" th:text="${s.mkctitle}">微信小程序入门与实战 常用组件API开发技巧项目实战</p>
+															<div class="info">
+																<span th:text="'¥ '+${s.mkcmoney}">¥ 149.00</span>
+																<span th:text="${s.mkdfname}">初级</span>
+																<span class="fa fa-user-o"></span>
+																<span th:text="${s.mkclearned}">19158</span>
+															</div>
+														</div></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>
 					</div>
 					<div role="tabpanel" class="tab-pane" id="courses">
-						免费课程
+							<div class="sz-course-list" >
+								<div class="item" th:if="${userpay.list.size()>0}" th:each="usep:${userpay.list}">
+									<div class="img-box">
+										<a th:href="@{/learn_show(courseid=${usep.mkcsid})}" target="_blank">
+											<img th:src="@{'/img/'+${usep.mkcimg}}" alt="" title="">
+										</a>
+									</div><!-- .img-box end -->
+									<div class="title clearfix">
+										<h3><a th:href="@{/learn_show(courseid=${usep.mkcsid})}" target="_blank" th:text="${usep.mkctitle}"></a></h3>
+										<div class="update-info" th:if="${usep.mkpsrarus==1}" th:text="'已完结'">已完结</div>
+										<div class="update-info" th:if="${usep.mkpsrarus==0}" th:text="'学习中'">已完结</div>
+									</div><!-- .title end -->
+									<div class="study-info">
+										<span class="complete-percentage">已完成18%</span>
+										<span class="downloads">APP下载0节</span>
+										<span class="time">用时2小时13分钟</span>
+										<span class="complete-progress" th:text="'学习至 '+${usep.mkcsname}"></span>
+									</div><!-- .study-info end -->
+									<div class="links clearfix">
+										<div class="links-box">
+											<a th:href="@{/CourseNodeAll(mkuid=${usep.mkuid},mkcsid=${usep.mkcsid})}">笔记
+												<em th:if="${usep.containsKey('notenum')==true}" th:text="${usep.notenum}">0</em>
+												<em th:if="${usep.containsKey('notenum')==false}">0</em>
+											</a>
+											<a  th:onclick="'javascript:wenanswer('+${usep.mkcsid}+')'" href="#wenanswcard" aria-controls="wenanswcard" role="tab" data-toggle="tab">问答
+												<em th:if="${usep.containsKey('asknum')==true}" th:text="${usep.asknum}">2</em>
+												<em th:if="${usep.containsKey('asknum')==false}">0</em>
+											</a>
+										</div>
+										<div class="btn-box">
+
+
+											<a th:href="@{/video(mkcstid=${usep.mkcstid})}" class="continue" target="_blank">继续学习</a>
+
+										</div>
+									</div><!-- .links end -->
+
+									<div class="share-box clearfix">
+										<div class="show-btn"><i class="fa fa-angle-down" aria-hidden="true"></i></div>
+										<div class="share-box-con">
+											<div class="bdsharebuttonbox bdshare-button-style0-16" data-tag="share_110" data-shizhan="110" data-bd-bind="1576814749019">
+												<a class="bds_weixin icon-share-weichat" data-cmd="weixin" title="分享到微信"></a>
+												<a class="bds_tsina icon-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+												<a class="bds_qzone icon-share-qq" data-cmd="qzone" href="#" title="分享到QQ空间"></a>
+											</div>
+										</div>
+									</div>
+
+								</div><!-- .item end-->
+
+								<!--如果有分页就只显示分页 没有分页就显示实战课程-->
+								<!--111111-->
+								<div class="qa-comment-page" th:if="${userpay.list.size()>0}">
+									<div class="page">
+										<span th:if="${userpay.hasPreviousPage}==false" class="disabled_page">首页</span>
+										<a th:if="${userpay.hasPreviousPage}" th:href="@{/Mk_Use/useshow(mkuid=1,pagenum=${userpay.navigateFirstPage})}">首页</a>
+										<span th:if="${userpay.hasPreviousPage}==false" class="disabled_page">上一页</span>
+										<a th:if="${userpay.hasPreviousPage}" th:href="@{/Mk_Use/useshow(mkuid=1,pagenum=${userpay.prePage})}">上一页</a>
+										<!--循环分页数-->
+										<th:block th:each="i :${#numbers.sequence(1, userpay.pages)}">
+											<!-- 当前页样式为on-->
+											<a th:href="@{/Mk_Use/useshow(mkuid=1,pagenum=${i})}" th:class="${userpay.pageNum == i}? 'active text-page-tag' :'text-page-tag'">
+												<th:block th:text="${i}"></th:block>
+											</a>
+										</th:block>
+										<span th:if="${userpay.hasNextPage}==false" class="disabled_page">下一页</span>
+										<a th:if="${userpay.hasNextPage}" th:href="@{/Mk_Use/useshow(mkuid=1,pagenum=${userpay.nextPage})}">下一页</a>
+										<span th:if="${userpay.hasNextPage}==false" class="disabled_page">首页</span>
+										<a th:if="${userpay.hasNextPage}" th:href="@{/Mk_Use/useshow(mkuid=1,pagenum=${userpay.navigateLastPage})}">尾页</a>
+									</div>
+								</div>
+
+
+								<div id="notelist" class="note-course-list clearfix" th:if="${userpay.list.size()==0}">
+									<div class="notnote">
+										<div class="iconwrap pt96">
+											<i class="fa fa-pencil-square-o"></i>
+										</div>
+										<p>你还没有实战课程，时间就是金钱，我的朋友</p>
+										<a target="_blank" href="//coding.imooc.com">去实战看看</a>
+									</div>
+								</div>
+
+
+							</div>
+
 					</div>
+
 				</div>
 
+			</div>
 
+			<!--显示问答窗体-->
+			<div role="tabpanel" class="tab-pane" id="wenanswcard">
+				<div>
+					<div class="top-bar">
+						<div class="bread">
+							<a target="_blank" href="#" id="coding">实战</a>
+							<i>\</i>
+							<a href="#" target="_blank" id="title"> 全方位深入解析最新版SpringBoot源码</a>
+						</div><!-- .bread end -->
+						<div class="course-info" style="min-height: 0px;">
+							<h3><a target="_blank"  id="title1"> 全方位深入解析最新版SpringBoot源码</a></h3>
+							<div class="links">
+								<a class="link note " >笔记<em id="note">0</em></a>
+								<a class="link ques active" href="#wenanswcard" aria-controls="wenanswcard" role="tab" data-toggle="tab">问答<em id="ask">2</em></a>
+								<a class="continue" target="_blank">继续学习</a>
+							</div><!-- .links end-->
+						</div><!-- .course-info end -->
+					</div><!-- .top-bar end -->
+					<div class="sub-nav">
+						<a class="tab active" href="#mywen" aria-controls="mywen" role="tab" data-toggle="tab">我的提问</a>
+						<a class="tab" href="#myans" aria-controls="myans" role="tab" data-toggle="tab">我的回答</a>
+					</div><!-- .sub-nav end -->
+					<!--提问-->
+					<div class="tab-content">
+
+						<div role="tabpanel" class="tab-pane active" id="mywen">
+							<div class="ques-list pb60" id="pb60">
+								<!--从这里开始拼接-->
+
+							</div><!-- .ques-list end -->
+						</div>
+						<div role="tabpanel" class="tab-pane" id="myans">
+							<div class="ques-list pb60" id="pb61">
+								<!--我的回答开始拼接-->
+
+
+							</div>
+						</div>
+					</div>
+
+					<!--回答-->
+				</div>
 			</div>
 
 			<!-- 我的收藏 -->
@@ -188,7 +1019,6 @@
 				<div class="nav">
 					<div class="tool-left l">
 						<a href="#allcollect" aria-controls="allcollect" role="tab" data-toggle="tab" class="sort-item active">全部</a>
-						<a href="#learncourse" aria-controls="learncourse" role="tab" data-toggle="tab" class="sort-item ">学习路线</a>
 						<a href="#Freecourse" aria-controls="Freecourse" role="tab" data-toggle="tab" class="sort-item ">免费课程</a>
 						<a href="#warcourse" aria-controls="warcourse" role="tab" data-toggle="tab" class="sort-item ">实战课程</a>
 					</div>
@@ -198,42 +1028,123 @@
 					<div role="tabpanel" class="tab-pane active" id="allcollect">
 
 						<div class="all-course-main">
-							<div class="not-conts">
-								没有任何课程，可以先<a href="//www.imooc.com" class="find-course">去找找课程</a>
+							<div class="allcourse-content" th:if="${pageinfo.list.size()>0}" th:each="p:${pageinfo.list}">
+								<div class="courseitem">
+									<div class="img-box">
+										<a th:href="@{/learn_show(courseid=${p.mkcsid})}" target="_blank">
+											<img width="200" height="116" alt="Android CMake以及NDK实践基础" th:src="@{'/img/'+${p.mkcimg}}">
+										</a>
+									</div>
+									<div class="info-box">
+										<div class="title">
+											<span th:if="${p.mkcmoney==0}" th:text="'免费课程'">免费课程</span>
+											<span th:if="${p.mkcmoney!=0}" th:text="'实战课程'">免费课程</span>
+											<a href="//www.imooc.com/learn/1212" class="hd" target="_blank" th:text="${p.mkctitle}">Android CMake以及NDK实践基础</a>
+										</div>
+										<div class="study-info">
+											<p class="follow-desc" th:text="${p.mkcontent}">Android底层开发入门必备，CMake动态库编译和使用，NDK的各种开发技巧。 </p>
+										</div>
+										<div class="op">
+											<a th:onclick="'javascript:Cancelcollection('+${p.mkcsid}+')'" data-cid="1212" data-type="1" title="取消收藏" class="all_follow_f js-cancel-follow">取消收藏</a>
+										</div>
+									</div>
+								</div>
 							</div>
-						</div>
 
-					</div>
-					<div role="tabpanel" class="tab-pane" id="learncourse">
-
-						<div class="all-course-main">
-							<div class="not-conts">
-								您还没有收藏学习路线，请到<a href="//www.imooc.com" class="find-course">学习路线中添加</a>
+							<div class="not-conts" th:if="${pageinfo.list.size()==0}">
+								没有任何课程，可以先<a href="/course/list" class="find-course">去找找课程</a>
 							</div>
+
+							<div class="recomment-body">
+								<div class="js-load-recommentcourse">
+									<h4>实战推荐</h4>
+									<ul id="js-load-recommentcourse">
+										<li th:each="s:${shizhan}">
+											<a th:href="@{/learn_show(courseid=${s.mkcsid})}" class="recommend-item">
+												<div class="img l">
+													<img width="216" height="120" th:src="@{'/img/'+${s.mkcimg}}">
+												</div>
+												<div class="content">
+													<p class="title" th:text="${s.mkctitle}">微信小程序入门与实战 常用组件API开发技巧项目实战</p>
+													<div class="info">
+														<span th:text="'¥ '+${s.mkcmoney}">¥ 149.00</span>
+														<span th:text="${s.mkdfname}">初级</span>
+														<span class="fa fa-user-o"></span>
+														<span th:text="${s.mkclearned}">19158</span>
+													</div>
+												</div></a>
+										</li>
+									</ul>
+								</div>
+							</div>
+
 						</div>
 
 					</div>
 					<div role="tabpanel" class="tab-pane" id="Freecourse">
-
-
-						<div class="all-course-main">
-							<div class="not-conts">
-								你最近有没有收藏任何课程,可以先去<a href="//www.imooc.com" class="find-course">找找课程</a>
+						<div class="not-conts">
+							你最近有没有收藏免费课程，可以先<a href="/course/list" class="find-course">去找找课程</a>
+						</div>
+						<div class="recomment-body">
+							<div class="js-load-recommentcourse">
+								<h4>实战推荐</h4>
+								<ul id="js-load-recommentcourse">
+									<li th:each="s:${shizhan}">
+										<a th:href="@{/learn_show(courseid=${s.mkcsid})}" class="recommend-item">
+											<div class="img l">
+												<img width="216" height="120" th:src="@{'/img/'+${s.mkcimg}}">
+											</div>
+											<div class="content">
+												<p class="title" th:text="${s.mkctitle}">微信小程序入门与实战 常用组件API开发技巧项目实战</p>
+												<div class="info">
+													<span th:text="'¥ '+${s.mkcmoney}">¥ 149.00</span>
+													<span th:text="${s.mkdfname}">初级</span>
+													<span class="fa fa-user-o"></span>
+													<span th:text="${s.mkclearned}">19158</span>
+												</div>
+											</div></a>
+									</li>
+								</ul>
 							</div>
 						</div>
 
 					</div>
 					<div role="tabpanel" class="tab-pane" id="warcourse">
 
-						<div class="all-course-main">
-							<div class="not-conts">
-								你最近有没有收藏任何课程,可以先去<a href="//www.imooc.com" class="find-course">找找课程</a>
-							</div>
-						</div>
+                        <div class="sz-course-list">
 
+							<div class="not-conts">
+								你最近有没有收藏实战课程，可以先<a href="/course/list" class="find-course">去找找课程</a>
+							</div>
+
+                            <div class="recomment-body">
+                                <div class="js-load-recommentcourse">
+                                    <h4>实战推荐</h4>
+                                    <ul id="js-load-recommentcourse">
+                                        <li th:each="s:${shizhan}">
+											<a th:href="@{/learn_show(courseid=${s.mkcsid})}" class="recommend-item">
+                                            <div class="img l">
+                                                <img width="216" height="120" th:src="@{'/img/'+${s.mkcimg}}">
+                                            </div>
+                                            <div class="content">
+                                                <p class="title" th:text="${s.mkctitle}">微信小程序入门与实战 常用组件API开发技巧项目实战</p>
+                                                <div class="info">
+                                                    <span th:text="'¥ '+${s.mkcmoney}">¥ 149.00</span>
+                                                    <span th:text="${s.mkdfname}">初级</span>
+                                                    <span class="fa fa-user-o"></span>
+                                                    <span th:text="${s.mkclearned}">19158</span>
+                                                </div>
+                                            </div></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
 
 					</div>
 				</div>
+
 			</div>
 
 			<!-- 我的笔记 -->
@@ -281,21 +1192,60 @@
 								<div class="tab-content">
 									<!-- 免费课程 -->
 									<div role="tabpanel" class="tab-pane active" id="notecourse">
-										<div class="note-item-wrap js-course-note" data-type="1" data-cid="1059">
+										<!--判断如果为空了-->
+
+										<div id="notelist" class="note-course-list clearfix" th:if="${usernodes.size()==0}">
+											<div class="notnote">
+												<div class="iconwrap pt96">
+													<i class="fa fa-pencil-square-o"></i>
+												</div>
+												<p>你还没有实战笔记，时间就是金钱，我的朋友</p>
+												<a target="_blank" href="//coding.imooc.com">去实战看看</a>
+											</div>
+										</div>
+
+
+<!--										循环这里开始了-->
+										<div class="note-item-wrap js-course-note" data-type="1" th:each="node:${usernodes}">
 											<div class="note-pic">
-												<img class="course-banner" src="">
+												<img class="course-banner" src="" th:src="@{'/img/'+${node.mkcimg}}">
 											</div>
 											<div class="note-content">
-												<h3>Springboot 微信小程序 – 微信登录功能实战</h3>
-												<div class="note-course-type default">免费课程</div>
-												<div class="note-course-count">笔记 3 条</div>
-												<div class="note-edit-time">编辑时间：2019-12-12 16:37:01</div>
+												<h3 th:text="${node.mkctitle}">Springboot 微信小程序 – 微信登录功能实战</h3>
+												<div class="note-course-type default" th:if="${node.mkcmoney==0}" th:text="'免费课程'">免费课程</div>
+												<div class="note-course-count" th:if="${node.containsKey('countnode')==true}" th:text="'笔记 '+${node.countnode}+' 条'">笔记 3 条</div>
+												<div class="note-course-count" th:if="${node.containsKey('countnode')==false}" >笔记 0 条</div>
+												<div class="note-edit-time" th:text="'编辑时间：'+${node.mknctime}">编辑时间：2019-12-12 16:37:01</div>
 											</div>
 										</div>
 									</div>
 									<!-- 笔记实战课程 -->
 									<div role="tabpanel" class="tab-pane" id="notemoneycourse">
 
+										<div class="note-item-wrap js-course-note" data-type="1" th:each="usm:${usermoney}">
+											<div class="note-pic">
+												<img class="course-banner" src="" th:src="@{'/img/'+${usm.mkcimg}}">
+											</div>
+											<div class="note-content">
+												<h3 th:text="${usm.mkctitle}">Springboot 微信小程序 – 微信登录功能实战</h3>
+												<div class="note-course-type default" th:if="${usm.mkcmoney==0}" th:text="'免费课程'">免费课程</div>
+												<div class="note-course-type coding" th:if="${usm.mkcmoney!=0}" th:text="'实战课程'">免费课程</div>
+												<div class="note-course-count" th:if="${usm.containsKey('countnode')==true}" th:text="'笔记 '+${usm.countnode}+' 条'">笔记 3 条</div>
+												<div class="note-course-count" th:if="${usm.containsKey('countnode')==false}" >笔记 0 条</div>
+												<div class="note-edit-time" th:text="'编辑时间：'+${usm.mknctime}">编辑时间：2019-12-12 16:37:01</div>
+											</div>
+										</div>
+
+
+										<div id="notelist" class="note-course-list clearfix" th:if="${usermoney.size()==0}">
+											<div class="notnote">
+												<div class="iconwrap pt96">
+													<i class="fa fa-pencil-square-o"></i>
+												</div>
+												<p>你还没有实战笔记，时间就是金钱，我的朋友</p>
+												<a target="_blank" href="//coding.imooc.com">去实战看看</a>
+											</div>
+										</div>
 
 									</div>
 
@@ -309,16 +1259,166 @@
 					</div>
 					<div role="tabpanel" class="tab-pane" id="Latelylist">
 
-						最新编辑课程
+						<div class="container" id="container">
+							<div class="js-order-title search-intro" style="">
+								最近 60 天，写了 <span class="js-total">8</span> 条笔记
+							</div>
+							<div id="notelist" class="note-course-list clearfix">
+								<!-- 课程循环开始了 -->
+								<div class="item js-item clearfix"  data-type="imooc" data-noteid="2386432" th:if="${nownoteall.size()>0}" th:each="nownote:${nownoteall}">
+									<div class="item-left clearfix">
+										<i class="fa fa-caret-square-o-right" aria-hidden="true"></i>
+									</div>
+									<div class="item-right">              <!--<div class='item-left-line'></div>-->
+										<div class="item-title">
+											<div class="btn-course-note js-course-note" data-type="1" data-cid="1195">
+												<a th:href="@{CourseNodeAll(mkuid=1,mkcsid=${nownote.mkcsid})}" target="_blank">定位到课程笔记</a>
+											</div>
+											<a target="_blank" th:href="@{/learn_show(courseid=${nownote.mkcsid})}" th:text="${nownote.mkctitle}">                 Android实现跨进程通信
+											</a>
+										</div>
+										<div class="item-minfo clearfix">
+											<a target="_blank" th:href="@{/video(mkcstid=${nownote.mkcstid})}" th:text="${nownote.mkcsname}">                 1-1 课程介绍
+											</a>
+										</div>
+										<div class="js-item-content" style="display: block;" th:id="'ed'+${nownote.mknid}">
+											<div class="item-content">
+                                                <input type="hidden" th:id="'con'+${nownote.mknid}" th:value="${nownote.mknotecontent}"/>
+												<div class="item-p1"><p  th:utext="${nownote.mknotecontent}">awdawdawd</p></div>
+											</div>
+											<div class="item-bottom clearfix" style="clear: none">
+												<!-- 点赞 -->
+												<a href="javascript:;" class="likes js-likes clearfix disabled">
+													<i class="fa fa-thumbs-o-up"></i>
+													<span class="" th:if="${nownote.containsKey('fabcount')==true}" th:text="${nownote.fabcount}">0</span>
+													<span class="" th:if="${nownote.containsKey('fabcount')==false}">0</span>
+												</a>
+												<!-- 删除 -->
+												<a th:onclick="'javascript:delmnid('+${nownote.mknid}+')'" class="delete js-delete clearfix">
+													<i class="fa fa-trash-o"></i>
+													<span>删除</span>
+												</a>
+                                                <!-- 编辑 -->
+												<a th:onclick="'javascript:edit('+${nownote.mknid}+')'" class="edit js-edit clearfix">
+													<i class="fa fa-pencil-square-o"></i>
+													<span>编辑</span>
+												</a>
+											</div>
+										</div>
+                                        <!--编辑器所在的位置-->
+										<div class="js-note-editor note-editor" th:id="'edito'+${nownote.mknid}" style="display:none;">
+                                            <div  class="edui-imooc">
+                                                <div id="edui1" class="edui-editor  edui-imooc" style="width: 688px; z-index: 999; ">
+                                                    <textarea th:id="'edit'+${nownote.mknid}" autofocus></textarea>
+                                                </div>
+                                            </div>
+											<div class="note-editor-tool">
+												<a th:onclick="'javascript:cancel('+${nownote.mknid}+')'" class="moco-btn js-note-cancel">取消</a>
+												<a th:onclick="'javascript:comeon('+${nownote.mknid}+')'" class="moco-btn moco-btn-red js-note-submit">提交</a>
+											</div>
+										</div>
+                                        <script type="text/javascript">
+                                            function showdisplay(mknid) {
+                                                //获取内容
+                                                var con=$("#con"+mknid).val();
+                                                //获取显示的框框
+                                                var display=$("#edito"+mknid).css("display");
+                                                if(display=="none")
+                                                {
+                                                    $("#ed"+mknid).css("display",'none');
+                                                    $("#edito"+mknid).css("display",'block');
+                                                    var editor = new Simditor({
+                                                        textarea:$('#edit'+mknid),
+                                                        //optional options
+                                                        toolbar:[
+                                                            'code' ,
+                                                            'bold',
+                                                            'italic',        // unordered list
+                                                            'blockquote',
+                                                            // 'emoji',
+                                                            'image',
+                                                            'indent',
+                                                            'outdent',
+                                                        ],
+                                                        //  emoji: {
+                                                        // 	imagePath: 'images/emoji/'
+                                                        // },
+                                                        defaultImage : 'images/image.png', //编辑器插入图片时使用的默认图片
+                                                        upload : {
+                                                            url : '/InsertNode', //文件上传的接口地址
+                                                            params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+                                                            fileKey: 'file', //服务器端获取文件数据的参数名
+                                                            connectionCount: 1,
+                                                            width:100,
+                                                            height:100,
+                                                            leaveConfirm: '正在上传文件'
+                                                        }
+                                                    });
+                                                    editor.setValue(con);
+                                                }
 
+                                            }
+                                            //放弃编辑
+                                            function cancel(mknid) {
+                                                // 取消按钮显示回来
+                                                $("#ed"+mknid).css("display",'block');
+                                                $("#edito"+mknid).css("display",'none');
+                                            }
+                                            //提交编辑
+                                            function comeon(mknid) {
+                                                //获取编辑器输入的内容
+                                                var content=$("#edit"+mknid).val();
+                                                $.ajax({
+                                                    url:"/Mk_Use/UpdMnid",
+                                                    type:"post",
+                                                    data:{content:content,mknid:mknid},
+                                                    success:function (data) {
+                                                            if(data==1)
+                                                            {
+                                                                console.log("编辑成功了");
+                                                            }
+                                                    }
+                                                })
+                                            }
+                                            //编辑笔记
+                                            function edit(mknid) {
+                                                showdisplay(mknid);
+                                            }
+
+
+                                        </script>
+									</div>
+								</div>
+
+								<!--删除笔记的提示框-->
+								<div class="moco-modal-layer moco-tip-layer moco-tipconfirm-layer" id="del" style="display: none;">
+									<i class="fa fa-question-circle fa-2x"></i>
+									<span class="moco-tipconfirm-info">删除后无法恢复，确定删除？</span>
+									<a class="moco-btn moco-btn-gray-l js-modal-cancel" onclick="return false" href="javascript:void(0)">
+										<i class="fa fa-times-circle-o fa-2x"></i>
+									</a>
+									<a class="moco-btn moco-btn-dark js-modal-submit" onclick="return false" href="javascript:void(0)">
+										<i class="fa fa-check-circle-o fa-2x"></i>
+									</a>
+								</div>
+
+								<div class="notnote" th:if="${nownoteall.size()==0}">
+									<div class="iconwrap pt96">
+										<i class="fa fa-pencil-square-o"></i>
+									</div>
+									<p>未找到最近 60 天的笔记</p>
+									<a target="_blank" href="//coding.imooc.com">去实战看看</a>
+								</div>
+
+							</div>
+
+							<div class="paginationwrap">
+								<div class="pagination js-pagination clearfix"></div>
+							</div>
+						</div>
 					</div>
 				</div>
-
-
-
-
 			</div>
-
 			<!-- 我的问题 -->
 			<div role="tabpanel" class="tab-pane" id="myatpic">
 
@@ -419,6 +1519,23 @@
 	</div>
 </div>
 
+
+<!-- 页脚-start -->
+<div class="f-footer">
+    <div class="f-footer-box clearfix">
+        <div class="footer-link">
+            <a href="javascript:void(0);"  target="_blank" title="企业合作">企业合作</a>
+            <a href="javascript:void(0);" target="_blank" title="联系我们">联系我们</a>
+            <a href="javascript:void(0);" target="_blank" title="常见问题">常见问题</a>
+            <a href="javascript:void(0);" target="_blank" title="意见反馈">意见反馈</a>
+            <a href="javascript:void(0);" target="_blank" title="友情链接">友情链接</a>
+        </div>
+        <div class="footer-copyright">
+            <span>©&nbsp;2017&nbsp; 备案 </span>
+        </div>
+    </div>
+</div>
+<!-- 页脚-end-->
 
 </body>
 
