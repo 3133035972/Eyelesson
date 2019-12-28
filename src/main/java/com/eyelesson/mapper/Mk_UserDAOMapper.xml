@@ -16,5 +16,199 @@
         select a.*,b.follor from a inner join b on a.mkuid=b.mkuid
         where a.mkuid=#{param1}
     </select>
+<!--    查询用户免费的笔记-->
+    <select id="usernode" resultType="java.util.Map">
+        select a.*,count(mkcsid) countnode from(
+        select mkc.mkcsid,mkc.mkctitle,mkc.mkcimg,mkc.mkcmoney,mkn.* from mk_note  mkn
+        left join mk_use  mku on mkn.mkuid=mku.mkuid
+        left join mk_soncourse_section mkss on mkn.mkcstid=mkss.mkcstid
+        left join mk_course mkc on  mkss.mkcsid=mkc.mkcsid
+        where mkn.mkuid=#{param1}
+        order by mkn.mknctime desc
+        )a
+        where mkcmoney=0
+        group by mkcsid
+    </select>
+    <!--查询用户的实战笔记-->
+    <select id="usermoney"  resultType="java.util.Map">
+        select a.*,count(mkcsid) countnode from(
+        select mkc.mkcsid,mkc.mkctitle,mkc.mkcimg,mkc.mkcmoney,mkn.* from mk_note  mkn
+        left join mk_use  mku on mkn.mkuid=mku.mkuid
+        left join mk_soncourse_section mkss on mkn.mkcstid=mkss.mkcstid
+        left join mk_course mkc on  mkss.mkcsid=mkc.mkcsid
+        where mkn.mkuid=#{param1}
+        order by mkn.mknctime desc
+        )a
+        where mkcmoney!=0
+        group by mkcsid
 
+
+    </select>
+    <!--查询用户学习过的全部课程-->
+    <select id="usercourseAll" resultType="java.util.Map">
+        with a as (
+        select mkp.mkprid,mkp.mkuid,mkp.mkpsrarus,mkprduration,mkc.mkcimg,mkc.mkctitle,mkss.mkcsname,mkc.mkcsid,mkss.mkcstid,mkc.mkcmoney from mk_process mkp
+        left join mk_use mk on mkp.mkuid=mk.mkuid
+        left join mk_soncourse_section mkss on mkp.mkcstid=mkss.mkcstid
+        left join mk_course mkc on mkss.mkcsid=mkc.mkcsid
+        where mkp.mkuid=#{param1} and
+        mkp.mkprid in(
+        select max(mkp.mkprid) from mk_process mkp
+        left join mk_use mk on mkp.mkuid=mk.mkuid
+        left join mk_soncourse_section mkss on mkp.mkcstid=mkss.mkcstid
+        left join mk_course mkc on mkss.mkcsid=mkc.mkcsid
+        where mkp.mkuid=#{param1}
+        group by mkc.mkcsid
+        )),
+        b as
+        (
+        select mc.mkcsid,count(mn.mkcstid) notenum  from mk_process mkp
+        left join mk_note mn on mn.mkcstid=mkp.mkcstid
+        left join mk_soncourse_section mkss on mn.mkcstid=mkss.mkcstid
+        left join mk_course mc on mkss.mkcsid=mc.mkcsid
+        where mn.mkuid=#{param1}
+        group by mkp.mkcstid
+        ),
+        c as
+        (
+        select mc.mkcsid,mn.mkatpid,count(mn.mkcstid) asknum from mk_process mkp
+        left join mk_asktopic mn on mn.mkcstid=mkp.mkcstid
+        left join mk_soncourse_section mkss on mn.mkcstid=mkss.mkcstid
+        left join mk_course mc on mkss.mkcsid=mc.mkcsid
+        where mn.mkuid=#{param1}
+        group by mkp.mkcstid
+        )
+        select a.*,b.notenum,c.asknum,c.mkatpid from a left join b
+        on a.mkcsid=b.mkcsid
+        left join c on a.mkcsid=c.mkcsid
+
+    </select>
+    <!--查询用户学习过的不是免费的课程-->
+    <select id="userpay" resultType="java.util.Map">
+        with a as (
+        select mkp.mkprid,mkp.mkuid,mkp.mkpsrarus,mkprduration,mkc.mkcimg,mkc.mkctitle,mkss.mkcsname,mkc.mkcsid,mkss.mkcstid,mkc.mkcmoney from mk_process mkp
+        left join mk_use mk on mkp.mkuid=mk.mkuid
+        left join mk_soncourse_section mkss on mkp.mkcstid=mkss.mkcstid
+        left join mk_course mkc on mkss.mkcsid=mkc.mkcsid
+        where mkp.mkuid=#{param1} and
+        mkp.mkprid in(
+        select max(mkp.mkprid) from mk_process mkp
+        left join mk_use mk on mkp.mkuid=mk.mkuid
+        left join mk_soncourse_section mkss on mkp.mkcstid=mkss.mkcstid
+        left join mk_course mkc on mkss.mkcsid=mkc.mkcsid
+        where mkp.mkuid=#{param1}
+        group by mkc.mkcsid
+        )),
+        b as
+        (
+        select mc.mkcsid,count(mn.mkcstid) notenum  from mk_process mkp
+        left join mk_note mn on mn.mkcstid=mkp.mkcstid
+        left join mk_soncourse_section mkss on mn.mkcstid=mkss.mkcstid
+        left join mk_course mc on mkss.mkcsid=mc.mkcsid
+        where mn.mkuid=#{param1}
+        group by mkp.mkcstid
+        ),
+        c as
+        (
+        select mc.mkcsid,mn.mkatpid,count(mn.mkcstid) asknum from mk_process mkp
+        left join mk_asktopic mn on mn.mkcstid=mkp.mkcstid
+        left join mk_soncourse_section mkss on mn.mkcstid=mkss.mkcstid
+        left join mk_course mc on mkss.mkcsid=mc.mkcsid
+        where mn.mkuid=#{param1}
+        group by mkp.mkcstid
+        )
+        select a.*,b.notenum,c.asknum,c.mkatpid from a left join b
+        on a.mkcsid=b.mkcsid
+        left join c on a.mkcsid=c.mkcsid
+        where a.mkcmoney != 0
+    </select>
+    <!--查询用户学习过的是免费的课程-->
+    <select id="usernotpay" resultType="java.util.Map">
+        with a as (
+        select mkp.mkprid,mkp.mkuid,mkprduration,mkp.mkdate,mkc.mkcimg,mkc.mkctitle,mkss.mkcsname,mkc.mkcsid,mkss.mkcstid,mkc.mkcmoney from mk_process mkp
+        left join mk_use mk on mkp.mkuid=mk.mkuid
+        left join mk_soncourse_section mkss on mkp.mkcstid=mkss.mkcstid
+        left join mk_course mkc on mkss.mkcsid=mkc.mkcsid
+        where mkp.mkuid=#{param1} and
+        mkp.mkprid in(
+        select max(mkp.mkprid) from mk_process mkp
+        left join mk_use mk on mkp.mkuid=mk.mkuid
+        left join mk_soncourse_section mkss on mkp.mkcstid=mkss.mkcstid
+        left join mk_course mkc on mkss.mkcsid=mkc.mkcsid
+        where mkp.mkuid=#{param1}
+        group by mkc.mkcsid
+        )),
+        b as
+        (
+        select mc.mkcsid,count(mn.mkcstid) notenum  from mk_process mkp
+        left join mk_note mn on mn.mkcstid=mkp.mkcstid
+        left join mk_soncourse_section mkss on mn.mkcstid=mkss.mkcstid
+        left join mk_course mc on mkss.mkcsid=mc.mkcsid
+        where mn.mkuid=#{param1}
+        group by mkp.mkcstid
+        ),
+        c as
+        (
+        select mc.mkcsid,mn.mkatpid,count(mn.mkcstid) asknum from mk_process mkp
+        left join mk_asktopic mn on mn.mkcstid=mkp.mkcstid
+        left join mk_soncourse_section mkss on mn.mkcstid=mkss.mkcstid
+        left join mk_course mc on mkss.mkcsid=mc.mkcsid
+        where mn.mkuid=#{param1}
+        group by mkp.mkcstid
+        )
+        select a.*,b.notenum,c.asknum,c.mkatpid from a left join b
+        on a.mkcsid=b.mkcsid
+        left join c on a.mkcsid=c.mkcsid
+        where a.mkcmoney = 0
+    </select>
+    <!--显示该用户收藏的课程-->
+    <select id="usercoll" resultType="java.util.Map">
+        select *from mk_favorites mkf
+        left join mk_course mkc on mkf.mkcsid=mkc.mkcsid
+        where mkf.mkuid=#{param1}
+    </select>
+    <!--显示这个用户最近编辑过的笔记-->
+    <select id="nownote" resultType="java.util.Map">
+        with a as(
+        select mkc.mkcsid,mkc.mkctitle,mkss.mkcstid,mkss.mkcsname,mkn.mkuid,mkn.mknotecontent,mkn.mknid,mkn.mknctime from mk_note mkn
+        left join mk_soncourse_section mkss
+        on mkn.mkcstid=mkss.mkcstid
+        left join mk_course mkc
+        on mkss.mkcsid=mkc.mkcsid
+        order by mkn.mknctime desc),
+        b as(select mkn.mknid,count(mkf.mknid) fabcount from mk_note mkn
+        left join mk_fabulous mkf
+        on mkn.mknid=mkf.mknid
+        group by mkn.mknid)
+        select a.*,b.fabcount from a left join b
+        on a.mknid=b.mknid
+        where a.mkuid=#{param1}
+        order by mknctime desc
+    </select>
+    <!--显示这个用户在课程的回复以及问答-->
+    <select id="usercouseall" resultType="com.eyelesson.entity.mk_course">
+        with a as(select mkc.*,count(mksc.mkuid) asktopic from mk_course mkc
+        left join mk_soncourse_section mkss on mkc.mkcsid=mkss.mkcsid
+        left join mk_asktopic mksc on mkss.mkcstid=mksc.mkcstid
+        where mkc.mkcsid=#{param1} and mksc.mkuid=#{param2}
+        group by mkc.mkcsid),
+        b as(
+        select mkc.*,count(mkawc.mkuid) answtop from mk_course mkc
+        left join mk_soncourse_section mkss on mkc.mkcsid=mkss.mkcsid
+        left join mk_asktopic mksc on mkss.mkcstid=mksc.mkcstid
+        left join mk_answertopic mkawc on mksc.mkatpid=mkawc.mkatpid
+        where mkc.mkcsid=#{param1} and mkawc.mkuid=#{param2}
+        group by mkc.mkcsid
+        )
+        select a.*,b.answtop from a
+        inner join b
+        on a.mkcsid=b.mkcsid
+    </select>
+    <select id="usercall" resultType="com.eyelesson.entity.mk_course">
+        select * from mk_course mkc
+        left join mk_soncourse_section mkss on mkc.mkcsid=mkss.mkcsid
+        left join mk_asktopic mksc on mkss.mkcstid=mksc.mkcstid
+        where mkc.mkcsid=#{param1}
+        group by mkc.mkcsid
+    </select>
 </mapper>

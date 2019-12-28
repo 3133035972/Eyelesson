@@ -12,15 +12,10 @@ import java.util.Map;
 
 public interface Mk_NodeDAO extends Mapper<Mk_Note> {
 
-    //详细查看这个用户发的笔记
-    Map<String,Object> notes(int mkatpid);
-    //查看前五个相关问题
-    @Select("select *from mk_asktopic\n" +
-            "where mkcstid=#{param1}\n" +
-            "order by mkatptime desc limit 5")
-    List<Mk_asktopic> limit5(int mkcsid);
+    //发布笔记
+    int InsertNode(Mk_Note mkNote);
     //查看这个课程的全部笔记
-    List<Map<String,Object>> NoteAll(int mkuid);
+    List<Map<String,Object>> NoteAll(int mkuid, int mkcsid);
     //这个课程讲师的信息
     Map<String,Object> authall(int couseid);
     //查询登录这个人的信息

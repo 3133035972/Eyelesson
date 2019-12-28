@@ -26,9 +26,11 @@ public class PermissionConfig {
     PosModulesService posModulesService;
 
     public boolean hasPermission(HttpServletRequest request, Authentication authentication){
+
             System.out.println("进入hasPermission");
 
-        // 获取用户身份
+
+            // 获取用户身份
         Object principal = authentication.getPrincipal();
 
         System.out.println("principal:"+principal);
@@ -37,7 +39,7 @@ public class PermissionConfig {
         //判断是否认证成功
         if(principal instanceof UserDetails){
             // 根据用户获取对应的权限
-            Integer posId = (Integer) session.getAttribute("posId");
+            Integer posId = (Integer) session.getAttribute("posid");
             System.out.println(posId);
 
             List<String> permission = permissionService.findPermissionByPosId(posId);

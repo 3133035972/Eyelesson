@@ -1,6 +1,7 @@
 package com.eyelesson.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 import java.util.List;
@@ -9,8 +10,9 @@ import java.util.List;
  * 模块表 菜单
  */
 @Entity
-@Table(name = "modules")
+@Table(name = "jx_modules")
 public class Modules {
+    @Id
     private String moduleCode;//模块编号
     private String moduleText;//模块文本
     private String moduleIconCls;//模块图标

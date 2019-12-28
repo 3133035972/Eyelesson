@@ -1,15 +1,15 @@
 package com.eyelesson.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
-/* 员工表 */
 @Entity
 @Table(name = "mk_staff")
 public class Mk_Staff {
-
 
     @Id
     private Integer mksid;

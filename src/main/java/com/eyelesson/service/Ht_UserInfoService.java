@@ -24,12 +24,8 @@ public class Ht_UserInfoService {
         return htMkUserinfodao.findPosIdByUserName(uname);
     }
 
-
-
     //后台首页根据用户名显示对应的职位和员工名称
     public Map<String,Object> findPosAndEmpNameByUserName(String mkusername){
         return htMkUserinfodao.findPosAndEmpNameByUserName(mkusername);
     }
-
-
 }

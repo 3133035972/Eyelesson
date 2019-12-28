@@ -9,6 +9,7 @@ import java.util.Map;
 @Mapper
 public interface Ht_mk_UserinfoDao extends tk.mybatis.mapper.common.Mapper<Mk_UserInfo> {
 
+
     //后台登录
     @Select("select mkst.*,mkuse.mkuserid,mkuse.mkusername,mkuse.mkupassword from mk_userinfo mkuse\n" +
             "left join mk_staff mkst on mkuse.mksid=mkst.mksid\n" +
@@ -29,6 +30,7 @@ public interface Ht_mk_UserinfoDao extends tk.mybatis.mapper.common.Mapper<Mk_Us
             "join mk_position p on p.mkpid = e.mksposid\n" +
             "where u.mkusername = #{param1}")
     Map<String,Object> findPosAndEmpNameByUserName(String mkusername);
+
 
 
 }

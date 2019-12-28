@@ -65,5 +65,10 @@ public class Mk_StaffService {
         return pageEntity;
     }
 
+    //查询出员工讲师关注量最多的5位员工
+    public List<Mk_Staff> findfive(){
+        return mk_staffDAO.findfive();
+    }
+
 
 }

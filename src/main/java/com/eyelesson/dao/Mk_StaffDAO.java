@@ -27,6 +27,10 @@ public interface Mk_StaffDAO extends tk.mybatis.mapper.common.Mapper<Mk_Staff> {
     @Select("select max(mksid) from mk_staff")
     List<String> findNewStaffId();
 
+    //查询出员工讲师关注量最多的5位员工
+    @Select("select * from mk_staff order by mksfollowcount desc limit 0,5")
+    List<Mk_Staff> findfive();
+
 
 
 }

@@ -9,21 +9,27 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("mk_course")
 public class mk_coursecontroller {
 
     @Autowired
     mk_courseservice  mk_courseservice;
 
+    @Resource
+    HttpSession session;
+
     //显示评论页面和数据
     @RequestMapping("comment_show")
-    public String comment_show(Integer courseid,String uid,Model model,Integer pagenum,Integer pagesize)
+    public String comment_show(Integer courseid, Integer uid, Model model, Integer pagenum, Integer pagesize)
     {
-        Map<String, Object> byCidUid = mk_courseservice.findByCidUid(1, "2");
+        //获取用户的id
+        Mk_Use m= (Mk_Use) session.getAttribute("msgss");
+        Map<String, Object> byCidUid = mk_courseservice.findByCidUid(1, m.getMkuid());
         if(byCidUid.get("mkuid")==null)
         {
             Mk_Staff mksid = mk_courseservice.findStaffId((Integer) byCidUid.get("mksid"));
@@ -58,7 +64,8 @@ public class mk_coursecontroller {
     @RequestMapping("learn_show")
     public String learn_show(Integer courseid,String uid,Model model)
     {
-        Map<String, Object> learn = mk_courseservice.findByCidUid(1, "2");
+        Mk_Use m= (Mk_Use) session.getAttribute("msgss");
+        Map<String, Object> learn = mk_courseservice.findByCidUid(1,2);
         if(learn.get("mkuid")==null)
         {
             Mk_Staff mksid = mk_courseservice.findStaffId((Integer) learn.get("mksid"));
@@ -83,7 +90,8 @@ public class mk_coursecontroller {
     @RequestMapping("ask_show")
     public String askAll(Integer couseid,Integer pagenum,Integer pagesize,Model model)
     {
-        Map<String, Object> byCidUid = mk_courseservice.findByCidUid(1, "2");
+        Mk_Use m= (Mk_Use) session.getAttribute("msgss");
+        Map<String, Object> byCidUid = mk_courseservice.findByCidUid(1, m.getMkuid());
         if(byCidUid.get("mkuid")==null)
         {
             Mk_Staff mksid = mk_courseservice.findStaffId((Integer) byCidUid.get("mksid"));
@@ -138,6 +146,8 @@ public class mk_coursecontroller {
     @RequestMapping("video")
     public String Video(Integer mkcstid,Model model,Integer pageNum,Integer pageSize)
     {
+        //获取用户的id
+        Mk_Use m= (Mk_Use) session.getAttribute("msgss");
         //显示播放的视频
         Mk_soncourse_section son = mk_courseservice.findSon(mkcstid);
         model.addAttribute("son",son);
@@ -146,12 +156,15 @@ public class mk_coursecontroller {
         {
             pageNum=1;
         }
-        PageInfo<Map<String,Object>> pinglist=mk_courseservice.findZhangAll(mkcstid,pageNum,2);
-        model.addAttribute("pageinfo",pinglist);
+
         List<Mk_fathercourse_section> listfu=mk_courseservice.Allfu(son.getMkcsid());
         model.addAttribute("listfu",listfu);
         List<Mk_soncourse_section> listson=mk_courseservice.listson(son.getMkcsid(),mkcstid);
         model.addAttribute("listson",listson);
+        //这个章节下的评论
+        PageInfo<Map<String,Object>> pinglist=mk_courseservice.findZhangAll(mkcstid,pageNum,2);
+        model.addAttribute("pageinfo",pinglist);
+        //获取这个课程的类型
         List<Map<String,Object>> TypeAll=mk_courseservice.findTypeAll(son.getMkcid());
         model.addAttribute("type",TypeAll);
         if(pageNum==null)
@@ -162,7 +175,8 @@ public class mk_coursecontroller {
         model.addAttribute("wenall",wenall);
         try{
             //这本笔记
-            Mk_Note oneNote = mk_courseservice.OneNoteImg(son.getMkcsid());
+            //从session中获取这个用户的id
+            Mk_Note oneNote = mk_courseservice.OneNoteImg(son.getMkcsid(),m.getMkuid());
             model.addAttribute("onenote",oneNote);
         }catch (Exception e){
             model.addAttribute("onenote",null);
@@ -175,7 +189,10 @@ public class mk_coursecontroller {
     @ResponseBody
     public Mk_Note showNote(Integer mkcsid)
     {
-        return mk_courseservice.OneNoteImg(mkcsid);
+        //获取用户的id
+        Mk_Use m= (Mk_Use) session.getAttribute("msgss");
+        //从session获取这个用户的id
+        return mk_courseservice.OneNoteImg(mkcsid,m.getMkuid());
     }
 
     //删除笔记
@@ -193,4 +210,18 @@ public class mk_coursecontroller {
         return mk_courseservice.findzall(mkcstid);
     }
 
+    //添加到学习进程当中
+    @RequestMapping("InsertProcess")
+    @ResponseBody
+    public int InsertProcess(Mk_process mk_process)
+    {
+        return mk_courseservice.InsertProcess(mk_process);
+    }
+
+    /* 课程分类显示 */
+    @RequestMapping("qtkcfl")
+    public String qtkcfl(){
+
+        return "list";
+    }
 }

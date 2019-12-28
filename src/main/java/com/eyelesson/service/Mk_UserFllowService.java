@@ -13,9 +13,9 @@ public class Mk_UserFllowService {
 
     @Resource
     Mk_UserFlower mkUserFlower;
-    @Resource
-    Mk_UseDAO mk_useDAO;
 
+    @Resource
+    Mk_UseDAO mkUseDAO;
 
     //关注用户
     public int InsertAuth(int mkusid,int mkucid)
@@ -31,8 +31,13 @@ public class Mk_UserFllowService {
     //显示个人中心
     public Map<String,Object> users(int mkuid)
     {
-        return mk_useDAO.users(mkuid);
+        return mkUseDAO.users(mkuid);
     }
 
+    //取消收藏
+    public int DeleteMkcsid(int mkcsid,int mkuid)
+    {
+        return mkUserFlower.DeleteMkcsid(mkcsid,mkuid);
+    }
 
 }

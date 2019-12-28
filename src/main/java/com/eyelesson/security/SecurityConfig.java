@@ -8,6 +8,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import javax.annotation.Resource;
 
 @Configuration
 //当前时一个配置类
@@ -16,18 +19,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
+
+
     //拦截请求配置
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-/*
-        // 解决跨域
-        http.headers().frameOptions().disable();
-
-        //设置权限 只在这些路径下面进行权限的设置和访问
-        http.authorizeRequests()//只设置后台请求才能触发认证
-                .antMatchers("/hou/**","/modules/**").access("@permissionConfig.hasPermission(request,authentication)");
-*/
 
         // 解决跨域
         http.headers().frameOptions().disable();
@@ -36,7 +32,63 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()//只设置后台请求才能触发认证
                 .antMatchers("/hou/**","/modules/**").access("@permissionConfig.hasPermission(request,authentication)").and().csrf().disable();
 
-        //认证请求
+        //先认证再授权
+        // 认证请求  对于请求要进行身份认证
+        http.authorizeRequests()
+                // 所有请求  都需要进行身份认证
+                .anyRequest()
+                // 授权
+                .authenticated()
+                // 用于条件的拼接
+                .and()
+                // 使用自定义form表单进行登录
+                .formLogin()
+                // 登录页面的路径
+                .loginPage("/hou/login")
+                // 登录提交的地址,表单的提交路径和配置的路径一致  而这个路径在controller中是否真的存在无所谓
+                //如果真的存在这个路径的话，访问这个路径不代表登录成功，仅仅是需要提交路径而已
+                .loginProcessingUrl("/hou/loginSubmit")
+                // 登录成功默认跳转的地址,在没有访问资源时才会跳转  就是你没有访问的其他路径被拦截的时候（直接访问登录进行登录而登录成功的路径）
+                //如果要是在访问其他路径被拦截到登录页面，则登录成功之后会直接跳转到登录之前访问的路径
+                /*.defaultSuccessUrl("/back/views/index.html")*/
+                .defaultSuccessUrl("/hou/loginSuccess",true)
+                //.successHandler(new ForwardAuthenticationSuccessHandler("/back/views/index.html"))
+                // 失败的地址
+                .failureUrl("/hou/loginError")
+                // form表单对应的用户名属性名，默认必须使用username,password
+                .usernameParameter("mkusername")
+                .passwordParameter("mkupassword")
+                // 不进行认证
+                .permitAll()
+                .and()
+                //禁用csrf跨域请求
+                .csrf()
+                .disable();
+
+
+        //定制退出
+        http.logout()
+                //.logoutUrl("/sys/doLogout")  //只支持定制退出url
+                //支持定制退出url以及httpmethod
+                .logoutRequestMatcher(new AntPathRequestMatcher("/hou/loginOut", "GET"))
+                .addLogoutHandler((request,response,authentication) -> System.out.println("=====1====="))
+                .addLogoutHandler((request,response,authentication) -> System.out.println("=====2======"))
+                .addLogoutHandler((request,response,authentication) -> System.out.println("=====3======"))
+                .logoutSuccessHandler(((request, response, authentication) -> {
+                    System.out.println("=====4=======");
+                    response.sendRedirect("/hou/login");
+                }))
+                //.logoutSuccessUrl("/html/logoutsuccess2.html")  //成功退出的时候跳转的页面
+                //.deleteCookies()  //底层也是使用Handler实现的额
+                //清除认证信息
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
+        ;  //使session失效
+
+
+
+
+        /*//认证请求
         http.authorizeRequests()
                 //只设置后台请求才能触发认证
                 .antMatchers("/hou/**","/modules/**")
@@ -69,16 +121,12 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .and()
                 //禁用csrf跨域请求
                 .csrf()
-                .disable();
+                .disable();*/
+
+
+
 
     }
-
-    //配置不拦截的路径 后台的资源放行
-    @Override
-    public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/hts/**","/res/**");
-    }
-
 
     @Autowired
     AuthenticationProviderConfig authenticationProviderConfig;
@@ -89,6 +137,32 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
         //认证生成器
         auth.authenticationProvider(authenticationProviderConfig);
     }
+
+
+    //配置不拦截的路径 后台的资源放行
+    @Override
+    public void configure(WebSecurity web) {
+
+        web.ignoring().antMatchers(
+                // 静态资源
+                "/hts/**","/res/**",
+                // Mk_UseController
+                "/Mk_Use/**",
+                // Mk_StaffController
+                "/Mk_Staff/**",
+                // Mk_asktopicController
+                "/InsertAsktopic","/findNode","/InsertAnswer","/InsertAnAnwer",
+                // Mk_CommentController
+                "/InsertComment",
+                // mk_coursecontroller
+                "/comment_show","/learn_show","/ask_show",
+                ""
+
+        );
+
+    }
+
+
 
 
 }

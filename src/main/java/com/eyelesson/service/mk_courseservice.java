@@ -2,6 +2,7 @@ package com.eyelesson.service;
 
 import com.eyelesson.dao.mk_coursedao;
 import com.eyelesson.entity.*;
+import com.eyelesson.util.PageDatas;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class mk_courseservice {
     mk_coursedao mk_coursedao;
 
     //查询该用户查看的课程
-    public Map<String,Object> findByCidUid(Integer couseid,String uid)
+    public Map<String,Object> findByCidUid(Integer couseid,Integer uid)
     {
         Map<String,Object> count = mk_coursedao.findByCouridUid(couseid, uid);
         if(count==null)
@@ -61,30 +62,33 @@ public class mk_courseservice {
 
     //一对多
     //获取子节点中所有父节点
-    public List<Mk_soncourse_section> findzi(int mkscid)
+    public List<Mk_soncourse_section> findzi(int mkscid,int mkcsid)
     {
-        return mk_coursedao.listzi(mkscid);
+        return mk_coursedao.listzi(mkscid,mkcsid);
     }
 
     //先获取某个课程的所有的父级
     public List<Mk_fathercourse_section> Allfu(int courseid)
     {
-        List<Mk_fathercourse_section> allfu = mk_coursedao.listfu(1);
+        List<Mk_fathercourse_section> allfu = mk_coursedao.listfu(courseid);
 
         for(Mk_fathercourse_section mk:allfu)
         {
-            List<Mk_soncourse_section> allzi=mk_coursedao.listzi(mk.getMkfcsid());
+            List<Mk_soncourse_section> allzi=mk_coursedao.listzi(mk.getMkfcsid(),mk.getMkcourseid());
             mk.setChildrens(allzi);
         }
         return allfu;
     }
 
     //获取这个课程下面的笔记和图片1个 一对多
-    public Mk_Note OneNoteImg(Integer couseid)
+    public Mk_Note OneNoteImg(Integer couseid,Integer mkuid)
     {
-        Mk_Note note = mk_coursedao.findTimedesc(couseid);
-        List<Mk_NoteImg> noteImg = mk_coursedao.findNoteImg(note.getMknid());
-        note.setChildrens(noteImg);
+        Mk_Note note = mk_coursedao.findTimedesc(couseid,mkuid);
+        if(note!=null)
+        {
+            List<Mk_NoteImg> noteImg = mk_coursedao.findNoteImg(note.getMknid());
+            note.setChildrens(noteImg);
+        }
         return note;
     }
 
@@ -109,7 +113,7 @@ public class mk_courseservice {
     public PageInfo<Map<String,Object>> findZhangAll(int mkcstid,Integer pageNum,Integer pageSize)
     {
         PageHelper.startPage(pageNum,pageSize);
-        PageInfo<Map<String,Object>> pageInfo=new PageInfo<>(mk_coursedao.findZhangAll(mkcstid));
+        PageInfo<Map<String,Object>> pageInfo=new PageInfo<Map<String,Object>>(mk_coursedao.findZhangAll(mkcstid));
         return pageInfo;
     }
     //显示这个章节下面的所有课程
@@ -121,7 +125,7 @@ public class mk_courseservice {
     public PageInfo<Map<String,Object>> findAskAll(int coueseid,Integer pagenum,Integer pagesize)
     {
         PageHelper.startPage(pagenum,pagesize);
-        PageInfo<Map<String,Object>> findaskAll=new PageInfo<>(mk_coursedao.findaskAll(coueseid));
+        PageInfo<Map<String,Object>> findaskAll=new PageInfo<Map<String,Object>>(mk_coursedao.findaskAll(coueseid));
         return findaskAll;
     }
     //显示这个类型的课程
@@ -145,7 +149,7 @@ public class mk_courseservice {
     public PageInfo<Map<String,Object>> wenAll(int mkcstid,Integer pagenum,Integer pageSize)
     {
         PageHelper.startPage(pagenum,pageSize);
-        PageInfo<Map<String,Object>> all=new PageInfo<>(mk_coursedao.findZWen(mkcstid));
+        PageInfo<Map<String,Object>> all=new PageInfo<Map<String,Object>>(mk_coursedao.findZWen(mkcstid));
         return all;
     }
     //这个章节下的评论
@@ -154,7 +158,85 @@ public class mk_courseservice {
         return mk_coursedao.findZhangAll(mkcstid);
     }
 
+    //学习进程中插入
+    public int InsertProcess(Mk_process mkProcess)
+    {
+        Mk_process findprocess = mk_coursedao.findprocess(mkProcess.getMkuid(), mkProcess.getMkcstid());
+        if(findprocess==null)
+        {
+            Integer mkcstid = mk_coursedao.selectMaxmkcstid(mkProcess.getMkcsid());
+            if(mkcstid==mkProcess.getMkcstid())
+            {
+                //插入已经学完了
+                mkProcess.setMkprid(1);
+                return mk_coursedao.InsertProcess(mkProcess);
+            }
+            //正常插入
+            return mk_coursedao.InsertProcess(mkProcess);
+        }
+        Integer inmkcstid = mk_coursedao.selectMaxmkcstid(mkProcess.getMkcsid());
+        if(inmkcstid==mkProcess.getMkcstid())
+        {
+            //修改时间和进程的进度
+            Mk_process mkProcess1=new Mk_process();
+            mkProcess1.setMkprduration(mkProcess.getMkprduration());
+            mkProcess1.setMkpsrarus(1);
+            mkProcess1.setMkuid(mkProcess.getMkuid());
+            mkProcess1.setMkcstid(mkProcess.getMkcstid());
+            return mk_coursedao.UpdateProcess(mkProcess1);
+        }
+        //只修改时间
+        Mk_process mkProcess1=new Mk_process();
+        mkProcess1.setMkprduration(mkProcess.getMkprduration());
+        mkProcess1.setMkuid(mkProcess.getMkuid());
+        mkProcess1.setMkcstid(mkProcess.getMkcstid());
+        return mk_coursedao.UpdateProcess1(mkProcess1);
 
+
+
+    }
+
+    /*  前台显示免费课程 4条信息 */
+    public List<mk_course> qtmfFour(){
+        return mk_coursedao.qtmfFour();
+    }
+
+    /*  前台显示实战课程 4条信息 */
+    public List<mk_course> qtszFour(){
+        return mk_coursedao.qtszFour();
+    }
+
+
+    //查询免费信息
+    public PageDatas<Map<String,Object>> flselect(int page, int limit, Integer mkdfid, Integer mkcid, Integer mkctid){
+        PageHelper.startPage(page,limit);
+        List<Map<String,Object>> jx_studnets = mk_coursedao.flselect(mkdfid,mkcid,mkctid);
+        PageInfo<Map<String,Object>> pageInfo=new PageInfo<Map<String,Object>>(jx_studnets);
+        PageDatas<Map<String,Object>> pd = new PageDatas<Map<String,Object>>();
+        pd.setCurPage(page);//当前第几页
+        pd.setPageSize(limit);//每页记录数
+        pd.setTotalCount((int) pageInfo.getTotal());//总记录数
+        pd.setTotalPage(pageInfo.getPages());//总共页数
+        pd.setCount((int) pageInfo.getTotal());//总记录数
+        pd.setData(jx_studnets);//当前页的数据
+        return pd;
+    }
+
+
+    //查询实战信息
+    public PageDatas<Map<String,Object>> szflselect(int page, int limit,Integer mkcid, Integer mkctid){
+        PageHelper.startPage(page,limit);
+        List<Map<String,Object>> jx_studnets = mk_coursedao.szflselect(mkcid,mkctid);
+        PageInfo<Map<String,Object>> pageInfo=new PageInfo<Map<String,Object>>(jx_studnets);
+        PageDatas<Map<String,Object>> pd = new PageDatas<Map<String,Object>>();
+        pd.setCurPage(page);//当前第几页
+        pd.setPageSize(limit);//每页记录数
+        pd.setTotalCount((int) pageInfo.getTotal());//总记录数
+        pd.setTotalPage(pageInfo.getPages());//总共页数
+        pd.setCount((int) pageInfo.getTotal());//总记录数
+        pd.setData(jx_studnets);//当前页的数据
+        return pd;
+    }
 
 
 

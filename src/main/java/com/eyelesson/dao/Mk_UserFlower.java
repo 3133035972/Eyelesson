@@ -16,5 +16,7 @@ public interface Mk_UserFlower {
     //取消关注作者
     @Delete("delete from mk_userconcerns where mkusid=#{param1} and mkucid=#{param2}")
     int DeleteAuth(int mkusid, int mkucid);
-
+    //取消收藏
+    @Delete("delete from mk_favorites where mkcsid=#{param1} and mkuid=#{param2}")
+    int DeleteMkcsid(int mkcsid, int mkuid);
 }

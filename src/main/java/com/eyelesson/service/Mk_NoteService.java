@@ -25,28 +25,21 @@ public class Mk_NoteService {
     //发布笔记
     public int Insert(Mk_Note mk_note)
     {
-        return mkNodeDAO.insertSelective(mk_note);
+        int i = mkNodeDAO.InsertNode(mk_note);
+        return i;
     }
     //发布笔记图片
     public int InsertImg(Mk_NoteImg mkNoteImg)
     {
         return mkNoteImgDAO.insert(mkNoteImg);
     }
-    //查看详细的笔记
-    public Map<String,Object> nodes(int mktapid)
-    {
-        return mkNodeDAO.notes(mktapid);
-    }
-    //查看前5个相关问题
-    public List<Mk_asktopic> limit5(int mkcstid)
-    {
-        return mkNodeDAO.limit5(mkcstid);
-    }
+
+
     //查看这个课程的全部笔记
-    public PageInfo<Map<String,Object>> NoteAll(int mkuid,int pagenum,int pagesize)
+    public PageInfo<Map<String,Object>> NoteAll(int mkuid,int pagenum,int pagesize,int mkcsid)
     {
         PageHelper.startPage(pagenum,pagesize);
-        PageInfo<Map<String,Object>> pageInfo=new PageInfo<>(mkNodeDAO.NoteAll(mkuid));
+        PageInfo<Map<String,Object>> pageInfo=new PageInfo<Map<String,Object>>(mkNodeDAO.NoteAll(mkuid,mkcsid));
         return pageInfo;
     }
     //查询当前课程的信息

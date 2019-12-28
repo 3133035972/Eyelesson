@@ -1,5 +1,7 @@
 package com.eyelesson.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -18,6 +20,79 @@ public class Mk_answertopic {
     private Integer mkuid;
     private Integer mkaid;
     private Date mkantptime;
+    private Integer mkanum;
+
+    @Transient
+    //这里是存储父级节点下面的自己点的id
+    private String str;
+    @Transient
+    private Integer mkcstid;
+    @Transient
+    private String mkcsname;
+    //发帖人的id
+    @Transient
+    private Integer nodeuid;
+    @Transient
+    private String mkatitle;
+
+    @Transient
+    private Integer tanswer;
+
+    public Integer getNodeuid() {
+        return nodeuid;
+    }
+
+    public void setNodeuid(Integer nodeuid) {
+        this.nodeuid = nodeuid;
+    }
+
+    public Integer getTanswer() {
+        return tanswer;
+    }
+
+    public void setTanswer(Integer tanswer) {
+        this.tanswer = tanswer;
+    }
+
+    public String getMkatitle() {
+        return mkatitle;
+    }
+
+    public void setMkatitle(String mkatitle) {
+        this.mkatitle = mkatitle;
+    }
+
+    public Integer getMkcstid() {
+        return mkcstid;
+    }
+
+    public void setMkcstid(Integer mkcstid) {
+        this.mkcstid = mkcstid;
+    }
+
+    public String getMkcsname() {
+        return mkcsname;
+    }
+
+    public void setMkcsname(String mkcsname) {
+        this.mkcsname = mkcsname;
+    }
+
+    public String getStr() {
+        return str;
+    }
+
+    public void setStr(String str) {
+        this.str = str;
+    }
+
+    public Integer getMkanum() {
+        return mkanum;
+    }
+
+    public void setMkanum(Integer mkanum) {
+        this.mkanum = mkanum;
+    }
 
     @Override
     public String toString() {
@@ -40,11 +115,20 @@ public class Mk_answertopic {
     private String mkuname;
     @Transient
     private String mkuimg;
-
+    @Transient
+    private Integer fab;
     @Transient
     private String uname;
     @Transient
     private String uimg;
+
+    public Integer getFab() {
+        return fab;
+    }
+
+    public void setFab(Integer fab) {
+        this.fab = fab;
+    }
 
     public String getUname() {
         return uname;

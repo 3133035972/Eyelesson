@@ -3,7 +3,12 @@ package com.eyelesson.entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.util.List;
+import java.util.Map;
 
+
+/* 课程表 */
 @Entity
 @Table(name = "mk_course")
 public class mk_course {
@@ -25,6 +30,49 @@ public class mk_course {
     private Integer mkcstate;
     private String mkcourseknow;
     private String mkteacherlearwhat;
+    /* 忽略 课程难度表 多对一  */
+    @Transient
+    private Mk_difficulty mk_difficultys;
+    @Transient
+    private Integer asktopic;
+    @Transient
+    private Integer answtop;
+    @Transient
+    private List<Mk_asktopic> topchildren;
+    @Transient
+    private List<Mk_answertopic> answerchildren;
+
+    public Integer getAsktopic() {
+        return asktopic;
+    }
+
+    public void setAsktopic(Integer asktopic) {
+        this.asktopic = asktopic;
+    }
+
+    public Integer getAnswtop() {
+        return answtop;
+    }
+
+    public void setAnswtop(Integer answtop) {
+        this.answtop = answtop;
+    }
+
+    public List<Mk_asktopic> getTopchildren() {
+        return topchildren;
+    }
+
+    public void setTopchildren(List<Mk_asktopic> topchildren) {
+        this.topchildren = topchildren;
+    }
+
+    public List<Mk_answertopic> getAnswerchildren() {
+        return answerchildren;
+    }
+
+    public void setAnswerchildren(List<Mk_answertopic> answerchildren) {
+        this.answerchildren = answerchildren;
+    }
 
     @Override
     public String toString() {
@@ -45,6 +93,11 @@ public class mk_course {
                 ", mkcstate=" + mkcstate +
                 ", mkcourseknow='" + mkcourseknow + '\'' +
                 ", mkteacherlearwhat='" + mkteacherlearwhat + '\'' +
+                ", mk_difficultys=" + mk_difficultys +
+                ", asktopic=" + asktopic +
+                ", answtop=" + answtop +
+                ", topchildren=" + topchildren +
+                ", answerchildren=" + answerchildren +
                 '}';
     }
 
@@ -174,5 +227,13 @@ public class mk_course {
 
     public void setMkteacherlearwhat(String mkteacherlearwhat) {
         this.mkteacherlearwhat = mkteacherlearwhat;
+    }
+
+    public Mk_difficulty getMk_difficultys() {
+        return mk_difficultys;
+    }
+
+    public void setMk_difficultys(Mk_difficulty mk_difficultys) {
+        this.mk_difficultys = mk_difficultys;
     }
 }

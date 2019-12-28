@@ -12,7 +12,4 @@ public class MyWebConfigurer implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/img/**").addResourceLocations("file:D:/BaiduNetdiskDownload/");
     }
-
-
-
 }

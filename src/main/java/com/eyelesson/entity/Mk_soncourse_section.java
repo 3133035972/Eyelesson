@@ -3,6 +3,7 @@ package com.eyelesson.entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "mk_soncourse_section")
@@ -16,8 +17,77 @@ public class Mk_soncourse_section {
     private String mkcsurl;
     private Integer mkcstime;
     private Integer mkonsale;
-
+    private String mkssimg;
     private Integer mkcid;
+
+    @Transient
+    private Integer mksid;
+    @Transient
+    private String mksimg;
+    @Transient
+    private String mkskill;
+    @Transient
+    private Integer mkuid;
+    @Transient
+    private String mkuimg;
+    @Transient
+    private String mkuintroduce;
+
+    public Integer getMksid() {
+        return mksid;
+    }
+
+    public void setMksid(Integer mksid) {
+        this.mksid = mksid;
+    }
+
+    public String getMksimg() {
+        return mksimg;
+    }
+
+    public void setMksimg(String mksimg) {
+        this.mksimg = mksimg;
+    }
+
+    public String getMkskill() {
+        return mkskill;
+    }
+
+    public void setMkskill(String mkskill) {
+        this.mkskill = mkskill;
+    }
+
+    public Integer getMkuid() {
+        return mkuid;
+    }
+
+    public void setMkuid(Integer mkuid) {
+        this.mkuid = mkuid;
+    }
+
+    public String getMkuimg() {
+        return mkuimg;
+    }
+
+    public void setMkuimg(String mkuimg) {
+        this.mkuimg = mkuimg;
+    }
+
+    public String getMkuintroduce() {
+        return mkuintroduce;
+    }
+
+    public void setMkuintroduce(String mkuintroduce) {
+        this.mkuintroduce = mkuintroduce;
+    }
+
+    public String getMkssimg() {
+        return mkssimg;
+    }
+
+    public void setMkssimg(String mkssimg) {
+        this.mkssimg = mkssimg;
+    }
 
     public Integer getMkcid() {
         return mkcid;
@@ -37,7 +107,14 @@ public class Mk_soncourse_section {
                 ", mkcsurl='" + mkcsurl + '\'' +
                 ", mkcstime=" + mkcstime +
                 ", mkonsale=" + mkonsale +
+                ", mkssimg='" + mkssimg + '\'' +
                 ", mkcid=" + mkcid +
+                ", mksid=" + mksid +
+                ", mksimg='" + mksimg + '\'' +
+                ", mkskill='" + mkskill + '\'' +
+                ", mkuid=" + mkuid +
+                ", mkuimg='" + mkuimg + '\'' +
+                ", mkuintroduce='" + mkuintroduce + '\'' +
                 '}';
     }
 

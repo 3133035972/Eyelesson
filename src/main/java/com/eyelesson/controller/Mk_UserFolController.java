@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Map;
 
 @Controller
-@RequestMapping("Mk_UserFol")
 public class Mk_UserFolController {
 
     @Autowired
@@ -26,15 +25,12 @@ public class Mk_UserFolController {
     {
         return mkUserFllowService.InsertAuth(mkusid, mkuid);
     }
-
-
-    //显示个人中心页面
-    //根据当前登录的人跳转他的个人中心
-    @RequestMapping("Useshow")
-    public String useshow(Integer mkuid, Model model)
+    //取消收藏
+    @RequestMapping("DeleteMkcsid")
+    @ResponseBody
+    public int DeleteMkcsid(int mkcsid,int mkuid)
     {
-        Map<String, Object> users = mkUserFllowService.users(mkuid);
-        model.addAttribute("users",users);
-        return "personal";
+        return mkUserFllowService.DeleteMkcsid(mkcsid,mkuid);
     }
+
 }

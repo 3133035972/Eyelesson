@@ -1,5 +1,7 @@
 package com.eyelesson.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -30,6 +32,7 @@ public class Mk_Use {
     private Integer mkustate;
     private Integer mkfollowcount;
     private Integer mkuintegral;
+
     private Integer mkposid;
 
     @Override

@@ -2,21 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="com.eyelesson.dao.Mk_NodeDAO">
 
-    <select id="notes" resultType="java.util.Map">
-        select mkas.mkatpid,mkas.mkatitle,mkas.mkatpcontent,mkas.mkapreview,
-        mkas.mkatptime,mkus.mkuid,mkus.mkuname,mkus.mkuimg,mkss.mkfcsid,mkss.mkcstid,mkss.mkcsname,mkco.mkcsid,
-        mkco.mkctitle,mkco.mkcontent,mkcc.mkcname,mkct.mkctname,
-        count(mkawc.mkatpid)count from mk_asktopic mkas
-        left join mk_soncourse_section mkss
-        on mkas.mkcstid = mkss.mkcstid
-        left join mk_answertopic mkawc on mkas.mkatpid=mkawc.mkatpid
-        left join mk_course mkco on mkss.mkcsid=mkco.mkcsid
-        left join mk_curriculum mkcc on mkco.mkcid=mkcc.mkcid
-        left join mk_curriculumType mkct on mkcc.mkctid=mkct.mkctid
-        left join mk_use mkus on mkas.mkuid=mkus.mkuid
-        where mkas.mkatpid=#{param1}
-        group by mkawc.mkatpid
-    </select>
+    <insert id="InsertNode" parameterType="com.eyelesson.entity.Mk_Note">
+        insert into mk_note(mknid,mknotecontent,mkcstid,mkuid,mknctime)
+        select max(mknid)+1,#{mknotecontent},#{mkcstid},#{mkuid},now() from mk_note
+    </insert>
+
+
+
 
     <select id="NoteAll" resultType="java.util.Map">
 
@@ -24,14 +16,14 @@
         left join mk_soncourse_section mkss
         on mn.mkcstid=mkss.mkcstid
         left join mk_Fabulous mf on mn.mknid=mf.mknid
-        where mn.mkuid=#{param1}
+        where mn.mkuid=#{param1} and mn.mkcstid=#{param2}
         group by mn.mknid
 
     </select>
 
 
     <select id="authall" resultType="java.util.Map">
-        select mkc.mkcsid,mkc.mkctitle,mkdf.mkdfname,mkc.mkctime,mkc.mkclearned,mkc.mkcscore,mkc.mkteacherlearwhat,mku.mkuname,mku.mkuimg,mku.mkuintroduce,
+        select mkc.mkcsid,mkc.mkctitle,mkdf.mkdfname,mkc.mkctime,mkc.mkclearned,mkc.mkcscore,mkc.mkteacherlearwhat,mkc.mkcimg,mku.mkuname,mku.mkuimg,mku.mkuintroduce,
         mks.mksname,mks.mksimg from mk_course mkc left join mk_use mku
         on mkc.mkuid=mku.mkuid
         left join mk_staff mks on mkc.mksid=mks.mksid

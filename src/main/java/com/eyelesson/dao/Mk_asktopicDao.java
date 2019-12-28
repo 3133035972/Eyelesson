@@ -28,9 +28,11 @@ public interface Mk_asktopicDao  extends Mapper<Mk_asktopic> {
     int UpdateMkapreview(Integer mkatpid);
 
     //显示这个问题下的全部 回答 父回答以及全部的子回答
-    @Select("select mkaw.*,mku.mkuname,mku.mkuimg  from mk_answertopic mkaw \n" +
+    @Select("select mkaw.*,mku.mkuname,mku.mkuimg,count(mkf.mkatpid) fab  from mk_answertopic mkaw\n" +
             "left join mk_use mku on mkaw.mkuid=mku.mkuid\n" +
-            "where mkatpid=#{param1} and mkaid=0")
+            "left join mk_fabulous mkf on mkaw.mkantid=mkf.mkatpid\n" +
+            "where mkaw.mkatpid=#{param1} and mkaid=0\n" +
+            "group by mkaw.mkantid")
     List<Mk_answertopic> listanswer(int mkatpid);
 
     //显示下面的子节点
@@ -41,4 +43,33 @@ public interface Mk_asktopicDao  extends Mapper<Mk_asktopic> {
             "where mkaw.mkaid=#{param1}")
     List<Mk_answertopic> listzi(int mkaid);
 
+    //查询这个节点下最大的编号
+    @Select("select max(mkanum)+1 from mk_answertopic where mkatpid=#{param1} ")
+    Integer mknum(int mkatpid);
+
+    //显示出来回答所在的顺序
+    @Select("select mkaw.mkantid as mkantid,mkaw.mkatpid,mkaw.mkatpcontent,mkaw.mkuid,\n" +
+            "mkaw.mkaid,mkaw.mkanum,mkaw.mkantptime,mku.mkuname,mku.mkuimg,mku1.mkuname as uname,mku1.mkuimg as uimg,\n" +
+            "count(mkf.mkatpid) fab  \n" +
+            "from mk_answertopic mkaw\n" +
+            "left join mk_use mku on mkaw.mkuid=mku.mkuid\n" +
+            "left join mk_fabulous mkf on mkaw.mkantid=mkf.mkatpid\n" +
+            "left join mk_answertopic mka on mka.mkantid=mkaw.mkaid\n" +
+            "left join mk_use mku1 on mka.mkuid=mku1.mkuid \n" +
+            "where mkaw.mkantid in(${param1})\n" +
+            "group by mkaw.mkantid\n" +
+            "order by field(mkaw.mkantid,${param1}) ")
+    List<Mk_answertopic> listall(String str);
+    //回答问题
+    @Insert("insert into mk_answertopic (mkatpid,mkatpcontent,mkuid,mkaid,mkanum)values(#{mkatpid},#{mkatpcontent},#{mkuid},#{mkaid},#{mkanum})")
+    int InsertAnswer(Mk_answertopic mkAnswertopic);
+
+    @Select("select *From mk_asktopic order by mkatpid ${parma1}")
+    List<Mk_answertopic> findAll(String tsra);
+
+    //查询出这个问题的内容以及回复的人
+    @Select("select mkatp.*,mkatitle from mk_answertopic mkatp\n" +
+            "left join mk_asktopic mkask on mkatp.mkatpid=mkask.mkatpid\n" +
+            "where mkatp.mkantid=#{param1}")
+    Mk_answertopic findMkantid(int mkantid);
 }

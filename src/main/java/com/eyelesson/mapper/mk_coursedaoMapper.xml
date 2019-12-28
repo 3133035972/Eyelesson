@@ -15,36 +15,38 @@
     <!--根据课程id查询出来-->
     <select id="findCourid" resultType="java.util.Map">
         select * from mk_course mkc inner join mk_difficulty mkd on mkc.mkdfid
-        =mkd.mkdfid left join mk_soncourse_section mkss on mkc.mkcsid=mkss.mkcstid
-        left join mk_process mkpr on mkpr.mkcstid=mkss.mkcstid
+        =mkd.mkdfid
+        left join mk_soncourse_section mkss on mkc.mkcsid=mkss.mkcsid
         where mkc.mkcsid=#{param1}
+        group by mkc.mkcsid
     </select>
 
     <!-- 获取所有的评论以及点赞-->
     <select id="findPingAll" resultType="java.util.Map">
         with
         c as (
-        select mkco.mkcmid,mkss.mkcsid,mkus.mkuimg,mkus.mkuname,mkco.mkcmcontent,mkss.mkcsname,mkco.mkcmcreatetime
-        from mk_comment mkco inner join mk_soncourse_section mkss
+        select mkco.mkcmid,mkss.mkcsid,mkus.mkuimg,mkus.mkuid,mkus.mkuname,mkco.mkcmcontent,mkss.mkcsname,mkco.mkcmcreatetime
+        from mk_comment mkco left join mk_soncourse_section mkss
         on mkco.mkcstid=mkss.mkcstid inner join mk_use mkus on mkco.mkuid=mkus.mkuid
         where mkcsid = #{param1}
         group by mkco.mkcmid
 
         )
-        select count(c.mkcmid) fabulous,c.* from c inner join mk_fabulous
+        select count(f.mkcmid) fabulous,c.* from c left join mk_fabulous
         f on c.mkcmid=f.mkcmid group by c.mkcmid
         order by c.mkcmcreatetime desc
     </select>
 <!-- 查询某个章节的所有评论-->
     <select id="findZhangAll" resultType="java.util.Map">
-        select mkcm.mkcmid,mkus.mkuname,mkus.mkuimg,mkss.mkcsid,mkcm.mkcmcreatetime,mkcm.mkcmcontent,mkss.mkcsname,
+        select mkcm.mkcmid,mkus.mkuid,mkus.mkuname,mkus.mkuimg,mkss.mkcsid,mkcm.mkcmcreatetime,mkcm.mkcmcontent,mkss.mkcsname,
         count(mkf.mkcmid) count,mkss.mkcstid
-        from mk_comment mkcm inner join mk_soncourse_section mkss
+        from mk_comment mkcm left join mk_soncourse_section mkss
         on mkcm.mkcstid=mkss.mkcstid
-        inner join mk_fabulous mkf on mkcm.mkcmid=mkf.mkcmid
-        inner join mk_use mkus on mkf.mkuid=mkus.mkuid
+        left join mk_fabulous mkf on mkcm.mkcmid=mkf.mkcmid
+        left join mk_use mkus on mkcm.mkuid=mkus.mkuid
         where mkss.mkcstid=#{param1}
-        group by mkcm.mkuid
+        group by mkcm.mkcmid
+        order by mkcm.mkcmcreatetime desc
     </select>
     <!--查询出这个科目下所有的问答-->
     <select id="findaskAll" resultType="java.util.Map">
@@ -74,11 +76,11 @@
         mkc.mkcsid,count(mkf.mknid) count
         from mk_note mkn inner join  mk_use mku
         on mkn.mkuid=mku.mkuid
-        left join mk_soncourse_section mkss
-        on mkn.mkcstid=mkss.mkcstid left join
+        inner join mk_soncourse_section mkss
+        on mkn.mkcstid=mkss.mkcstid inner join
         mk_course mkc on mkss.mkcsid=mkc.mkcsid
         left join mk_Fabulous mkf on mkn.mknid=mkf.mknid
-        where mkc.mkcsid=#{param1}
+        where mkc.mkcsid=#{param1} and mkn.mkuid=#{param2}
         group by mkn.mknid
         order by mkn.mknctime desc limit 0,1)
         select *from a
@@ -99,7 +101,7 @@
     </select>
 <!--    这个章节下面的所有问答-->
     <select id="findZWen" resultType="java.util.Map">
-        select mkas.mkatpid,mkas.mkuid,mku.mkuname,mku.mkuimg,mkas.mkatitle,mkas.mkatpcontent,mkas.mkatptime,mkas.mkapreview,mkss.mkcsname,mkss.mkcsurl,mkss.mkcstid,count(mkas.mkatpid)
+        select mkas.mkatpid,mkas.mkuid,mku.mkuname,mku.mkuimg,mkas.mkatitle,mkas.mkatpcontent,mkas.mkatptime,mkas.mkapreview,mkss.mkcsname,mkss.mkcsurl,mkss.mkcstid,count(mkan.mkatpid)
         count,mkua.mkuname as uname,mkan.mkuid as uid from mk_asktopic mkas
         left join mk_soncourse_section mkss
         on mkas.mkcstid=mkss.mkcstid

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 
 @Controller
-@RequestMapping("Mk_Comment")
 public class Mk_CommentController {
 
     @Resource
@@ -22,5 +21,7 @@ public class Mk_CommentController {
     {
         return mkCommentService.InsertCommet(mkComment);
     }
+
+    //显示404
 
 }

@@ -1,8 +1,11 @@
 package com.eyelesson.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.Date;
 
 @Entity
@@ -16,6 +19,28 @@ public class Mk_asktopic {
     private Date mkatptime;
     private Integer mkuid;
     private Integer mkapreview;
+
+    @Transient
+    private String mkcsname;
+
+    @Transient
+    private Integer answer;
+
+    public Integer getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(Integer answer) {
+        this.answer = answer;
+    }
+
+    public String getMkcsname() {
+        return mkcsname;
+    }
+
+    public void setMkcsname(String mkcsname) {
+        this.mkcsname = mkcsname;
+    }
 
     @Override
     public String toString() {

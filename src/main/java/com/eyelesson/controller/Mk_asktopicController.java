@@ -2,30 +2,38 @@ package com.eyelesson.controller;
 
 import com.eyelesson.entity.Mk_answertopic;
 import com.eyelesson.entity.Mk_asktopic;
-import com.eyelesson.service.Mk_NoteService;
 import com.eyelesson.service.Mk_asktopicService;
+import com.eyelesson.util.EditorImg;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("Mk_asktopic")
 public class Mk_asktopicController {
 
     @Autowired
     Mk_asktopicService mkAsktopicService;
 
+    @Resource
+    EditorImg editorImg;
     //发布问题
     @RequestMapping("InsertAsktopic")
     @ResponseBody
-    public int InsertAsktopic(Mk_asktopic mkAsktopic)
-    {
-        System.out.println(mkAsktopic);
+    public int InsertAsktopic(Mk_asktopic mkAsktopic, MultipartFile[] file) throws Exception {
+
+        editorImg.EditorJsonObject(file);
+        if(mkAsktopic.getMkatpcontent()==null)
+        {
+            return 1;
+        }
         return mkAsktopicService.insertasktop(mkAsktopic);
     }
     //通过点击这个问题来判断ip来增加浏览量
@@ -41,5 +49,27 @@ public class Mk_asktopicController {
         model.addAttribute("answlist",answlist);
         return "FineNode";
     }
+    //回答问题
+    @RequestMapping("InsertAnswer")
+    @ResponseBody
+    public int InsertAnswer(Mk_answertopic mkAnswertopic,MultipartFile[] files) throws JSONException {
+        editorImg.EditorJsonObject(files);
+        if(mkAnswertopic.getMkatpcontent()==null)
+        {
+            return 1;
+        }
+        return mkAsktopicService.InsertAnswer(mkAnswertopic);
+    }
 
+    //回复的回复
+    @RequestMapping("InsertAnAnwer")
+    @ResponseBody
+    public int InsertAnAnwer(Mk_answertopic mkAnswertopic,MultipartFile[] files) throws JSONException {
+        editorImg.EditorJsonObject(files);
+        if(mkAnswertopic.getMkatpcontent()==null)
+        {
+            return 1;
+        }
+        return mkAsktopicService.InsertAnAnswer(mkAnswertopic);
+    }
 }
