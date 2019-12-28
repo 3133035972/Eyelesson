@@ -62,7 +62,7 @@ public class Mk_UseController {
         System.out.println("密码:"+ mkUse.getMkupassword());
         Mk_Use m = mk_useService.selectOne(mkUse);
         System.out.println(m);
-        session.setAttribute("msgss",m);
+        session.setAttribute("users",m);
         return m;
     }
 
