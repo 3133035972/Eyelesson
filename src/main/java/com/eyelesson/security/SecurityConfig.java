@@ -29,7 +29,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
         //设置权限 只在这些路径下面进行权限的设置和访问
         http.authorizeRequests()//只设置后台请求才能触发认证
-                .antMatchers("/hou/**","/modules/**","/ht_mk_course/**","/ht_mk_wheelplanting/**").access("@permissionConfig.hasPermission(request,authentication)").and().csrf().disable();
+                .antMatchers("/hou/**","/modules/**","/ht_mk_course/**","/ht_mk_wheelplanting/**","/ht_mk_position/**").access("@permissionConfig.hasPermission(request,authentication)").and().csrf().disable();
 
         //先认证再授权
         // 认证请求  对于请求要进行身份认证
@@ -141,7 +141,6 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
 
-
         web.ignoring().antMatchers(
                 // 静态资源
                 "/hts/**","/res/**","/img/**",
@@ -162,8 +161,5 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
         );
 
     }
-
-
-
 
 }
