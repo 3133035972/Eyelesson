@@ -1,10 +1,10 @@
 package com.eyelesson.dao;
 
 import com.eyelesson.entity.*;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.mapping.FetchType;
 import org.omg.CORBA.OBJECT_NOT_EXIST;
+import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
@@ -49,11 +49,14 @@ public interface Mk_UseDAO extends Mapper<Mk_Use> {
     int UpdateMnid(String content, int mknid);
     //查询当前用户所在课程所提问的问题和回答的问题
     mk_course usercouseall(int mkcsid, int mkuid);
+
     //如果没有回答和问题
     mk_course usercall(int mkcsid);
+
     //获取所有子节点
     @Select("select *from mk_soncourse_section where mkcsid=#{param1}")
     List<Mk_soncourse_section> mks(int mkcsid);
+
     //获取问节点
     @Select("select mkask.*,mkss.mkcsname,count(mkawc.mkatpid) answer from mk_asktopic mkask\n" +
             "left join mk_soncourse_section mkss on mkask.mkcstid=mkss.mkcstid\n" +
@@ -61,6 +64,7 @@ public interface Mk_UseDAO extends Mapper<Mk_Use> {
             "where mkask.mkcstid=#{param1} and mkask.mkuid=#{param2} \n" +
             "group by mkask.mkatpid")
     List<Mk_asktopic> findHui(int mkcstid, int mkuid);
+
     //获取答节点
     @Select("select mkask.mkatitle,mkawc.*,mkss.mkcsname,mkss.mkcstid,count(mkawc.mkaid) tanswer from \n" +
             "mk_answertopic mkawc \n" +
@@ -69,16 +73,29 @@ public interface Mk_UseDAO extends Mapper<Mk_Use> {
             "where mkask.mkcstid=#{param1} and mkawc.mkuid=#{param2}\n" +
             "group by mkawc.mkaid")
     List<Mk_answertopic> findAnswer(int mkcstid, int mkuid);
+
     //用户点到个人设置
     @Select("select *from mk_use where mkuid=#{param1}")
     Mk_Use usersetup(int mkuid);
+
     //修改用户的密码
     @Update("update mk_use set mkupassword =#{param2} where mkuid=#{param1} and mkupassword=#{param3}")
     int UpdatePwd(int mkuid, String newpwd, String pwd);
+
     //查询微博账号
     @Select("select * from mk_use where mkuweibo=#{param1}")
     Mk_Use selectWeibo(String mkuweibo);
 
+    //根据手机号查找用户
 
+
+    @Select("select * from mk_use where mkuphone = #{param1} and mkposid = 4")
+    @Results({
+            @Result(id = true,column = "mkpid",property = "mkpid"),
+            @Result(column = "mkpname",property = "mkpname"),
+            @Result(property = "mk_positions",column = "mkpid",javaType = Mk_position.class,
+                    one = @One(select = "com.eyelesson.dao.Ht_Mk_positionDao.selectmkpid"))
+    })
+    Mk_Use selectUse(String mkuphone);
 
 }
