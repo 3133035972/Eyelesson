@@ -24,8 +24,21 @@ public class Ht_UserInfoService {
         return htMkUserinfodao.findPosIdByUserName(uname);
     }
 
-    //后台首页根据用户名显示对应的职位和员工名称
+    //后台首页根据用户名显示对应的职位和员工名称 员工
     public Map<String,Object> findPosAndEmpNameByUserName(String mkusername){
         return htMkUserinfodao.findPosAndEmpNameByUserName(mkusername);
     }
+
+    //后台首页根据用户名显示对应的职位和员工名称 用户
+    public Map<String,Object> findPosAndUseNameByUserName(String mkuphone){
+        return htMkUserinfodao.findPosAndUseNameByUserName(mkuphone);
+    }
+
+
+    //根据用户的名称去查询职位的编号(角色)
+    public int PosIdPhone(String mkuphone)
+    {
+        return htMkUserinfodao.findPosIdByUserPhone(mkuphone);
+    }
+
 }

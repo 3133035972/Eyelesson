@@ -161,4 +161,13 @@ public class Mk_UseService {
     {
         return mk_useDAO.UpdatePwd(mkuid,newpwd,pwd);
     }
+
+
+    //根据手机号查找用户
+    public Mk_Use selectUse(String mkuphone){
+
+        return mk_useDAO.selectUse(mkuphone);
+
+    }
+
 }

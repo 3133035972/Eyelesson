@@ -2,6 +2,7 @@ package com.eyelesson.service;
 
 import com.eyelesson.dao.mk_coursedao;
 import com.eyelesson.entity.*;
+import com.eyelesson.util.PageData;
 import com.eyelesson.util.PageDatas;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -236,6 +237,20 @@ public class mk_courseservice {
         pd.setCount((int) pageInfo.getTotal());//总记录数
         pd.setData(jx_studnets);//当前页的数据
         return pd;
+    }
+
+
+    //视频管理 查询讲师员视频
+    public PageData UseCourse(int page, int limit){
+        PageHelper.startPage(page,limit);
+        List<Map<String, Object>> emps = mk_coursedao.UseCourse();
+
+        PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(emps) ;
+
+        PageData pageData = new PageData(pageInfo.getPageNum(),pageInfo.getSize(), (int) pageInfo.getTotal(),pageInfo.getPages(),pageInfo.getList());
+
+        return pageData;
+
     }
 
 
