@@ -3,7 +3,7 @@ package com.eyelesson.util;
 import java.util.List;
 import java.util.Map;
 
-public class PageData {
+public class PageData<T> {
     //当前是第几页
     private Integer curPage;
     //每页显示的数据数
@@ -13,25 +13,25 @@ public class PageData {
     //总页数
     private Integer totalPage;
     //展现在页面的数据
-    List<Map<String,Object>> data;
+    List<T> data;
     //状态码
     private Integer code=0;
-    
-    
+
+
 	public PageData() {
 
     }
 
-    
-	
-	public PageData(Integer curPage, Integer pageSize, Integer count, Integer totalPage, List<Map<String, Object>> data) {
+
+
+	public PageData(Integer curPage, Integer pageSize, Integer count, Integer totalPage, List<T> data) {
 		super();
 		this.curPage = curPage;
 		this.pageSize = pageSize;
 		this.count = count;
 		this.totalPage = totalPage;
 		this.data = data;
-		
+
 	}
 
 
@@ -50,7 +50,7 @@ public class PageData {
 	public void setCode(Integer code) {
 		this.code = code;
 	}
-	
+
     public Integer getCurPage() {
         return curPage;
     }
@@ -67,8 +67,8 @@ public class PageData {
         this.pageSize = pageSize;
     }
 
-    
-    
+
+
     public Integer getCount() {
 		return count;
 	}
@@ -86,11 +86,11 @@ public class PageData {
         this.totalPage = totalPage;
     }
 
-    public List<Map<String, Object>> getData() {
+    public List<T> getData() {
         return data;
     }
 
-    public void setData(List<Map<String, Object>> data) {
+    public void setData(List<T> data) {
         this.data = data;
     }
 }
