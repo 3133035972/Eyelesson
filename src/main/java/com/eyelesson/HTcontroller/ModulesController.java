@@ -1,7 +1,8 @@
-package com.eyelesson.controller;
+package com.eyelesson.HTcontroller;
 
 
 import com.eyelesson.service.ModulesService;
+import com.eyelesson.util.LayuiModules;
 import com.eyelesson.util.ModulesNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,29 @@ public class ModulesController {
     }
 
 
+    //跳转后台首页
+    @RequestMapping("index")
+    public String index(){
+        return "hts/index";
+    }
 
+
+
+    // 分配权限
+    @RequestMapping("pos_modules")
+    @ResponseBody
+    public boolean pos_modules(String[] modules,int posId){
+        System.out.println("分配权限:"+modules+"->"+modules.getClass());
+        return  modelsService.pos_modules(posId, modules);
+    }
+
+
+
+    @RequestMapping("modulesMgr")
+    @ResponseBody
+    public List<LayuiModules> modulesMgr(int posId){
+        return modelsService.showModules(posId);
+    }
 
 
 }

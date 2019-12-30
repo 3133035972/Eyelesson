@@ -1,4 +1,4 @@
-package com.eyelesson.controller;
+package com.eyelesson.HTcontroller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,12 +17,14 @@ public class Ht_UserInfoController {
     {
         return "hts/login";
     }
+
     //显示登录成功页面
     @RequestMapping("loginSuccess")
     public String loginSuccess()
     {
         return "hts/index";
     }
+
     //显示登录失败页面
     @RequestMapping("loginError")
     public String loginError(Model model)
@@ -30,13 +32,16 @@ public class Ht_UserInfoController {
         model.addAttribute("msg","用户名密码错误");
         return "hts/login";
     }
+
     //用户注销 直接写地址
     @RequestMapping("loginOut")
     public String loginOut(HttpSession session)
     {
+
         session.removeAttribute("infos");
-        System.out.println("\"123123212\" = " + "123123212");
+
         return "hts/login";
     }
+
 
 }
