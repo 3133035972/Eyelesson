@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/hts/layui/css/layui.css" >
+    <script type="text/javascript" src="/hts/layui/layui.js" ></script>
+    <script type="text/javascript" src="/hts/layui/jquery-3.1.1.js" ></script>
+    <script type="text/javascript">
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+            laydate.render({
+                elem: '#birthday'
+                ,theme: 'molv'
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        layui.use(['form','layer'], function(){
+            var form = layui.form;
+            form.render('select');
+            form.on('submit(submitBtn)', function(data) {
+                var param = data.field;
+                alert("监听提交" + JSON.stringify(param));
+                $.ajax({
+                    url: "/ht_mk_wheelplanting/mkAdd",
+                    type: 'post',
+                    dataType: 'json',
+                    data: param,
+                    success: function (res) {
+                        if (res == 1) {
+                            layer.msg('操作成功');
+                            window.parent.location.reload();
+                        }
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</head>
+<body>
+<div style="margin-top: 10px;" >
+    <form class="layui-form" id="stuForm" lay-filter="example" >
+
+
+        <input id="mkwpid" name="mkwpid"  type="text"   class="layui-input" style="display: none;"/>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">类型</label>
+            <div class="layui-input-block">
+                <select name="mkcsid" lay-filter="roseId" lay-verify="required">
+                    <option value="">请选择</option>
+                    <option th:each="l : ${list}" th:value="${l.mkcsid}" th:text="${l.mkctitle}" ></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">时长</label>
+            <div class="layui-input-block">
+                <input type="text" name="mkwpurl" lay-verify="mkwpurl" autocomplete="off" placeholder="请输入(必选项)" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="submitBtn">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

@@ -69,15 +69,20 @@
                     </a>
                 </li>
                 <li class="layui-nav-item" lay-unselect>
-                    <a href="javascript:;">
-                        <cite >[[${session.infos.mkpname}]]--[[${session.infos.mksname}]]</cite>
+                    <a href="javascript:;" th:if="${session.infos} != null ">
+                        <cite>[[${session.infos.mkpname}]]--[[${session.infos.mksname}]]</cite>
                     </a>
+                    <a href="javascript:;" th:if="${session.infoss} != null ">
+                        <cite>[[${session.infoss.mkpname}]]--[[${session.infoss.mkuname}]]</cite>
+                    </a>
+
                     <dl class="layui-nav-child">
                         <dd style="text-align: center;"><a lay-href="/back/views/set/user/info.html">基本资料</a></dd>
                         <dd style="text-align: center;"><a lay-href="/back/views/set/user/password.html">修改密码</a></dd>
                         <hr>
                         <dd layadmin-event="logout" style="text-align: center;"><a href="/hou/loginOut">退出</a></dd>
                     </dl>
+
                 </li>
 
                 <li class="layui-nav-item layui-hide-xs" lay-unselect>
@@ -124,7 +129,7 @@
                             // alert(JSON.stringify(data[i].text))
                             menu += "<li data-name=\"senior\" class=\"layui-nav-item\">" +
                                 "    <a href=\"javascript:;\" lay-tips=\"高级\" lay-direction=\"2\">  " +
-                                "   <i class=\""+data[i].iconCls+"\"></i>" +
+                                "   <i class=\"" + data[i].iconCls + "\"></i>" +
                                 "      <cite>" +
                                 data[i].text +
 
@@ -205,7 +210,8 @@
 
             <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layadmin-layout-tabs">
                 <ul class="layui-tab-title" id="LAY_app_tabsheader">
-                    <li lay-id="/back/views/home/console.html" lay-attr="/back/views/home/console.html" class="layui-this"><i
+                    <li lay-id="/back/views/home/console.html" lay-attr="/back/views/home/console.html"
+                        class="layui-this"><i
                             class="layui-icon layui-icon-home"></i></li>
                 </ul>
             </div>
@@ -216,7 +222,7 @@
         <!-- 中心主体内容 -->
         <div class="layui-body" id="LAY_app_body">
             <div class="layadmin-tabsbody-item layui-show">
-                <img src="/hts/image/777.jpg" width="1147" height="545">
+                <img src="/hts/image/777.jpg" width="100%" height="100%">
             </div>
         </div>
 

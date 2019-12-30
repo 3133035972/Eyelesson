@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>权限</title>
+
+    <link rel="stylesheet" href="/hts/layui/css/layui.css" media="all">
+    <script src="/hts/layui/layui.js"></script>
+
+    <script src="/hts/js/jquery-3.1.1.js"></script>
+
+    <!--引用xtree-->
+    <script src="/hts/layui-xtree/layui-xtree.js"></script>
+
+    <script type="text/javascript">
+        //使用表格
+        layui.use(['form', 'table'], function () {
+            var form = layui.form;
+            var $ = layui.$;
+            var table = layui.table;
+            table.render({
+                elem: '#posInfo' //根基id获取元素
+                , height: 550
+                , url: '/ht_mk_position/queryAll' //路径
+                , cellMinWidth: 80   //定义全局最小宽度
+                , toolbar: '#toolbarDemo'
+                , cols: [[ //列
+                    {field: 'mkpid', title: '职位编号', align: 'center'}
+                    ,{field: 'mkpname', title: '职位名称', align: 'center'}
+                    /*{field: 'posId', title: '职务编号', align: 'center'}
+                    , {field: 'posName', title: '职务名称', align: 'center'}
+                    , {field: 'posDesc', title: '职务说明', align: 'center'}
+                    , {field: 'deptName', title: '所属部门', align: 'center'}*/
+                    , {fixed: 'right', title: '操作', align: 'center', toolbar: '#barDemo'}
+                ]]
+                , page: true//开启分页
+            });
+
+
+            var posId;
+
+            //监听行工具事件 table：lay-filter="role"
+            table.on('tool(pos)', function (obj) {
+                var data = obj.data;
+                posId = data.mkpid;
+                alert(posId)
+                // 菜单显示
+                //1、最基础的用法 - 直接绑定json
+                var xtree1 = new layuiXtree({
+                    elem: 'xtree1'   //(必填) 放置xtree的容器，样式参照 .xtree_contianer
+                    , form: form     //(必填) layui 的 from
+                    , data: "/modules/modulesMgr?posId=" + posId     //(必填) json数据
+                });
+
+                // 打开菜单div隐藏
+                layer.open({
+                    title: '更改权限',
+                    offset: '10px',//居上100左右居中
+                    resize: false,//不可改变大小
+                    type: 1,
+                    skin: 'layui-layer-rim', //加上边框
+                    area: ['330px', '540px'], //宽高
+                    content: $("#add-main")
+                    , shade: 0.3 //遮罩
+                });
+            });
+
+
+            // 修改权限
+            form.on('submit(*)', function (data) {
+                // 给所有的复选框设name值
+                $('input[type=checkbox]:checked').each(function () {
+                    $(this).attr("name", "modules");
+                });
+                //获取到要执行修改的职务编号 进行数据保存
+                $.ajax({
+                    type: 'post',
+                    url: "/modules/pos_modules?" + $("#modulesFrm").serialize() + "&posId=" + posId,
+                    success: function (data) {
+                        layer.alert('提交成功', {
+                            skin: 'layui-layer-molv' //样式类名  自定义样式
+                            , closeBtn: 1    // 是否显示关闭按钮
+                            , anim: 1 //动画类型
+                            , btn: ['确定'] //按钮
+                            , icon: 6    // icon
+                            , yes: function () {
+
+                                layer.close(layer.index); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
+                                layer.close(layer.index - 1); //它获取的始终是最新弹出的某个层，值是由layer内部动态递增计算的
+
+                            }
+                        })
+                    }, error: function (XMLHttpRequest) {
+                        if (XMLHttpRequest.status == 403) {
+                            layer.msg("对不起，你没有该权限", {icon: 2});
+                        } else {
+                            layer.msg("出错了" + XMLHttpRequest.status, {icon: 2});
+                        }
+                    }
+                });
+                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            });
+
+        });
+
+    </script>
+</head>
+<body>
+<!-- 信息数据表格 -->
+<table class="layui-hide" lay-filter="pos" id="posInfo"></table>
+<!--    菜单显示    -->
+
+<div id="add-main" style="display: none;" ->
+    <!--别忘记form 以及form的class-->
+    <form class="layui-form" id="modulesFrm">
+        <div id="xtree1" class="xtree_contianer"></div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="*">提交</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<!-- 行内按钮组件 -->
+<script type="text/html" id="barDemo">
+    <div class="layui-btn-container">
+        <a class="layui-btn layui-btn-xs" lay-event="update"><i class="layui-icon">&#xe642;</i>设置权限</a>
+    </div>
+</script>
+
+</body>
+</html>

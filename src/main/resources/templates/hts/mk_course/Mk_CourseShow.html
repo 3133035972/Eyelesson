@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>员工</title>
+
+    <link rel="stylesheet" href="/hts/layuiadmin/layui/css/layui.css" media="all">
+    <script src="/hts/layuiadmin/layui/layui.js"></script>
+
+    <script src="/hts/js/jquery-3.1.1.js"></script>
+
+
+    <script type="text/javascript">
+        //使用表格
+        layui.use(['table', 'util','laydate','form'], function () {
+             var table = layui.table;
+            table.render({
+                elem: '#empInfo' //根基id获取元素
+                ,id:"empInfoReload" //给该表格命名id
+                , url: '/ht_mk_course/UseCourse' //路径
+                , height: 550
+                , cellMinWidth: 80   //定义全局最小宽度
+                , toolbar: '#toolbarDemo'
+                , cols: [[ //列
+                    {field: 'mkcsid', title: '编号', align: 'center', fixed: 'left', sort: true},
+                    {field: 'mkctitle', title: '课程的标题', align: 'center'},
+                    {field: 'mkcontent', title: '课程的简介',  align: 'center'},
+                    {field: 'mkcname', title: '课程类型', align: 'center'},
+                    {field: 'mkdfname', title: '课程的难度',  align: 'center'},
+                    {field: 'mkuname', title: '发布用户', align: 'center'},
+                    {field: 'mkctime', title: '课程的时长',  align: 'center'},
+                    {field: 'mkcmoney', title: '价格', align: 'center'},
+                    {field: 'mkclearned', title: '学习人数',  align: 'center'},
+                    {field: 'mkcnote', title: '课程笔记', align: 'center'},
+                    {field: 'mkcscore', title: '课程评分',  align: 'center'},
+                    {
+                        field: 'mkcstate', title: '状态',  align: 'center', templet: function (d) {
+                            if (d.mkcstate == '0') {
+                                return '通过'
+                            } else if (d.state == '1') {
+                                return '未通过'
+                            }
+                        }
+                    },
+                    {field: 'mkcourseknow', title: '课程须知', align: 'center'},
+                    {field: 'mkteacherlearwhat', title: '学习目标',  align: 'center'}
+                ]]
+                , page: true//开启分页
+                , dataType: "json"
+            });
+        });
+    </script>
+</head>
+<body>
+<table class="layui-hide" lay-filter="mk_course" id="empInfo"></table>
+
+</body>
+</html>

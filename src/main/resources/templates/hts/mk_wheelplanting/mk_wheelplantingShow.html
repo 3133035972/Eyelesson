@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>显示</title>
+</head>
+
+<script type="text/javascript" src="/hts/layui/layui.js"></script>
+<script type="text/javascript" src="/hts/layui/jquery-3.1.1.js"></script>
+<link rel="stylesheet" href="/hts/layui/css/layui.css">
+
+<script>
+    layui.use('table', function () {
+        var table = layui.table;
+        table.render({
+            elem: '#empInfo'
+            , id: 'empInfoReload'
+            , height: 450
+            , url: '/ht_mk_wheelplanting/show'
+            , cellMinWidth: 80
+            , toolbar: '#toolbarDemo'
+            , cols: [
+                [
+                    {field: 'mkwpid', width: 80, title: '轮播表的id', align: 'center', fixed: 'left', sort: true}
+                    , {field: 'mkctitle', title: '课程的id', align: 'center'}
+                    , {field: 'mkwpurl', title: '轮播图背景', align: 'center'}
+                    , {fixed: 'right', title: '操作', width: 200, align: 'center', toolbar: '#barDemo'}
+                ]
+            ]
+            , dataType: "json"
+            , page: true
+            , limit: 10
+            , limits: [5, 10, 15, 20, 25]
+            , groups: 2
+            , first: "首页"
+            , last: "尾页"
+        });
+
+        //表格重载
+        var $ = layui.$, active = {
+            reload: function () {
+                var demoReload = $('#demoReload');
+                table.reload('empInfoReload', {
+                    page: {
+                        curr: 1
+                    }
+                    , where: {
+                        name: demoReload.val()
+                    }
+                });
+            }
+        };
+        $('#searchBtn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        table.on('toolbar(emp)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'addEmp':
+                    $.ajax({
+                        url:'/ht_mk_wheelplanting/add',
+                        success:function () {
+                            layer.open({
+                                title: '添加'
+                                , id: 'add'
+                                , type: 2
+                                , content: '/ht_mk_wheelplanting/add'
+                                , offset: '10px'
+                                , resize: false
+                                , fixed: false
+                                , btn: '关闭'
+                                , btnAlign: 'c'
+                                , shade: 0.3
+                                , area: ['600px', '530px']
+                            });
+                        },
+                        //没有权限，错误回调
+                        error:function (XMLHttpRequest) {
+                            if (XMLHttpRequest.status==403){
+                                layer.msg('对不起，你没有该权限', {icon: 5});
+                            }
+                        }
+                    })
+                    break;
+            };
+        });
+        table.on('tool(emp)', function (obj) {
+            var data = obj.data;
+            if (obj.event == 'del') {
+                layer.confirm('真的要删除么？', function (index) {
+                    layer.close(index);
+                    $.ajax({
+                        type: 'post',
+                        url: '/ht_mk_wheelplanting/Delete',
+                        dataType: 'json',
+                        data: {mkwpid: data.mkwpid},
+                        success: function (res) {
+                            if (res == 1) {
+                                layer.msg('删除成功');
+                                window.location.reload();
+                            }
+                        },
+                        error:function (XMLHttpRequest) {
+                            if (XMLHttpRequest.status==403){
+                                layer.msg('对不起，你没有该权限', {icon: 5});
+                            }
+                        }
+                    });
+                });
+            } else if (obj.event == 'update') {
+                $.ajax({
+                    url:'/ht_mk_wheelplanting/update?mkwpid=' + data.mkwpid,
+                    success:function () {
+                        layer.open({
+                            title: '修改信息'
+                            , id: 'upd'
+                            , type: 2
+                            , content: '/ht_mk_wheelplanting/update?mkwpid=' + data.mkwpid
+                            , offset: '10px'
+                            , resize: false
+                            , fixed: false
+                            , btn: '关闭'
+                            , btnAlign: 'c'
+                            , shade: 0.3
+                            , area: ['600px', '530px']
+                        });
+                    },
+                    error:function (XMLHttpRequest) {
+                        if (XMLHttpRequest.status==403){
+                            layer.msg('对不起，你没有该权限', {icon: 5});
+                        }
+                    }
+                })
+
+            }
+        });
+
+
+    });
+
+    //格式转换
+    function createrFormat(o) {
+        return o;
+    }
+
+</script>
+
+<body>
+
+<div class="demoTable" style="margin-top: 15px;margin-left: 20px;">
+    搜索：
+    <!--<div class="layui-form-item">
+        <label class="layui-form-label"></label>
+        <div class="layui-input-block">
+            <select name="film_type" lay-filter="roseId" lay-verify="required",name="name" id="demoReload">
+                <option value="">请选择</option>
+                <option th:each="l : ${list}" th:value="${l.type_id}" th:text="${l.type_name}" ></option>
+            </select>
+        </div>
+    </div>-->
+
+    <div class="layui-inline">
+        <input class="layui-input" name="name" id="demoReload" autocomplete="off">
+    </div>
+    <button class="layui-btn" id="searchBtn" data-type="reload">搜索</button>
+</div>
+<!-- 学生信息数据表格 -->
+<table class="layui-hide" lay-filter="emp" id="empInfo"></table>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="update">修改</a>
+</script>
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="addEmp">添加</button>
+    </div>
+</script>
+
+</body>
+</html>
