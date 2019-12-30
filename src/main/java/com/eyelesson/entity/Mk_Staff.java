@@ -27,6 +27,7 @@ public class Mk_Staff {
     private Integer mkstate;
     private Date mksquit;
     private Integer mksposid;
+    private Integer mksfollowcount;
 
 
     @Override
@@ -47,7 +48,16 @@ public class Mk_Staff {
                 ", mkstate=" + mkstate +
                 ", mksquit=" + mksquit +
                 ", mksposid=" + mksposid +
+                ", mksfollowcount=" + mksfollowcount +
                 '}';
+    }
+
+    public Integer getMksfollowcount() {
+        return mksfollowcount;
+    }
+
+    public void setMksfollowcount(Integer mksfollowcount) {
+        this.mksfollowcount = mksfollowcount;
     }
 
     public String getMksimg() {

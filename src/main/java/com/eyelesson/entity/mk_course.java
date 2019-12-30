@@ -30,6 +30,7 @@ public class mk_course {
     private Integer mkcstate;
     private String mkcourseknow;
     private String mkteacherlearwhat;
+
     /* 忽略 课程难度表 多对一  */
     @Transient
     private Mk_difficulty mk_difficultys;
@@ -41,6 +42,7 @@ public class mk_course {
     private List<Mk_asktopic> topchildren;
     @Transient
     private List<Mk_answertopic> answerchildren;
+
 
     public Integer getAsktopic() {
         return asktopic;

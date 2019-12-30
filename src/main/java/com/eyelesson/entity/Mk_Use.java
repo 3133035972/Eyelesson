@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.Date;
 
 @Entity
@@ -32,8 +33,10 @@ public class Mk_Use {
     private Integer mkustate;
     private Integer mkfollowcount;
     private Integer mkuintegral;
-
     private Integer mkposid;
+
+    @Transient
+    private Mk_position mk_positions;
 
     @Override
     public String toString() {
@@ -59,7 +62,16 @@ public class Mk_Use {
                 ", mkfollowcount=" + mkfollowcount +
                 ", mkuintegral=" + mkuintegral +
                 ", mkposid=" + mkposid +
+                ", mk_positions=" + mk_positions +
                 '}';
+    }
+
+    public Mk_position getMk_positions() {
+        return mk_positions;
+    }
+
+    public void setMk_positions(Mk_position mk_positions) {
+        this.mk_positions = mk_positions;
     }
 
     public Integer getMkuid() {
