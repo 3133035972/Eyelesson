@@ -18,12 +18,20 @@ public class AuthenticationProviderConfig  implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        
         //获取身份名称(表单提交的用户名)
         String name=authentication.getName();
+        System.out.println("name:"+name);
+        
         //获取凭证
         Object credentials = authentication.getCredentials();
+        
         //根据用户名获取用户的真实用户信息
         UserDetails userDetails = userInfoServiceConfig.loadUserByUsername(name);
+
+        System.out.println("userDetails:"+userDetails);
+
+        
         if(userDetails==null)
         {
             //抛出没有用户的异常

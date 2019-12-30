@@ -20,7 +20,6 @@ import javax.annotation.Resource;
 public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
 
-
     //拦截请求配置
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -30,7 +29,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
         //设置权限 只在这些路径下面进行权限的设置和访问
         http.authorizeRequests()//只设置后台请求才能触发认证
-                .antMatchers("/hou/**","/modules/**").access("@permissionConfig.hasPermission(request,authentication)").and().csrf().disable();
+                .antMatchers("/hou/**","/modules/**","/ht_mk_course/**","/ht_mk_wheelplanting/**").access("@permissionConfig.hasPermission(request,authentication)").and().csrf().disable();
 
         //先认证再授权
         // 认证请求  对于请求要进行身份认证
@@ -138,26 +137,28 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProviderConfig);
     }
 
-
     //配置不拦截的路径 后台的资源放行
     @Override
     public void configure(WebSecurity web) {
 
+
         web.ignoring().antMatchers(
                 // 静态资源
-                "/hts/**","/res/**",
-                // Mk_UseController
+                "/hts/**","/res/**","/img/**",
+                // Mk_UseController 用户表
                 "/Mk_Use/**",
-                // Mk_StaffController
-                "/Mk_Staff/**",
-                // Mk_asktopicController
+                // Mk_asktopicController 问表
                 "/InsertAsktopic","/findNode","/InsertAnswer","/InsertAnAnwer",
-                // Mk_CommentController
+                // Mk_CommentController 评论表
                 "/InsertComment",
-                // mk_coursecontroller
-                "/comment_show","/learn_show","/ask_show",
-                ""
-
+                // mk_coursecontroller 课程表
+                "/comment_show","/learn_show","/ask_show","/iscollect","/insertcollect","/Deletecollect","/video","/showNote","/DeNote","/zall","/InsertProcess","/qtkcfl",
+                // Mk_FabulousController 点赞表
+                "/NoteFavor","/PingFavor","/1",
+                // Mk_NodeController 笔记表
+                "/InsertNode","/CourseNodeAll","/updatenode",
+                // Mk_UserFolController 用户关注表
+                "/InsertAuth","/DeleteMkcsid"
         );
 
     }
