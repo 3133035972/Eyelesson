@@ -457,7 +457,7 @@
 																</a>
 																<a th:href="@{/CourseNodeAll(mkuid=${session.msgss.mkuid},mkcsid=${son.mkcsid})}" target="_blank" class="post-action">查看全文</a>
 															</div>
-															<span title="55分钟前" class="r timeago" id="ajaxtime">55分钟前</span>
+															<span title="55分钟前" class="r timeago" id="ajaxtime" th:text="${onenote.mknctime}">55分钟前</span>
 														</div>
 													</div>
 													<div class="js-note-editor note-editor" style="display:none;">
@@ -579,7 +579,8 @@
 										<a href="//coding.imooc.com/class/71.html" class="aside-course-name" target="_blank" th:text="${type.mkctitle}">算法与数据结构--综合提升篇（c++版）
 										</a>
 										<p class="aside-course-price" >
-											<span style="font-weight: bold" >￥<span th:text="${type.mkcmoney}"></span></span>
+											<span th:if="${type.mkcmoney!=0}" th:text="'￥'+${type.mkcmoney}" style="font-weight: bold" ></span>
+											<span th:if="${type.mkcmoney==0}" th:text="'免费'" style="font-weight: bold" ></span>
 										</p>
 										<div class="aside-course-dot">
 											<i>&nbsp;</i>

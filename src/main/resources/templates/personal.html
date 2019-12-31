@@ -22,6 +22,7 @@
 	<link rel="stylesheet" type="text/css" href="/res/css/szqu-less.css"/>
 	<link rel="stylesheet" type="text/css" href="/res/css/note-less.css">
 	<link rel="stylesheet" type="text/css" href="/res/css/moco.min.css">
+	<link rel="stylesheet" type="text/css" href="/res/css/a2.css">
     <!--    编辑器的-->
     <link rel="stylesheet" type="text/css" href="/res/simditor/site/assets/styles/simditor.css" />
     <script type="text/javascript" src="/res/simditor/site/assets/scripts/jquery.min.js"></script>
@@ -35,27 +36,6 @@
 		CONETXT_PATH = '';
 	</script>
 	<style type="text/css">
-
-		/**
-* 个人中心
-*/
-		.tab-content ul{
-			list-style: none;
-			height: 30px;
-			padding: 0px;
-		}
-		.tab-content ul li{
-			/**width: 100px;**/
-			float: left;
-			height: 40px;
-		}
-
-		.tab-content ul li a{
-			text-align: center;
-			line-height: 40px;
-			font-size: 18px;
-		}
-
 		.custdiv ul li{
 			width: 100px;
 			height: 40px;
@@ -574,11 +554,12 @@
 				<span>
 				</span>
 
-				<a class="more-user-info"><i class="fa fa-angle-down" aria-hidden="true"></i>更多信息</a>
+				<a class="more-user-info">
+					<i class="fa fa-angle-down" aria-hidden="true"></i>更多信息</a>
 			</p>
 		</div>
-		<div class="user-sign hide">
-			<p class="user-desc" th:if="${users.mkusign!=null}"><span th:text="${users.mkusign}">这位同学很懒，木有签名的说～</span></p>
+		<div class="user-sign hide" id="user">
+			<p class="user-desc" th:if="${users.mkusign!=null}"><span th:text="'个性签名: '+${users.mkusign}">这位同学很懒，木有签名的说～</span></p>
 			<p class="user-desc" th:if="${users.mkusign==null}"><span>这位同学很懒，木有签名的说～</span></p>
 		</div>
 		<div class="study-info clearfix">
@@ -595,11 +576,12 @@
 				<span>积分</span>
 			</div>
 			<div class="item follows">
-				<a href='/u/index/follows'><em th:text="${users.follor}">0</em></a>
+				<!--跳转到关注-->
+				<a href="#myFans" aria-controls="settings" role="tab" data-toggle="tab"><em th:text="${users.follor}">0</em></a>
 				<span>关注</span>
 			</div>
 			<div class="item follows">
-				<a href='/u/index/fans'><em th:text="${users.mkfollowcount}">0</em></a>
+				<a href="#myFans" aria-controls="settings" role="tab" data-toggle="tab"><em th:text="${users.mkfollowcount}">0</em></a>
 				<span>粉丝</span>
 			</div>
 			<div class="item follows"><div class="item follows"><a th:href="@{/Mk_Use/userSetup(mkuid=1)}" class="set-btn"><i class="fa fa-cog" aria-hidden="true"></i>个人设置</a></div>
@@ -963,7 +945,6 @@
 							</div>
 
 					</div>
-
 				</div>
 
 			</div>
@@ -1514,6 +1495,120 @@
 				</div>
 			</div>
 
+			<!--我的关注和粉丝-->
+			<div role="tabpanel" class="tab-pane" id="myFans">
+
+				<div class="nav">
+					<div class="tool-left l">
+						<a href="#myflower" aria-controls="myflower" role="tab" data-toggle="tab" class="sort-item active">我的关注</a>
+						<a href="#fans" aria-controls="fans" role="tab" data-toggle="tab" class="sort-item ">我的粉丝</a>
+					</div>
+				</div>
+
+				<div class="tab-content active">
+
+					<div role="tabpanel" class="tab-pane active" id="myflower">
+
+						<div class="concern-list" th:if="${folweruse.size()>0}">
+							<ul>
+								<li class="box" th:each="fol:${folweruse}">
+									<div class="left-img">
+										<a href="/u/4321686" target="_blank" th:if="${fol.containsKey('mksimg')==false}">
+											<img  th:src="@{'/img/'+${fol.mkuimg}}" class="top_head">
+										</a>
+										<a href="/u/4321686" target="_blank" th:if="${fol.containsKey('mkuimg')==false}">
+											<img  th:src="@{'/img/'+${fol.mksimg}}" class="top_head">
+										</a>
+									</div>
+									<div class="right-c">
+										<div class="title">
+											<a href="/u/4321686" target="_blank" th:if="${fol.containsKey('mksname')==false}">
+												<span class="nickname" th:text="${fol.mkuname}">慕课网官方_运营中心</span>
+											</a>
+											<a href="/u/4321686" target="_blank" th:if="${fol.containsKey('mkuname')==false}">
+												<span class="nickname" th:text="${fol.mksname}">慕课网官方_运营中心</span>
+											</a>
+										</div>
+										<p class="desc" title="全栈工程师">全栈工程师</p>
+										<div class="fs-line">
+											<a href="/u/4321686/follows" class="u-target">
+												<span class="group">
+													<em>关注</em>
+													<em class="u-margin-l-5" th:text="${fol.folwer}">368</em>
+												</span>
+											</a>
+											<a href="/u/4321686/fans" class="u-target u-margin-l-15" th:if="${fol.containsKey('mksfollowcount')==false}" >
+												<span class="group">
+													<em>粉丝</em>
+													<em class="u-margin-l-5" th:text="${fol.mkfollowcount}">822083</em>
+												</span>
+											</a>
+											<a href="/u/4321686/fans" class="u-target u-margin-l-15" th:if="${fol.containsKey('mkfollowcount')==false}">
+												<span class="group">
+													<em>粉丝</em>
+													<em class="u-margin-l-5" th:text="${fol.mksfollowcount}">822083</em>
+												</span>
+											</a>
+										</div>
+										<div class="btn-line" data-is_self="1" data-is-fans="0">
+											<!--获取id来取消-->
+											<th:block th:if="${fol.containsKey('mksid')==false}">
+												<input type="hidden" th:id="id"  th:value="${fol.mkuid}"/>
+											</th:block>
+											<th:block th:if="${fol.containsKey('mkuid')==false}">
+												<input type="hidden" th:id="id"  th:value="${fol.mksid}"/>
+											</th:block>
+											<a  href="Javascript:void(0)" th:onclick="'javascript:cencalfolw()'" data-uid="4321686" class="btn-o btn-gray-o  js-concern-already">取消关注</a>
+											<a href="/u/8408065/messages?uid=4321686" target="_blank" class="btn-o btn-gray-o  js-concern-msg">私信</a>
+										</div>
+									</div>
+								</li>
+
+							</ul>
+						</div>
+						<div class="nodata" th:if="${folweruse.size()==0}">
+							您还没有关注任何人
+						</div>
+
+					</div>
+					<div role="tabpanel" class="tab-pane" id="fans">
+
+<!--						<div class="concern-list" th:if="${myfans.size()>0}">-->
+<!--							<ul>-->
+<!--								<li class="box" th:each="mf:${myfans}">-->
+<!--									<div class="left-img">-->
+<!--										<a href="/u/4321686" target="_blank">-->
+<!--											<img th:src="@{'/img/'+${mf.mkuimg}}" class="top_head"></a>-->
+<!--									</div>-->
+<!--									<div class="right-c">-->
+<!--										<div class="title">-->
+<!--											<a href="/u/4321686" target="_blank"><span class="nickname" th:text="${mf.mkuname}">慕课网官方_运营中心</span></a>-->
+<!--										</div>-->
+<!--										<p class="desc" title="全栈工程师">全栈工程师</p>-->
+<!--										<div class="fs-line">-->
+<!--											<a href="/u/4321686/follows" class="u-target"><span class="group"><em>关注</em><em class="u-margin-l-5" th:text="${mf.folwer}">368</em></span></a>-->
+<!--											<a href="/u/4321686/fans" class="u-target u-margin-l-15"><span class="group"><em>粉丝</em><em class="u-margin-l-5" th:text="${mf.mkfollowcount}">822083</em></span></a>-->
+
+<!--										</div>-->
+<!--										<div class="btn-line" data-is_self="1" data-is-fans="0">-->
+<!--											<a href="Javascript:" data-uid="4321686" class="btn-o btn-gray-o  js-concern-already">取消关注</a>-->
+<!--											<a href="/u/8408065/messages?uid=4321686" target="_blank" class="btn-o btn-gray-o  js-concern-msg">私信</a>-->
+<!--										</div>-->
+<!--									</div>-->
+<!--								</li>-->
+
+<!--							</ul>-->
+<!--						</div>-->
+
+<!--						<div class="nodata" th:if="${myfans.size()==0}">-->
+<!--							您还没有任何粉丝-->
+<!--						</div>-->
+
+					</div>
+
+				</div>
+
+			</div>
 		</div>
 
 	</div>

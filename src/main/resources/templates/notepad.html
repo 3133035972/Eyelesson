@@ -635,10 +635,10 @@
             </div>
             <div class="text-center" th:if="${pageinfo.list.size()!=0}">
                 <span th:if="${pageinfo.hasPreviousPage}">
-					<a th:href="'/CourseNodeAll?mkuid='+${session.msgss.mkuid}+'&pagenum='+${pageinfo.prePage}" class="btn btn-primay btn-sm">上一页</a>
+					<a th:href="@{/CourseNodeAll(mkuid=${session.msgss.mkuid},pagenum=${pageinfo.prePage},mkcsid=${auth.mkcsid})}" class="btn btn-primay btn-sm">上一页</a>
 				</span>
                 <span th:if="${pageinfo.hasNextPage}">
-					<a th:href="'/CourseNodeAll?mkuid='+${session.msgss.mkuid}+'&pagenum='+${pageinfo.nextPage}" class="btn btn-primay btn-sm">下一页</a>
+					<a th:href="@{/CourseNodeAll(mkuid=${session.msgss.mkuid},pagenum=${pageinfo.nextPage},mkcsid=${auth.mkcsid})}" class="btn btn-primay btn-sm">下一页</a>
 				</span>
             </div>
 

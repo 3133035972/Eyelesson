@@ -7,20 +7,22 @@
 		<meta name="keywords" content="">
 		<meta name="description" content="">
 		<title>个人主页</title>
-		<link href="res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-		<link rel="stylesheet" type="text/css" href="res/font-awesome/css/font-awesome.min.css">
-		<link href="res/css/reset.css" rel="stylesheet" type="text/css"/>
-		<script type="text/javascript" src="res/js/jquery-1.11.3.min.js"></script>
-		<script type="text/javascript" src="res/js/jquery.form.js"></script>
-		<script type="text/javascript" src="res/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="res/js/oc.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="res/css/moco.min.css">
-		<link rel="stylesheet" type="text/css" href="res/css/swiper.css">
-		<link rel="stylesheet" type="text/css" href="res/css/coupon-less.css">
-		<link rel="stylesheet" type="text/css" href="res/css/balance-less.css">
-		<link rel="stylesheet" type="text/css" href="res/css/bill-less.css">
-		<link rel="stylesheet" type="text/css" href="res/css/share_style.css">
-		<link rel="stylesheet" type="text/css" href="res/css/index-less.css">
+		<link href="/res/css/reset1.css" rel="stylesheet" type="text/css"/>
+		<link href="/res/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+		<link rel="stylesheet" type="text/css" href="/res/font-awesome/css/font-awesome.min.css">
+
+		<script type="text/javascript" src="/res/js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="/res/js/jquery.form.js"></script>
+		<script type="text/javascript" src="/res/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/res/js/oc.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/res/css/moco.min.css">
+		<link rel="stylesheet" type="text/css" href="/res/css/swiper.css">
+		<link rel="stylesheet" type="text/css" href="/res/css/coupon-less.css">
+		<link rel="stylesheet" type="text/css" href="/res/css/balance-less.css">
+		<link rel="stylesheet" type="text/css" href="/res/css/bill-less.css">
+		<link rel="stylesheet" type="text/css" href="/res/css/share_style.css">
+		<link rel="stylesheet" type="text/css" href="/res/css/index-less.css">
+		<script type="text/javascript" src="/res/js/my.js"></script>
 	</head>
 
 	<body>
@@ -63,18 +65,8 @@
 		                <span class="fa fa-caret-right"></span>
 		            </li> 
 		        </a>
-		        <a href="#wen" aria-controls="wen" role="tab" data-toggle="tab">
-		            <li class="clearfix ">
-		                <p class="nav-name l">课程咨询</p>
-		                <span class="fa fa-caret-right"></span>
-		            </li> 
-		        </a>
-		        <a href="/pay/sharegoods" class="js-hide-in-act" style="display:none;">
-		            <li class="clearfix ">
-		                <p class="nav-name l">分销返利</p>
-		                <span class="fa fa-caret-right"></span>
-		            </li> 
-		        </a>
+
+
 		    </ul>
 		</div><!-- .slider end -->
 
@@ -96,99 +88,305 @@
 								<li><a href="#complete" aria-controls="complete" role="tab" data-toggle="tab">已完成</a></li>
 								<li><a href="#invalid" aria-controls="invalid" role="tab" data-toggle="tab">已失效</a></li>
 							</ul>
-							<span><a href="/myorder?type=del"><i class="fa fa-trash" aria-hidden="true"></i>订单回收站</a></span>
+							<span><a href="#recovery" aria-controls="recovery" role="tab" data-toggle="tab">
+								<i class="fa fa-trash" aria-hidden="true"></i>订单回收站</a>
+							</span>
 							</div>
 							<div class='myOrder'>
 								<!-- 内容部分 循环这里 -->
 								<div class="tab-content">
 									<!-- 全部 -->
 								    <div role="tabpanel" class="tab-pane active" id="allorder">
-								    	
-								    	<ul class="myOrder-list">
+
+								    	<ul class="myOrder-list" th:if="${orderall.size()>0}">
 									
-												<li data-flag="1912041348225431" >
+												<li data-flag="1912041348225431" th:each="od:${orderall}" >
 												<p class="myOrder-number">
-												<i class="fa-list fa" aria-hidden="true"></i>订单编号：1912041348225431
-												<span class="date">2019-12-04 13:48:22</span>						
-												<i class="fa fa-trash" aria-hidden="true" title="删除订单"></i>						
-												<a href="//www.imooc.com/user/feedback?order" target="_blank" class="myfeedback r">我要反馈</a>
+												<i class="fa-list fa" aria-hidden="true"></i><th:block th:text="'订单编号：'+${od.mkoid}">订单编号：1912041348225431</th:block>
+												<span class="date" th:text="${od.mkoctime}">2019-12-04 13:48:22</span>
+												<a href="javascript:void(0)" th:onclick="'javascript:orderdel('+${od.mkoid}+')'">
+													<i class="fa fa-trash" aria-hidden="true" title="删除订单"></i>
+												</a>
+
 											</p>
 
 											<div class="myOrder-course clearfix">
 												<dl class="course-del l">
 													<dd class="clearfix">
 														<a href="https://class.imooc.com/sc/73" class="l">
-															<img class="l" src="" width="160" height="90"/>
+															<img class="l" th:src="@{'/img/'+${od.mkcimg}}" width="160" height="90"/>
 														</a>
 														<div class="del-box l">								
-													<p class="course-desc">视频学习不限期，提供720天种类丰富的教学服务</p>
+													<p class="course-desc" th:text="${od.mkctitle}">视频学习不限期，提供720天种类丰富的教学服务</p>
 													<p class="price-btn-box clearfix">
-																<!-- 如果有优惠券 -->
+													<!-- 如果有优惠券 -->
 													<span class="l truepay-text">实付</span>
-													<span class="l course-little-price">￥4950.00</span>
+													<span class="l course-little-price" th:text="'￥'+${od.mkomoney}">￥4950.00</span>
 													</p>
 														</div>
 													</dd>
 													</dl>
 												<!-- 使用优惠券 -->
 													<div class="course-money l pt15">
-														<div class="type-box clearfix mb10">
-															<p class="type-text l">原价</p>
-															<p class="type-price l line-though">
-																<span class="RMB">&yen;</span>
-																6600.00
-															</p>
-														</div>
-														<div class="type-box clearfix mb10">
-															<p class="type-text l">折扣</p>
-															<p class="type-price l">
-																-
-																<span class="RMB">&yen;</span>
-																1650.00
-															</p>
-														</div>
 														<div class="total-box clearfix">
 															<p class="type-text l">实付</p>
 															<p class="type-price l">
 																<span class="RMB">&yen;</span>
-																4950.00
+																<th:block th:text="${od.mkomoney}"></th:block>
 															</p>
 														</div>
 
 													</div>
 													<div class="course-action l">
-														<p class="order-close">
+														<p class="order-close" th:if="${od.mkostate==1}" th:text="'已完成'">
 															已过期
 														</p>
+														<p class="order-close" th:if="${od.mkostate==3}" th:text="'已过期'">
+															已过期
+														</p>
+														<th:block th:if="${od.mkostate==0}">
+															<div class="course-action l">
+																<a class="pay-now" href="/pay/cashier?trade_number=1912281005084780">立即支付</a>
+																<a class="order-cancel" href="javascript:void(0);" th:onclick="'javascript:cancelorder('+${od.mkoid}+')'">取消订单</a>
+															</div>
+														</th:block>
 												</div>
 												</div>
 												</li>
 											</ul>
+
+										<th:block th:if="${orderall.size()==0}">
+											<div class="no-coupon">
+												您暂未产生订单
+											</div>
+										</th:block>
+
 								    </div>
 								    <!-- 未支付 -->
 								    <div role="tabpanel" class="tab-pane" id="nopayment">
-								    	
-								    	<div class="no-coupon">
+
+										<ul class="myOrder-list" th:if="${error.size()>0}">
+
+											<li data-flag="1912041348225431" th:each="err:${error}" >
+												<p class="myOrder-number">
+													<i class="fa-list fa" aria-hidden="true"></i><th:block th:text="'订单编号：'+${err.mkoid}">订单编号：1912041348225431</th:block>
+													<span class="date" th:text="${err.mkoctime}">2019-12-04 13:48:22</span>
+													<a href="javascript:void(0)" th:onclick="'javascript:orderdel('+${err.mkoid}+')'">
+														<i class="fa fa-trash" aria-hidden="true" title="删除订单"></i>
+													</a>
+												</p>
+
+												<div class="myOrder-course clearfix">
+													<dl class="course-del l">
+														<dd class="clearfix">
+															<a href="https://class.imooc.com/sc/73" class="l">
+																<img class="l" th:src="@{'/img/'+${err.mkcimg}}" width="160" height="90"/>
+															</a>
+															<div class="del-box l">
+																<p class="course-desc" th:text="${err.mkctitle}">视频学习不限期，提供720天种类丰富的教学服务</p>
+																<p class="price-btn-box clearfix">
+																	<!-- 如果有优惠券 -->
+																	<span class="l truepay-text">实付</span>
+																	<span class="l course-little-price" th:text="'￥'+${err.mkomoney}">￥4950.00</span>
+																</p>
+															</div>
+														</dd>
+													</dl>
+													<!-- 使用优惠券 -->
+													<div class="course-money l pt15">
+														<div class="total-box clearfix">
+															<p class="type-text l">实付</p>
+															<p class="type-price l">
+																<span class="RMB">&yen;</span>
+																<th:block th:text="${err.mkomoney}"></th:block>
+															</p>
+														</div>
+
+													</div>
+													<div class="course-action l">
+														<a class="pay-now" href="/pay/cashier?trade_number=1912281005084780">立即支付</a>
+														<a class="order-cancel" href="javascript:void(0);" th:onclick="'javascript:cancelorder('+${err.mkoid}+')'">取消订单</a>
+													</div>
+												</div>
+											</li>
+										</ul>
+
+								    	<div class="no-coupon" th:if="${error.size()==0}">
 							        			您暂无未支付订单
-							        		</div>
+										</div>
 
 								    </div>
 								    <!-- 已完成 -->
 								    <div role="tabpanel" class="tab-pane" id="complete">
-								    	
-								    	<div class="no-coupon">
+
+										<ul class="myOrder-list" th:if="${success.size()>0}">
+
+											<li data-flag="1912041348225431" th:each="suc:${success}" >
+												<p class="myOrder-number">
+													<i class="fa-list fa" aria-hidden="true"></i><th:block th:text="'订单编号：'+${suc.mkoid}">订单编号：1912041348225431</th:block>
+													<span class="date" th:text="${suc.mkoctime}">2019-12-04 13:48:22</span>
+													<a href="javascript:void(0)" th:onclick="'javascript:orderdel('+${suc.mkoid}+')'">
+														<i class="fa fa-trash" aria-hidden="true" title="删除订单"></i>
+													</a>
+												</p>
+
+												<div class="myOrder-course clearfix">
+													<dl class="course-del l">
+														<dd class="clearfix">
+															<a href="https://class.imooc.com/sc/73" class="l">
+																<img class="l" th:src="@{'/img/'+${suc.mkcimg}}" width="160" height="90"/>
+															</a>
+															<div class="del-box l">
+																<p class="course-desc" th:text="${suc.mkctitle}">视频学习不限期，提供720天种类丰富的教学服务</p>
+																<p class="price-btn-box clearfix">
+																	<!-- 如果有优惠券 -->
+																	<span class="l truepay-text">实付</span>
+																	<span class="l course-little-price" th:text="'￥'+${suc.mkomoney}">￥4950.00</span>
+																</p>
+															</div>
+														</dd>
+													</dl>
+													<!-- 使用优惠券 -->
+													<div class="course-money l pt15">
+														<div class="total-box clearfix">
+															<p class="type-text l">实付</p>
+															<p class="type-price l">
+																<span class="RMB">&yen;</span>
+																<th:block th:text="${suc.mkomoney}"></th:block>
+															</p>
+														</div>
+
+													</div>
+													<div class="course-action l">
+														<p class="order-finish">
+															已完成
+														</p>
+													</div>
+												</div>
+											</li>
+										</ul>
+
+								    	<div class="no-coupon" th:if="${success.size()==0}">
 							        			您暂无已完成订单
-							        		</div>
+										</div>
 
 								    </div>
 								    <!-- 已失效 -->
 								    <div role="tabpanel" class="tab-pane" id="invalid">
-								    	
-								    	<div class="no-coupon">
+
+										<ul class="myOrder-list" th:if="${inval.size()>0}">
+
+											<li data-flag="1912041348225431" th:each="inv:${inval}" >
+												<p class="myOrder-number">
+													<i class="fa-list fa" aria-hidden="true"></i><th:block th:text="'订单编号：'+${inv.mkoid}">订单编号：1912041348225431</th:block>
+													<span class="date" th:text="${inv.mkoctime}">2019-12-04 13:48:22</span>
+													<a href="javascript:void(0)" th:onclick="'javascript:orderdel('+${inv.mkoid}+')'">
+														<i class="fa fa-trash" aria-hidden="true" title="删除订单"></i>
+													</a>
+												</p>
+
+												<div class="myOrder-course clearfix">
+													<dl class="course-del l">
+														<dd class="clearfix">
+															<a href="https://class.imooc.com/sc/73" class="l">
+																<img class="l" th:src="@{'/img/'+${inv.mkcimg}}" width="160" height="90"/>
+															</a>
+															<div class="del-box l">
+																<p class="course-desc" th:text="${inv.mkctitle}">视频学习不限期，提供720天种类丰富的教学服务</p>
+																<p class="price-btn-box clearfix">
+																	<!-- 如果有优惠券 -->
+																	<span class="l truepay-text">实付</span>
+																	<span class="l course-little-price" th:text="'￥'+${inv.mkomoney}">￥4950.00</span>
+																</p>
+															</div>
+														</dd>
+													</dl>
+													<!-- 使用优惠券 -->
+													<div class="course-money l pt15">
+														<div class="total-box clearfix">
+															<p class="type-text l">实付</p>
+															<p class="type-price l">
+																<span class="RMB">&yen;</span>
+																<th:block th:text="${inv.mkomoney}"></th:block>
+															</p>
+														</div>
+
+													</div>
+													<div class="course-action l">
+														<p class="order-finish">
+															已失效
+														</p>
+													</div>
+												</div>
+											</li>
+										</ul>
+
+								    	<div class="no-coupon" th:if="${inval.size()==0}">
 							        			您暂无失效订单
-							        		</div>
+										</div>
 
 								    </div>
+									<!--订单回收站-->
+									<div role="tabpanel" class="tab-pane" id="recovery">
+
+										<ul class="myOrder-list" th:if="${listdel.size()>0}">
+											<li data-flag="1912041348225431" th:each="lisd:${listdel}" >
+												<p class="myOrder-number">
+													<i class="fa-list fa" aria-hidden="true"></i><th:block th:text="'订单编号：'+${lisd.mkoid}">订单编号：1912041348225431</th:block>
+													<span class="date" th:text="${lisd.mkoctime}">2019-12-04 13:48:22</span>
+													<a href="javascript:void(0)" th:onclick="'javascript:orderdel('+${lisd.mkoid}+')'">
+														<i class="fa fa-trash" aria-hidden="true" title="删除订单"></i>
+													</a>
+
+												</p>
+
+												<div class="myOrder-course clearfix">
+													<dl class="course-del l">
+														<dd class="clearfix">
+															<a href="https://class.imooc.com/sc/73" class="l">
+																<img class="l" th:src="@{'/img/'+${lisd.mkcimg}}" width="160" height="90"/>
+															</a>
+															<div class="del-box l">
+																<p class="course-desc" th:text="${lisd.mkctitle}">视频学习不限期，提供720天种类丰富的教学服务</p>
+																<p class="price-btn-box clearfix">
+																	<!-- 如果有优惠券 -->
+																	<span class="l truepay-text">实付</span>
+																	<span class="l course-little-price" th:text="'￥'+${lisd.mkomoney}">￥4950.00</span>
+																</p>
+															</div>
+														</dd>
+													</dl>
+													<!-- 使用优惠券 -->
+													<div class="course-money l pt15">
+														<div class="total-box clearfix">
+															<p class="type-text l">实付</p>
+															<p class="type-price l">
+																<span class="RMB">&yen;</span>
+																<th:block th:text="${lisd.mkomoney}"></th:block>
+															</p>
+														</div>
+
+													</div>
+													<div class="course-action l  order-recover">
+														<p class="order-close" th:if="${lisd.mkostate==1}" th:text="'已完成'">
+															已过期
+														</p>
+														<p class="order-close" th:if="${lisd.mkostate==3}" th:text="'已过期'">
+															已过期
+														</p>
+														<a href="javascript:void(0)" class="order-recover-btn js-recover">还原</a>
+													</div>
+												</div>
+											</li>
+										</ul>
+
+										<div class="myOrder" th:if="${listdel.size()==0}">
+											<div class="no-list">
+												回收站没有任何删除的订单
+											</div>
+										</div>
+
+									</div>
 		  						</div>	
 
 							</div>
@@ -294,13 +492,20 @@
 						<div class="right-title">
 							<h2>消费记录</h2>
 							<ul>
-								<li>目前共计 <i>1</i> 条记录</li>
-								<li>消费金额 <i>￥10.00</i></li>
-								<li class="js-info"></li>
+								<li>目前共计
+									<i th:if="${totalmoney.count!=null}" th:text="${totalmoney.count}">1</i>
+									<i th:if="${totalmoney.count==null}">0</i>条记录
+								</li>
+								<li>消费金额
+									<i th:if="${totalmoney.totalMoney!=null}" th:text="'￥'+${totalmoney.totalMoney}">￥0.00</i>
+									<i th:if="${totalmoney.totalMoney==null}">￥0.00</i>
+								</li>
+								<li class="js-info" th:if="${totalmoney.totalMoney==null}">投资自己等于投资未来</li>
+								<li class="js-info" th:if="${totalmoney.totalMoney!=null}">你的付出终有回报的一天</li>
 							</ul>
 						</div>
 						
-						<div class="list-box">
+						<div class="list-box" th:if="${success.size()>0}">
 							<div class="detail-box">
 								<div class="table-title clearfix">
 									<p class="l bill-id">订单编号</p>
@@ -312,41 +517,24 @@
 								</div>
 								<div class="table-detail">
 									<ul>
-										<li class="clearfix">
-											<p class="l bill-id">1912032034237130</p>
-				                            <p class="l bill-course" title='Java 快速开发'>Java 开发</p>
-				                            <p class="l bill-time">2019-12-03 20:34:23</p>
-				                            <p class="l bill-money">￥10.00</p>
-											<p class="l bill-pay">
-												苹果余额
-											</p>
-				                            <p class="l bill-result">
-				                                已支付
-				                            </p>
+										<li class="clearfix"  th:each="su:${success}">
+											<p class="l bill-id" th:text="${su.mkoid}">1912032034237130</p>
+				                            <p class="l bill-course" th:text="${su.mkctitle}">Java 开发</p>
+				                            <p class="l bill-time" th:text="${su.mkoctime}">2019-12-03 20:34:23</p>
+				                            <p class="l bill-money" th:text="'￥'+${su.mkomoney}">￥10.00</p>
+											<p class="l bill-pay">苹果余额</p>
+				                            <p class="l bill-result" th:if="${su.mkostate==1}" th:text="'已支付'">已支付</p>
 										</li>
 									</ul>
 								</div>
 							</div>
 						</div>
+
+						<div class="no-list" th:if="${success.size()==0}">
+							您暂无任何消费记录
+						</div>
 					</div>
 				</div>
-				<!-- 课程咨询 -->
-				<div role="tabpanel" class="tab-pane" id="wen">
-
-					<div class="js-cp-continer">
-							<div class="coupons-box">
-						        <div class="content-box">
-						        	<div class="no-coupon">
-							        	您暂无咨询
-							        </div>
-							    </div>
-							</div>
-					</div>
-					
-				</div>
-
-
-
 			    </div>
 		  </div>
 

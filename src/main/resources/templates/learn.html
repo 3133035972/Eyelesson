@@ -60,7 +60,7 @@
 						</div>
 						<div class="static-item" style="border:none;">
 							<div class="meta">课程时长</div>
-							<div class="meta-value" th:text="${commentlist.mkctime}">1小时25分</div>
+							<div class="meta-value">1小时25分</div>
 
 						</div>
 						<a th:onclick="'javascript:Collection('+${commentlist.mkcsid}+');'"   style="float: right;margin-top:5px;" title="收藏">
@@ -73,9 +73,9 @@
 					</div>
 
 					<div class="course-menu">
-						<a  href="/learn_show"><span class="menu-item cur">章节</span></a>
-						<a  href="/comment_show"><span class="menu-item">评论</span></a>
-						<a  href="/ask_show"><span class="menu-item">问答</span></a>
+						<a  th:href="@{/learn_show(courseid=${commentlist.mkcsid})}"><span class="menu-item cur">章节</span></a>
+						<a  th:href="@{/comment_show(courseid=${commentlist.mkcsid})}"><span class="menu-item">评论</span></a>
+						<a  th:href="@{/ask_show(couseid=${commentlist.mkcsid})}"><span class="menu-item">问答</span></a>
 					</div>
 				</div>
 				<!-- 基本信息-end -->
@@ -114,10 +114,16 @@
 			<!-- 教师信息&推荐课程 - start -->
 			<div class="main-course-right"  >
 				<div class="lecturer-item" style="width: 100%;">
-					<img class="lecturer-uimg"  th:if="${mksid!=null}" th:src="@{'img/'+${mksid.mksimg}}">
-					<span class="lecturer-name"  th:if="${mksid!=null}"  th:text="${mksid.mksname}" >王阳明</span>
+					<a th:href="@{Mk_Use/authshow(mksid=${mksid.mksid})}">
+						<img class="lecturer-uimg"  th:if="${mksid!=null}" th:src="@{'img/'+${mksid.mksimg}}">
+					</a>
+					<a th:href="@{Mk_Use/authshow}">
+						<span class="lecturer-name"  th:if="${mksid!=null}"  th:text="${mksid.mksname}" >王阳明</span>
+					</a>
 					<span class="lecturer-title" th:if="${mksid!=null}" th:text="${mksid.mkschool}">中华大学</span>
 					<span class="lecturer-p" th:if="${mksid!=null}" th:text="${mksid.mkskill}" >中华大学高级讲师，擅长写代码</span>
+					<input type="hidden" th:id="mksnum+${mksid.mksid}" th:value="${mksid.mksnum}"/>
+					<input type="hidden" id="unum" th:value="${session.msgss.mkunum}"/>
 					<a th:onclick="'javascript:follow('+${mksid.mksid}+');'" ><span class="follow-btn" id="follow">关注+</span></a>
 				</div>
 
@@ -134,7 +140,8 @@
 									<a href="//coding.imooc.com/class/71.html" class="aside-course-name" target="_blank" th:text="${type.mkctitle}">算法与数据结构--综合提升篇（c++版）
 									</a>
 									<p class="aside-course-price" >
-										<span style="font-weight: bold" >￥<span th:text="${type.mkcmoney}"></span></span>
+										<span th:if="${type.mkcmoney!=0}" th:text="'￥'+${type.mkcmoney}" style="font-weight: bold" ></span>
+										<span th:if="${type.mkcmoney==0}" th:text="'免费'" style="font-weight: bold" ></span>
 									</p>
 									<div class="aside-course-dot">
 										<i>&nbsp;</i>

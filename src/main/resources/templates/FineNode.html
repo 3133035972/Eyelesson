@@ -567,6 +567,7 @@
                         <!-- follow 发帖人的id -->
                         <input type="hidden" id="nodetitle" th:value="${nodes.mkctitle}" />
                         <input type="hidden" id="nodeuid" th:value="${nodes.mkuid}"/>
+                        <input type="hidden" th:id="unum+${nodes.mkuid}" th:value="${nodes.mkunum}"/>
                         <a th:onclick="'javascript:follow('+${nodes.mkuid}+')'" data-id="336639" class="l wenda-add-collection js-collection-btn">
                             <i id="heart" class="fa fa-heart-o" aria-hidden="true"></i>
                         </a>
@@ -609,7 +610,7 @@
                         <div class="qa-comment-wrap clearfix " th:if="${li.mkaid==0}">
                             <!--1级评论开始-->
                             <div class="qa-comment-author">
-                                <a  href="/u/6770146/bbs">
+                                <a  th:href="@{/Mk_Use/useshow(mkuid=${li.mkuid})}" >
                                     <img th:src="@{'img/'+${li.mkuimg}}"  width="40" height="40">
                                     <span class="qa-comment-nick" th:text="${li.mkuname}">不朽的战斗机</span>
                                 </a>

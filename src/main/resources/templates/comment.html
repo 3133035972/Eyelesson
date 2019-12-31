@@ -58,7 +58,7 @@
 							</div>
 							<div class="static-item" style="border:none;">
 								<div class="meta">课程时长</div>
-								<div class="meta-value" th:text="${commentlist.mkctime}">1小时25分</div>
+								<div class="meta-value">1小时25分</div>
 							</div>
 							<!-- thyemelf 和js传递值-->
 							<a th:onclick="'javascript:Collection('+${commentlist.mkcsid}+');'"   style="float: right;margin-top:5px;" title="收藏">
@@ -71,9 +71,9 @@
 						</div>
 						
 						<div class="course-menu">
-							<a  href="/learn_show"><span class="menu-item">章节</span></a>
-							<a  href="/comment_show"><span class="menu-item  cur">评论</span></a>
-							<a  href="/ask_show"><span class="menu-item">问答</span></a>
+							<a  th:href="@{/learn_show(courseid=${commentlist.mkcsid})}"><span class="menu-item">章节</span></a>
+							<a  th:href="@{/comment_show(courseid=${commentlist.mkcsid})}"><span class="menu-item  cur">评论</span></a>
+							<a  th:href="@{/ask_show(couseid=${commentlist.mkcsid})}"><span class="menu-item">问答</span></a>
 						</div>
 				</div>
 
@@ -92,14 +92,12 @@
 									<div class="user-name" th:text="${list.mkuname}">我是张三</div>
 								</a>
 								<div class="comment-content" th:text="${list.mkcmcontent}" >这门课真实用！一个列表嵌套好多种布局的时候，用recyclerview控件优雅实现，效率果然提高不少，老板肯定又会夸我，啊哈哈！！！</div>
-								<div class="comment-footer" th:text="${list.mkcmcreatetime}">时间：2016-12-05</div>
+								<div class="comment-footer" th:text="'时间：'+${list.mkcmcreatetime}">时间：2016-12-05</div>
 							</div>
 						</div>
 				</div>
 
 				</span>
-
-
 				<!--分页-->
 				<div class="text-center">
 					<span th:if="${pageinfo.hasPreviousPage}">
@@ -120,13 +118,21 @@
 				</span>
 				<!-- 评论-end -->
 			</div>
-			<!--			讲师内容部分-->
-			<div class="main-course-right" th:if="${mkuid==null}" >
+			<!--讲师内容部分-->
+			<div class="main-course-right" th:if="${mkuid==null}" title="aaaaa" >
 				<div class="lecturer-item" style="width: 100%;">
-					<img class="lecturer-uimg" th:if="${mksid!=null}" th:src="@{'img/'+${mksid.mksimg}}">
-					<span class="lecturer-name"  th:if="${mksid!=null}"  th:text="${mksid.mksname}" >王阳明</span>
+					<a th:href="@{Mk_Use/authshow(mksid=mksid)}" target="_blank">
+						<img class="lecturer-uimg" th:if="${mksid!=null}" th:src="@{'img/'+${mksid.mksimg}}">
+					</a>
+					<a th:href="@{Mk_Use/authshow(mksid=mksid)}" target="_blank">
+						<span class="lecturer-name"  th:if="${mksid!=null}"  th:text="${mksid.mksname}" >王阳明</span>
+					</a>
 					<span class="lecturer-title" th:if="${mksid!=null}" th:text="${mksid.mkschool}">中华大学</span>
 					<span class="lecturer-p" th:if="${mksid!=null}" th:text="${mksid.mkskill}" >中华大学高级讲师，擅长写代码</span>
+
+					<input type="text" th:id="mksnum+${mksid.mksid}" th:value="${mksid.mksnum}"/>
+
+					<input type="text" th:id="unum" th:value="${session.msgss.mkunum}"/>
 					<a th:onclick="'javascript:follow('+${mksid.mksid}+');'" ><span class="follow-btn" id="follow">关注</span></a>
 				</div>
 
@@ -144,7 +150,8 @@
 									<a href="//coding.imooc.com/class/71.html" class="aside-course-name" target="_blank" th:text="${type.mkctitle}">算法与数据结构--综合提升篇（c++版）
 									</a>
 									<p class="aside-course-price" >
-										<span style="font-weight: bold" >￥<span th:text="${type.mkcmoney}"></span></span>
+										<span th:if="${type.mkcmoney!=0}" th:text="'￥'+${type.mkcmoney}" style="font-weight: bold" ></span>
+										<span th:if="${type.mkcmoney==0}" th:text="'免费'" style="font-weight: bold" ></span>
 									</p>
 									<div class="aside-course-dot">
 										<i>&nbsp;</i>
@@ -164,10 +171,16 @@
 
 			<div class="main-course-right" th:if="${mksid==null}">
 				<div class="lecturer-item" style="width: 100%;">
-					<img class="lecturer-uimg"  th:if="${mkuid!=null}" th:src="@{'img/'+${mkuid.mksimg}}">
-					<span class="lecturer-name"  th:if="${mkuid!=null}"  th:text="${mkuid.mksname}" >王阳明</span>
+					<a th:href="@{Mk_Use/authshow(mkuid=${mkuid.mksid})}" target="_blank">
+						<img class="lecturer-uimg"  th:if="${mkuid!=null}" th:src="@{'img/'+${mkuid.mksimg}}">
+					</a>
+					<a th:href="@{Mk_Use/authshow(mkuid=mksid)}">
+						<span class="lecturer-name"  th:if="${mkuid!=null}"  th:text="${mkuid.mksname}" >王阳明</span>
+					</a>
 					<span class="lecturer-title" th:if="${mkuid!=null}" th:text="${mkuid.mkschool}">中华大学</span>
 					<span class="lecturer-p" th:if="${mkuid!=null}" th:text="${mkuid.mkskill}" >中华大学高级讲师，擅长写代码</span>
+					<input type="text" th:id="mksnum+${mkuid.mksid}" th:value="${mksid.mksnum}"/>
+					<input type="text" id="unum" th:value="${session.msgss.mkunum}"/>
 					<a th:onclick="'javascript:follow('+${mkuid.mksid}+');'" ><span class="follow-btn" id="follow">关注</span></a>
 				</div>
 

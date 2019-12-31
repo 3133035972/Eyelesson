@@ -68,10 +68,14 @@
 									</div>
 								</dd>
 
-								<dd><i class="fa fa-graduation-cap"></i><div class="icon-tips hide" style="display: none;"><div class="triangle_border_up"><span></span></div>还未学籍认证</div></dd>
-
-								<dd class="active"><i class="fa fa-mobile"></i><div class="icon-tips hide" style="display: none;"><div class="triangle_border_up"><span></span></div>你已绑定手机</div></dd>
-								<dd><i class="fa fa-envelope-o"></i><div class="icon-tips hide" style="display: none;"><div class="triangle_border_up"><span></span></div>还未绑定邮箱</div></dd>
+								<dd><i class="fa fa-graduation-cap"></i>
+									<div class="icon-tips hide" id="work" style="display: none;">
+										<div class="triangle_border_up"><span></span>
+										</div>还未学籍认证</div></dd>
+								<dd class="active">
+									<i class="fa fa-mobile"></i>
+									<div class="icon-tips hide" id="phone" style="display: none;">
+										<div class="triangle_border_up"><span></span></div>你已绑定手机</div></dd>
 							</dl>
 						</div>
 					</div>
@@ -102,8 +106,8 @@
 										<div class="moco-form-group">
 											<label  class="moco-control-label"></label>
 											<div class="moco-control-input">
-												<a href="javascript:void(0);" class="moco-btn moco-btn-blue js-avator-save marR10">确定</a>
-												<a href="javascript:void(0);" class="moco-btn moco-btn-normal js-modal-close" data-dismiss="modal">取消</a>
+												<a  class="moco-btn moco-btn-blue js-avator-save marR10">确定</a>
+												<a  class="moco-btn moco-btn-normal js-modal-close" data-dismiss="modal">取消</a>
 												<p class="js-gerror g_error"></p>
 											</div>
 										</div>
@@ -159,7 +163,7 @@
 														<p class="font2">可用手机号加密码登录慕课网，可通过手机号找回密码 <a class="font2" style="text-decoration: underline;" href="//www.imooc.com/help/detail/78" target="_blank">无法绑定</a></p>
 													</div>
 													<div class="right">
-														<a href="javascript:void(0);" class="change js-operate-phone moco-btn moco-btn-normal" changetype="phone">操作</a>
+														<a  class="change js-operate-phone moco-btn moco-btn-normal" changetype="phone">操作</a>
 														<input type="hidden" id="account" value="176******010">
 													</div>
 												</div>
@@ -172,7 +176,7 @@
 													</div>
 													<div class="right">
 														<!--点击当前按钮触发修改密码模态框-->
-														<a href="javascript:void(0)" type="button"  data-toggle="modal" data-target="#editorpwd"  class="moco-btn moco-btn-normal js-changePWD">修改</a>
+														<a  type="button"  data-toggle="modal" data-target="#editorpwd"  class="moco-btn moco-btn-normal js-changePWD">修改</a>
 													</div>
 												</div>
 
@@ -188,7 +192,7 @@
 																<p class="mr87 bind-name">微博</p>
 																<p th:if="${usersetup.mkuweibo==null}" class="mr87 red">未绑定 </p>
 																<p th:if="${usersetup.mkuweibo!=null}" class="mr87 bind-status">已绑定 </p>
-																<a th:if="${usersetup.mkuweibo==null}" href="" aria-role="button" hidefocus="true" class="moco-btn-normal rlf-btn-green btn js-bind mr87">添加绑定</a>
+																<a th:if="${usersetup.mkuweibo==null}" href="/Mk_Use/app/sinaLogin" aria-role="button" hidefocus="true" class="moco-btn-normal rlf-btn-green btn js-bind mr87">添加绑定</a>
 																<a th:if="${usersetup.mkuweibo!=null}" href="" aria-role="button" hidefocus="true" class="moco-btn-normal rlf-btn-green btn js-bind mr87" data-toggle="modal" data-target="#weibocancel">解除绑定</a>
 															</div>
 														</div>
@@ -239,8 +243,8 @@
 												<div class="moco-form-group">
 													<label  class="moco-control-label"></label>
 													<div class="moco-control-input">
-														<a th:onclick="'javascript:updatepwd('+${mkupassword}+')'" type="button" class="moco-btn moco-btn-blue js-submit" >确定</a>
-														<a href="javascript:void(0);" type="button" class="moco-btn moco-btn-normal js-modal-close" data-dismiss="modal">取消</a>
+														<a th:onclick="'javascript:updatepwd('+${usersetup.mkuid}+')'" type="button" class="moco-btn moco-btn-blue js-submit" >确定</a>
+														<a  type="button" class="moco-btn moco-btn-normal js-modal-close" data-dismiss="modal">取消</a>
 														<p class="js-gerror g_error"></p>
 													</div>
 												</div>
@@ -261,15 +265,15 @@
 										</div>
 										<div class="modal-body">
 
-											<div class="msg-layer in"  style=" display: block;height:300px!important" aria-hidden="false">
-												<h3>解除绑定</h3>
-												<p>解绑后将不能再使用QQ帐号登录慕课网。</p>
-												<div class="error js-error">密码错误</div>
-												<input type="password" placeholder="请输入慕课网登录密码">
+											<div class="msg-layer in"  style="height:300px!important" aria-hidden="false">
+
+												<p>解绑后将不能再使用微博帐号登录目课网。</p>
+												<div class="error js-error"></div>
+												<input type="password" id="mkupwd" placeholder="请输入目课网登录密码">
 												<div class="error"></div>
-												<a href="javascript:void(0)" class="js-sf-submit btn-submit">确定</a>
+												<a href="javascript:void(0)" class="js-sf-submit btn-submit" th:onclick="'javascript:passwordupdate('+${usersetup.mkuid}+')'">确定</a>
 												<a href="//www.imooc.com/user/newforgot" target="_blank" style="float: right;margin-right: 30px;margin-top: 10px;">找回密码</a>
-												<button aria-hidden="true" hidefocus="true" data-dismiss="modal" class="btn-close" type="button"></button>
+
 											</div>
 
 										</div>
@@ -299,8 +303,8 @@
 									</div>
 									<div class="info-box clearfix">
 										<label class="pull-left">个性签名</label>
-										<div class="pull-left" th:if="${usersetup.mkuintroduce==''}">未设置</div>
-										<div class="pull-left" th:if="${usersetup.mkuintroduce!=''}" th:text="${usersetup.mkuintroduce}">未设置</div>
+										<div class="pull-left" th:if="${usersetup.mkusign==''}">未设置</div>
+										<div class="pull-left" th:if="${usersetup.mkusign!=''}" th:text="${usersetup.mkusign}">未设置</div>
 									</div>
 								</div>
 							</div>
@@ -340,8 +344,7 @@
 														<label  class="moco-control-label">个性签名：</label>
 														<div class="moco-control-input">
 															<div class="pr">
-																<textarea th:if="${usersetup.mkuintroduce}==''" name="aboutme" id="aboutme"  rows="5" class="noresize js-sign moco-form-control"></textarea>
-																<textarea th:if="${usersetup.mkuintroduce}!=''" name="aboutme" id="aboutme"  rows="5" class="noresize js-sign moco-form-control" th:text="${usersetup.mkuintroduce}"></textarea>
+																<textarea name="aboutme" id="aboutme"  rows="5" class="noresize js-sign moco-form-control" th:text="${usersetup.mkusign}"></textarea>
 																<p class="numCanInput js-numCanInput ">还可以输入128个字符</p>
 															</div>
 														</div>
@@ -350,7 +353,7 @@
 														<label  class="moco-control-label"></label>
 														<div class="moco-control-input">
 															<a th:onclick="'javascript:submitinfo('+${usersetup.mkuid}+')'" type="button" class="moco-btn moco-btn-blue js-submit" >确定</a>
-															<a href="javascript:void(0);" type="button" class="moco-btn moco-btn-normal js-modal-close" data-dismiss="modal">取消</a>
+															<a  type="button" class="moco-btn moco-btn-normal js-modal-close" data-dismiss="modal">取消</a>
 															<p class="js-gerror g_error"></p>
 														</div>
 													</div>
@@ -378,7 +381,7 @@
 								<div class="setting ">
 									<div class="contentBox">
 										<div class="auth-box">
-											<a href="javascript:void(0);" class="auth-start js-start">开始认证</a>
+											<a  class="auth-start js-start">开始认证</a>
 										</div>
 
 										<dl class="auth-des">

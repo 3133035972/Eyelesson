@@ -9,8 +9,9 @@
     <title>在线网校学习平台</title>
 
     <!--<link href="/res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->
-    <link href="/res/bootstrap/bootstrap.css" rel="stylesheet" type="text/css">
-    <link href="/res/css/reset.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="res/font-awesome/css/font-awesome.min.css">
+    <link href="/res/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/res/css/head.css"/>
     <script type="text/javascript" src="/res/js/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="/res/bootstrap/bootstrap.js"></script>
     <!--[if lt IE 9]>
@@ -22,10 +23,25 @@
     <script type="text/javascript">
         CONETXT_PATH = '';
     </script>
+    <style type="text/css">
+
+        .msg_remind {
+            display: none;
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #f01414;
+            right: 19px;
+            top: 5px;
+            border-radius: 50%;
+        }
+
+    </style>
 </head>
 
 <body>
 <div th:fragment="head">
+
     <!-- 头部-start -->
     <div class="f-header">
         <div class="f-header-box clearfix">
@@ -36,9 +52,9 @@
                 <a href="/Mk_Use/szlist" class="header-nav-item">实战课程</a>
                 <a href="list.html" class="header-nav-item">猿 问</a>
 
-                <div style="border: 1px solid white;width: 220px;height: 35px;margin-top: -5px;margin-left: 380px;background: white;border-radius: 10px">
+                <div style="border: 1px solid white;width: 220px;margin-top: -5px;margin-left: 380px;background: white;border-radius: 10px">
                     <input type="text" placeholder="请输入关键字..."
-                           style="height: 35px;width: 200px;border: 5px solid white;border-radius: 10px"/>
+                           style="height: 28px;width: 200px;border: 5px solid white;border-radius: 10px"/>
                     <a href="javascript:;"
                        style="border: 0px solid red;width: 20px;position: absolute;top: 32px;left:860px">
                         <i class="glyphicon glyphicon-search" style="font-size: 20px"></i>
@@ -47,31 +63,32 @@
             </nav>
 
             <nav class="header-nav" style="float:right">
-                <a href="/hou/login" class="header-nav-item" style="margin-left:0px;font-size:14px;">管理后台</a>
+                <a href="#" class="header-nav-item" style="margin-left:0px;font-size:14px;">管理后台</a>
                 <!--<th:block th:text="" />-->
-                <span id="isshow" th:if="${session.users==null}">
+                <span id="isshow" th:if="${session.msgss==null}">
 					<a href="#myModal" class="header-nav-item" data-toggle="modal" onclick="login();"
                        style="margin-right:0px;font-size:14px;">登录</a>
 					<a href="#myModal" class="header-nav-item" data-toggle="modal" onclick="registe()"
                        style="margin-left:0px;font-size:14px;">注册</a>
 				</span>
 
-                <span id="isshow2" style="width: 400px" th:if="${session.users!=null}">
+                <span id="isshow2" style="width: 400px" th:if="${session.msgss!=null}">
 					<a href="javascript:;" class="header-nav-item" data-toggle="modal"
                        style="margin-right:0px;">
-							<i class="glyphicon glyphicon-shopping-cart" style="font-size: 20px"></i>
+							<i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
 					</a>
-					<a href="javascript:;" class="header-nav-item" data-toggle="modal"
-                       style="margin-right:0px;">
-							<i class="glyphicon glyphicon-envelope" style="font-size: 20px"></i>
+					<a th:href="@{/qt/Message}" class="header-nav-item" data-toggle="modal" style="margin-right:0px;position: relative">
+
+                            <i th:if="${session.news>0}" class="msg_remind" style="display: inline;"></i>
+							<i class="fa fa-bell fa-lg" aria-hidden="true"></i>
 					</a>
-					<a href="javascript:;" class="header-nav-item" data-toggle="modal"
+					<a th:href="@{/Mk_Use/useshow(mkuid=${session.msgss.mkuid})}" class="header-nav-item" data-toggle="modal"
                        style="margin-right:0px;font-size:14px;">
 							我的课程
 					</a>
 					<a id="userdetail" href="javascript:;" class="header-nav-item"
                        data-toggle="modal" style="margin-left:0px;height: 50px">
-						<img th:src="@{'/img/'+${session.users.mkuimg}}" class="img-circle" style="height: 30px;width: 30px">
+						<img th:src="${session.msgss.mkuimg}" class="img-circle" style="height: 30px;width: 30px">
 					</a>
 				</span>
 
@@ -80,19 +97,18 @@
     </div>
 
     <!-- 鼠标放头像悬浮 -->
-    <div id="xuanfu" th:if="${session.users!=null}">
+    <div id="xuanfu" th:if="${session.msgss!=null}">
+        <a href="javascript:;" style="width:300px;position: absolute;top: 10px;left: 20px">
 
-        <a th:href="@{/Mk_Use/useshow(mkuid=${session.users.mkuid})}" style="width:300px;position: absolute;top: 10px;left: 20px">
-
-            <img th:src="@{'/img/'+${session.users.mkuimg}}" class="img-circle" style="height: 80px;width: 80px;">
+            <img th:src="${session.msgss.mkuimg}" class="img-circle" style="height: 80px;width: 80px;">
 
             <label style="font-size: 25px;margin-left: 10px;margin-top: -40px"
-                   th:text="${session.users.mkuname}"></label>
+                   th:text="${session.msgss.mkuname}"></label>
             <p style="font-size: 12px;margin-top: -30px;margin-left: 100px">积分<label
-                    th:text="${session.users.mkuintegral}"></label></p>
+                    th:text="${session.msgss.mkuintegral}"></label></p>
         </a>
 
-        <a th:href="@{/Mk_Use/useshow(mkuid=${session.users.mkuid})}"
+        <a th:href="@{/Mk_Use/useshow(mkuid=${session.msgss.mkuid})}"
            style="border:3px solid #F8F8F8;height: 40px;width:45%;text-align: center;background:#F8F8F8;position: absolute;top: 110px;left: 10px"
            onmousemove="bigImg(this)" onmouseout="normalImg(this)">
 					<span style="line-height: 40px;">
@@ -101,7 +117,7 @@
 					</span>
         </a>
 
-        <a href="/Ordercenter.html"
+        <a th:href="@{/qt/orderAll}"
            style="border: 1px solid #F8F8F8;height: 40px;width:45%;text-align: center;background:#F8F8F8;position: absolute;top: 110px;left: 150px"
            onmousemove="bigImg(this)" onmouseout="normalImg(this)">
 					<span style="line-height: 40px;">
@@ -119,7 +135,7 @@
 					</span>
         </a>
 
-        <a href="/collect.html"
+        <a th:href="@{/Mk_Use/userSetup(mkuid=${session.msgss.mkuid})}"
            style="border: 1px solid #F8F8F8;height: 40px;width:45%;text-align: center;background:#F8F8F8;position: absolute;top: 160px;left: 150px"
            onmousemove="bigImg(this)" onmouseout="normalImg(this)">
 					<span style="line-height: 40px;">

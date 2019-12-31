@@ -982,25 +982,42 @@
 	<!-- 轮播 分类-end -->
 
 
+	<script type="text/javascript">
+		/* 鼠标移入事件 : onmousemove */
+		function bigImgss(x) {
+			//    $(x).find('h3')
+			$(x).find('h3').css("color","#FF5151")
+		}
+		/* 鼠标移出事件 : onmouseout */
+		function normalImgss(x) {
+			$(x).find('h3').css("color","black")
+		}
+	</script>
+
+
 	<!-- 实战推荐-start -->
 	<div class="types-block clearfix">
 		<div id="shizhan">
-			<h3 class="types-title">实战推荐</h3>
+			<h3 class="types-title" style="font-size:25px;font-weight: bold">实战推荐<a href="/Mk_Use/szlist" style="float: right">更多</a></h3>
 			<!--[[${session.qtszkc}]]-->
-			<div th:each="q:${session.qtszkc}" class="types-content" style="float: left;margin-right: 15px" >
-				<a  th:href="@{/learn_show(courseid=${q.mkcsid})}" >
+			<div onmousemove="bigImgss(this)"  onmouseout="normalImgss(this)"  th:each="q:${session.qtszkc}" class="types-content" style="float: left;margin-left: 10px;padding-right: 5px">
+				<a th:href="@{/learn_show(courseid=${q.mkcsid})}">
 					<div>
-						<img th:src="@{'/img/'+${q.mkcimg}}" height="150px" width="280px" style="border-radius: 10px">
-						<div class="course-card-content" style="word-wrap: break-word;word-break: break-all;overflow: hidden;margin-top: -10px;margin-left: 10px;width: 270px;">
+						<div style="border-radius: 15px;box-shadow: 0px 5px 8px 8px rgba(224,224,224)">
+							<img th:src="@{'/img/'+${q.mkcimg}}" height="150px" width="280px"
+								 style="border-radius: 10px;">
+						</div>
+						<div class="course-card-content"
+							 style="word-wrap: break-word;word-break: break-all;overflow: hidden;margin-top: -10px;margin-left: 10px;width: 270px;">
 							<h3 style="font-size: 17px;font-weight: bold;" th:text="${q.mkctitle}"></h3>
-							<div style="font-size: 12px;" >
+							<div style="font-size: 12px;margin-top: -10px">
 							<span style="font-size: 12px;">
 								[[${q.mk_difficultys.mkdfname}]]
 							<i class="glyphicon glyphicon-user" style="margin-left: 10px">
 							</i>
 								[[${q.mkclearned}]]
+								<p style="font-size: 12px;float: right">￥<span th:text="${q.mkcmoney}"></span></p>
 							</span>
-								<p style="font-size: 12px">￥<span th:text="${q.mkcmoney}"></span></p>
 							</div>
 						</div>
 					</div>
@@ -1016,23 +1033,28 @@
 	<!-- 免费好课-start -->
 	<div class="types-block clearfix" style="height: 320px;">
 		<div id="mianfei">
-
-			<h3 class="types-title">免费好课</h3>
-
-			<div th:each="q:${session.qtmfkc}" class="types-content" style="float: left;margin-right: 30px" >
-				<a th:href="@{/learn_show(courseid=${q.mkcsid})}" >
-					<div >
-						<img th:src="@{'/img/'+${q.mkcimg}}" height="150px" width="100%" style="border-radius: 10px">
-						<div class="course-card-content" style="word-wrap: break-word;word-break: break-all;overflow: hidden;margin-top: -10px;margin-left: 10px;width: 260px;">
+			<h3 class="types-title" style="font-size:25px;font-weight: bold">免费好课<a href="/Mk_Use/list"
+																					style="float: right">更多</a></h3>
+			<div onmousemove="bigImgss(this)"  onmouseout="normalImgss(this)" th:each="q:${session.qtmfkc}" class="types-content"
+				 style="float: left;margin-left: 10px;padding-right: 10px">
+				<a th:href="@{/learn_show(courseid=${q.mkcsid})}">
+					<div>
+						<div style="border-radius: 15px;box-shadow: 0px 5px 8px 8px rgba(224,224,224)">
+							<img th:src="@{'/img/'+${q.mkcimg}}" height="150px" width="280px"
+								 style="border-radius: 10px">
+						</div>
+						<div class="course-card-content"
+							 style="word-wrap: break-word;word-break: break-all;overflow: hidden;margin-top: -10px;margin-left: 10px;width: 260px;">
 							<h3 style="font-size: 17px;font-weight: bold" th:text="${q.mkctitle}"></h3>
-							<div style="font-size: 12px;margin-top: 28px" >
+							<div style="font-size: 12px;margin-top: 10px">
 							<span style="font-size: 12px;">
 								[[${q.mk_difficultys.mkdfname}]]
 							<i class="glyphicon glyphicon-user" style="margin-left: 20px">
 							</i>
 								[[${q.mkclearned}]]
 							</span>
-								<p style="font-size: 12px;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;" th:text="${q.mkcontent}"></p>
+								<p style="font-size: 12px;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;"
+								   th:text="${q.mkcontent}"></p>
 							</div>
 						</div>
 					</div>
@@ -1045,10 +1067,9 @@
 	</div>
 	<!-- 免费好课-end -->
 
-
 	<!-- 学习路线-start -->
 	<div class="types-block clearfix">
-		<h3 class="types-title">学习路线</h3>
+		<h3 class="types-title" style="font-size:20px;font-weight: bold">学习路线</h3>
 		<div class="types-content-left "
 			 style="background-image: url(http://img.mukewang.com/58ac18fd00012a4202240348.jpg);">
 			<div class="course-card-container-fix">
@@ -1065,12 +1086,12 @@
 		<div class="types-content-right ">
 			<div class="types-content-banner ">
 				<a target="_blank" href="http://coding.imooc.com/class/81.html">
-					<div class="types-content-banner-block green-bg"  style="margin-right:20px;" >
+					<div class="types-content-banner-block green-bg" style="margin-right:20px;">
 						Spring框架实战讲解！
 					</div>
 				</a>
 				<a target="_blank" href="http://coding.imooc.com/class/76.html">
-					<div class="types-content-banner-block gray-bg"  >
+					<div class="types-content-banner-block gray-bg">
 						MyBatis框架实战讲解！
 					</div>
 				</a>
@@ -1153,24 +1174,22 @@
 	<!--名校讲师-start -->
 
 	<div class="types-block clearfix">
-		<h3 class="types-title">名校讲师</h3>
+		<h3 class="types-title" style="font-size:20px;font-weight: bold">名校讲师</h3>
 		<a th:each="y:${session.ygjsfive}" href="javascript:;">
 			<div class="lecturer-card-container" style="width: 200px;margin-right: 40px">
 				<div class="lecturer-item">
 					<img class="lecturer-uimg" th:src="@{'/img/'+${y.mksimg}}">
 					<span class="lecturer-name">[[${y.mksname}]]</span>
 					<span class="lecturer-title">[[${y.mkschool}]]</span>
-					<span class="lecturer-p"  style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;" >[[${y.mkskill}]]</span>
+					<span class="lecturer-p"
+						  style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;">[[${y.mkskill}]]</span>
 				</div>
 			</div>
 		</a>
 
-
-
 	</div>
 	<!--名校讲师-end -->
 </div>
-
 
 
 <!-- 页脚-start -->
@@ -1178,25 +1197,24 @@
 <!-- 页脚-end-->
 
 
-
 </body>
 
 
 <script>
 
-	$(function(){
+	$(function () {
 		var index = 0;
 		var timer = 4000;
-		$('.bg-nav a').click(function(){
+		$('.bg-nav a').click(function () {
 			index = $('.bg-nav a').index($(this));
 			rollBg(index);
 		});
-		$('.index-roll-item').click(function(){
+		$('.index-roll-item').click(function () {
 			index = $('.index-roll-item').index($(this));
 			rollBg(index);
 		});
 
-		var rollBg = function(i){
+		var rollBg = function (i) {
 			$('.main-bg-item').fadeOut(1000);
 			$($('.main-bg-item')[i]).fadeIn(1000);
 			$('.bg-nav a').removeClass('cur');
@@ -1204,26 +1222,26 @@
 			$('.index-roll-item').removeClass('cur');
 			$($('.index-roll-item')[i]).addClass('cur');
 		}
-		setInterval(function(){
+		setInterval(function () {
 			index += 1;
-			index = index%4;
+			index = index % 4;
 			rollBg(index);
 		}, timer);
 
 
 		//课程分类展示
 		$(".category").popover({
-			trigger:'manual',
-			placement : 'right',
+			trigger: 'manual',
+			placement: 'right',
 			html: 'true',
-			content : '',
+			content: '',
 			animation: false
 		}).on("mouseenter", function () {
 			var cid = $(this).attr('c-id');
 			$('#' + cid).show();
-			$('#' + cid).hover(function(){
+			$('#' + cid).hover(function () {
 				$('#' + cid).show();
-			},function(){
+			}, function () {
 				$('#' + cid).hide();
 			});
 		}).on("mouseleave", function () {

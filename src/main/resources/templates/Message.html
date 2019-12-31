@@ -7,21 +7,22 @@
 		<meta name="keywords" content="">
 		<meta name="description" content="">
 		<title>个人主页</title>
-		<link href="res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-		<link rel="stylesheet" type="text/css" href="res/font-awesome/css/font-awesome.min.css">
-		<link href="res/css/reset.css" rel="stylesheet" type="text/css"/>
-		<script type="text/javascript" src="res/js/jquery-1.11.3.min.js"></script>
-		<script type="text/javascript" src="res/js/jquery.form.js"></script>
-		<script type="text/javascript" src="res/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="res/js/oc.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="res/css/moco.min.css.css">
-		<link rel="stylesheet" type="text/css" href="res/css/swiper.css">
-		<link rel="stylesheet" type="text/css" href="res/css/3.css">
-        <link rel="stylesheet" type="text/css" href="res/css/4.css">
-        <link rel="stylesheet" type="text/css" href="res/css/5.css">
-        <link rel="stylesheet" type="text/css" href="res/css/6.css">
-        <link rel="stylesheet" type="text/css" href="res/css/7.css">
+		<link href="/res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+		<link rel="stylesheet" type="text/css" href="/res/font-awesome/css/font-awesome.min.css">
+		<link href="/res/css/reset.css" rel="stylesheet" type="text/css"/>
+		<script type="text/javascript" src="/res/js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="/res/js/jquery.form.js"></script>
+		<script type="text/javascript" src="/res/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/res/js/oc.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/res/css/moco.min.css.css">
+		<link rel="stylesheet" type="text/css" href="/res/css/swiper.css">
+		<link rel="stylesheet" type="text/css" href="/res/css/3.css">
+        <link rel="stylesheet" type="text/css" href="/res/css/4.css">
+        <link rel="stylesheet" type="text/css" href="/res/css/5.css">
+        <link rel="stylesheet" type="text/css" href="/res/css/6.css">
+        <link rel="stylesheet" type="text/css" href="/res/css/7.css">
 
+        <script type="text/javascript" src="/res/js/my.js"></script>
 	</head>
 
 	<body>
@@ -46,7 +47,7 @@
             <div class='content'>
                 <div class="title-bar">
             	<a class="tip-setting" href="#">通知设置</a>
-                <a class="tag-read-btn" href="#">全部标记为已读</a>
+                <a class="tag-read-btn" href="javascript:void(0)" th:onclick="'javascript:updatestatus()'" >全部标记为已读</a>
             	<p class="tip-test">系统自动清理三个月前的已读通知</p>
             </div>
 
@@ -57,42 +58,44 @@
             	</div>
             </div>
             <div class="notice-list">
-                
-                    	<div note-id="11795126" class="notice">
+
+                <!--在这里开始循环了-->
+
+                <!--未读-->
+                <div note-id="12224965" class="notice" th:if="${Unreadnews.size()>0}" th:each="un:${Unreadnews}">
                     <div class="notice-box clearfix">
-                        
-                    
+                        <p class="notice-type ">课程</p>
+                        <div class="notice-show-box">
+                            <p class="notice-con ">
+                                有人在问题<a target="_blank" href="/qadetail/307336" th:text="${un.mknecontent}">有笔记或者源码吗</a>回复你了
+                            </p>
+                            <h5 class="notice-date">2019-12-27 16:52:06</h5>
+                        </div>
+                        <div class="del-box clearfix">
+                            <a href="javascript:void(0)" th:onclick="'javascript:newsdel('+${un.mknid}+')'" class="del-notice" title="删除此通知">
+                                <i class="fa fa-trash-o"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!--已读-->
+                <div note-id="11795126" class="notice" th:if="${listnews.size()>0}" th:each="news:${listnews}">
+                    <div class="notice-box clearfix">
                         <div class="notice-show-box">
                             <p class="notice-con pass ">
-                                <a target='_blank' href='https://order.imooc.com/coupon'>尊敬的用户，您有1张“11月专栏送券活动（用户3）”优惠券即将过期，机不可失，来选一门心仪的课程吧！</a>
+                                <a target='_blank' href='https://order.imooc.com/coupon' th:text="${news.mknecontent}">尊敬的用户，您有1张“11月专栏送券活动（用户3）”优惠券即将过期，机不可失，来选一门心仪的课程吧！</a>
                             </p>
                             <h5 class="notice-date">2019-11-29 18:25:43</h5>
                         </div>
                         <div class="del-box clearfix">
-                            <a href="javascript:void(0)" class="del-notice" title="删除此通知">
+                            <a href="javascript:void(0)" th:onclick="'javascript:newsdel('+${news.mknid}+')'" class="del-notice" title="删除此通知">
                                 <i class="fa fa-trash-o"></i>
                             </a>
                         </div>
                     </div>
-            	</div>
-                	<div note-id="10676242" class="notice">
-                    <div class="notice-box clearfix">
-                        
-                    
-                        <div class="notice-show-box">
-                            <p class="notice-con pass ">
-                                <a target='_blank' href='https://order.imooc.com/coupon'>尊敬的用户，您有1张“11月专栏送券活动（用户3）”优惠券即将过期，机不可失，来选一门心仪的课程吧！</a>
-                            </p>
-                            <h5 class="notice-date">2019-11-27 21:23:17</h5>
-                        </div>
-                        <div class="del-box clearfix">
-                            <a href="javascript:void(0)" class="del-notice" title="删除此通知">
-                                <i class="fa fa-trash-o"></i>
-                            </a>
-                        </div>
-                    </div>
-            	</div>
-                    
+                </div>
+
+<!--                <div class="no-notice" th:if="${listnews.size()==0}">暂无任何通知</div>-->
                     
             </div>
                 </div>
