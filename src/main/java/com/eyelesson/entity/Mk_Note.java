@@ -17,7 +17,7 @@ public class Mk_Note {
     private Integer mkcstid;
     private Integer mkuid;
     private String mknlink;
-    private Date mknctime;
+    private String mknctime;
 
     //用户的图片
     @Transient
@@ -114,11 +114,11 @@ public class Mk_Note {
         this.mknlink = mknlink;
     }
 
-    public Date getMknctime() {
+    public String getMknctime() {
         return mknctime;
     }
 
-    public void setMknctime(Date mknctime) {
+    public void setMknctime(String mknctime) {
         this.mknctime = mknctime;
     }
 

@@ -12,7 +12,7 @@ public class Mk_comment {
 
     private Integer mkcmid;
     private String mkcmcontent;
-    private Date mkcmcreatetime;
+    private String mkcmcreatetime;
     private Integer mkcstid;
     private Integer mkuid;
 
@@ -45,11 +45,11 @@ public class Mk_comment {
         this.mkcmcontent = mkcmcontent;
     }
 
-    public Date getMkcmcreatetime() {
+    public String getMkcmcreatetime() {
         return mkcmcreatetime;
     }
 
-    public void setMkcmcreatetime(Date mkcmcreatetime) {
+    public void setMkcmcreatetime(String mkcmcreatetime) {
         this.mkcmcreatetime = mkcmcreatetime;
     }
 

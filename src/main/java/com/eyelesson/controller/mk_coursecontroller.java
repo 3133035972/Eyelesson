@@ -29,7 +29,8 @@ public class mk_coursecontroller {
     {
         //获取用户的id
         Mk_Use m= (Mk_Use) session.getAttribute("msgss");
-        Map<String, Object> byCidUid = mk_courseservice.findByCidUid(1, m.getMkuid());
+        Map<String, Object> byCidUid = mk_courseservice.findByCidUid(courseid, m.getMkuid());
+        System.out.println(byCidUid);
         if(byCidUid.get("mkuid")==null)
         {
             Mk_Staff mksid = mk_courseservice.findStaffId((Integer) byCidUid.get("mksid"));
@@ -65,7 +66,7 @@ public class mk_coursecontroller {
     public String learn_show(Integer courseid,String uid,Model model)
     {
         Mk_Use m= (Mk_Use) session.getAttribute("msgss");
-        Map<String, Object> learn = mk_courseservice.findByCidUid(1,2);
+        Map<String, Object> learn = mk_courseservice.findByCidUid(courseid,m.getMkuid());
         if(learn.get("mkuid")==null)
         {
             Mk_Staff mksid = mk_courseservice.findStaffId((Integer) learn.get("mksid"));
@@ -81,7 +82,7 @@ public class mk_coursecontroller {
         List<Map<String,Object>> TypeAll=mk_courseservice.findTypeAll((Integer) learn.get("mkcid"));
         model.addAttribute("type",TypeAll);
         //获取这个课程的所有章节
-        List<Mk_fathercourse_section> listfu=mk_courseservice.Allfu(1);
+        List<Mk_fathercourse_section> listfu=mk_courseservice.Allfu(courseid);
         model.addAttribute("listfu",listfu);
         model.addAttribute("commentlist",learn);
         return "learn";
@@ -91,7 +92,7 @@ public class mk_coursecontroller {
     public String askAll(Integer couseid,Integer pagenum,Integer pagesize,Model model)
     {
         Mk_Use m= (Mk_Use) session.getAttribute("msgss");
-        Map<String, Object> byCidUid = mk_courseservice.findByCidUid(1, m.getMkuid());
+        Map<String, Object> byCidUid = mk_courseservice.findByCidUid(couseid, m.getMkuid());
         if(byCidUid.get("mkuid")==null)
         {
             Mk_Staff mksid = mk_courseservice.findStaffId((Integer) byCidUid.get("mksid"));

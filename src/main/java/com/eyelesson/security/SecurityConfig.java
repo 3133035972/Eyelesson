@@ -157,7 +157,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 // Mk_NodeController 笔记表
                 "/InsertNode","/CourseNodeAll","/updatenode",
                 // Mk_UserFolController 用户关注表
-                "/InsertAuth","/DeleteMkcsid"
+                "/InsertAuth","/DeleteMkcsid","/*"
         );
 
     }

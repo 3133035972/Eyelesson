@@ -1,6 +1,7 @@
 package com.eyelesson.controller;
 
 
+import com.eyelesson.entity.Mk_Staff;
 import com.eyelesson.entity.Mk_Use;
 import com.eyelesson.entity.mk_course;
 import com.eyelesson.service.*;
@@ -62,7 +63,11 @@ public class Mk_UseController {
         System.out.println("密码:"+ mkUse.getMkupassword());
         Mk_Use m = mk_useService.selectOne(mkUse);
         System.out.println(m);
-        session.setAttribute("users",m);
+        //未读消息
+        int news = mk_useService.UserNews(m.getMkuid());
+        System.out.println(news);
+        session.setAttribute("news",news);
+        session.setAttribute("msgss",m);
         return m;
     }
 
@@ -205,7 +210,22 @@ public class Mk_UseController {
         //显示用户最近编辑过的笔记
         List<Map<String,Object>> nownoteall=mk_useService.nownoteall(mkuid);
         model.addAttribute("nownoteall",nownoteall);
+        //显示当前用户关注的人
+        List<Map<String,Object>> folweruse = mk_useService.folweruse(mkuid);
+        model.addAttribute("folweruse",folweruse);
+        //我的粉丝
+        List<Map<String,Object>> myfans = mk_useService.myfans(mkuid);
+        model.addAttribute("myfans",myfans);
         return "personal";
+    }
+
+    //显示作者页面
+    @RequestMapping("authshow")
+    public String authshow(Integer mksid,Model model)
+    {
+        Mk_Staff staff = mk_useService.mkStaff(mksid);
+        model.addAttribute("staff",staff);
+        return "lecturer";
     }
 
     //删除笔记
@@ -241,12 +261,17 @@ public class Mk_UseController {
     //修改用户的密码
     @RequestMapping("UpdatePwd")
     @ResponseBody
-    public int UpdatePwd(int mkuid,String newpwd,String pwd)
+    public int UpdatePwd(int mkuid,String newpwd)
     {
-        return mk_useService.UpdatePwd(mkuid, newpwd, pwd);
+        return mk_useService.UpdatePwd(mkuid, newpwd);
     }
     //修改用户的信息
-
+    @RequestMapping("UpdateUseInfo")
+    @ResponseBody
+    public int UpdateUseInfo(Mk_Use mkUse)
+    {
+        return mk_useService.UpdateUseInfo(mkUse);
+    }
     /**
      * 点击界面的微博登录按钮 * @param request * @param response
      */
@@ -289,7 +314,7 @@ public class Mk_UseController {
                 int i = mk_useService.selectMkuid();
                 System.out.println("userId:" + i);
                 /* 注册编号 */
-                c.setMkunum("" + i);
+                c.setMkunum("U" + i);
                 /* 注册用户名称 */
                 c.setMkuname("目课网_" + i);
                 /* 注册用户微博账号 */
@@ -321,10 +346,24 @@ public class Mk_UseController {
 
         return "redirect:/Mk_Use/index";
     }
+    //根据id来查询出密码
+    @RequestMapping("findpwd")
+    @ResponseBody
+    public String findpwd(int mkuid)
+    {
+        return mk_useService.findpassword(mkuid);
+    }
+    //根据id来修改微博
+    @RequestMapping("UpdateWeibo")
+    @ResponseBody
+    public int UpdateWeibo(int mkuid)
+    {
+        return mk_useService.UpdateWeibo(mkuid);
+    }
 
     /* 显示免费课程 */
     @RequestMapping("list")
-    public String list(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "25") int limit, Integer mkdfid, Integer mkcid, Integer mkctid){
+    public String list(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "24") int limit, Integer mkdfid, Integer mkcid, Integer mkctid){
         System.out.println("page = " + page);
         System.out.println("mkdfid = " + mkdfid);
         System.out.println("mkcid = " + mkcid);
@@ -346,7 +385,7 @@ public class Mk_UseController {
 
     @RequestMapping("lists")
     @ResponseBody
-    public PageDatas<Map<String, Object>>  lists(@RequestParam(defaultValue = "1") int page,@RequestParam(defaultValue = "25") int limit,Integer mkdfid,Integer mkcid,Integer mkctid){
+    public PageDatas<Map<String, Object>>  lists(@RequestParam(defaultValue = "1") int page,@RequestParam(defaultValue = "24") int limit,Integer mkdfid,Integer mkcid,Integer mkctid){
         System.out.println("page = " + page);
         System.out.println("mkdfid = " + mkdfid);
         System.out.println("mkcid = " + mkcid);
@@ -370,18 +409,18 @@ public class Mk_UseController {
 
     /* 显示实战课程 */
     @RequestMapping("szlist")
-    public String szlist(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "25") int limit,Integer mkcid, Integer mkctid){
+    public String szlist(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "25") int limit, Integer mkcid, Integer mkctid) {
         System.out.println("page = " + page);
         System.out.println("mkcid = " + mkcid);
         System.out.println("mkctid = " + mkctid);
         /* 实战课程分类 方向 */
-        session.setAttribute("qtszflfx",mk_curriculumtypeService.selectAll());
+        session.setAttribute("qtszflfx", mk_curriculumtypeService.selectAll());
         //System.out.println("======:"+session.getAttribute("qtflfx"));
         /* 实战课程分类 分类 */
-        session.setAttribute("qtszflfls",mk_curriculumService.selectAll());
+        session.setAttribute("qtszflfls", mk_curriculumService.selectAll());
         //System.out.println("=======:"+session.getAttribute("qtflfls"));
         /* 实战课程显示信息 */
-        session.setAttribute("flszselect", courseservice.szflselect(page,25,mkcid,mkctid));
+        session.setAttribute("flszselect", courseservice.szflselect(page, 25, mkcid, mkctid));
         System.out.println(session.getAttribute("flszselect"));
         return "szlist";
     }
@@ -389,18 +428,18 @@ public class Mk_UseController {
 
     @RequestMapping("szlists")
     @ResponseBody
-    public PageDatas<Map<String, Object>>  szlists(@RequestParam(defaultValue = "1") int page,@RequestParam(defaultValue = "25") int limit,Integer mkcid,Integer mkctid){
+    public PageDatas<Map<String, Object>> szlists(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "25") int limit, Integer mkcid, Integer mkctid) {
         System.out.println("page = " + page);
         System.out.println("mkcid = " + mkcid);
         System.out.println("mkctid = " + mkctid);
         /* 实战课程分类 方向 */
-        session.setAttribute("qtszflfx",mk_curriculumtypeService.selectAll());
+        session.setAttribute("qtszflfx", mk_curriculumtypeService.selectAll());
         //System.out.println("======:"+session.getAttribute("qtflfx"));
         /* 实战课程分类 分类 */
-        session.setAttribute("qtszflfls",mk_curriculumService.selectAll());
+        session.setAttribute("qtszflfls", mk_curriculumService.selectAll());
         //System.out.println("=======:"+session.getAttribute("qtflfls"));
         /* 实战课程显示信息 */
-        PageDatas<Map<String, Object>> datas = courseservice.szflselect(page, 25,mkcid, mkctid);
+        PageDatas<Map<String, Object>> datas = courseservice.szflselect(page, 25, mkcid, mkctid);
         System.out.println("datas = " + datas);
         return datas;
     }

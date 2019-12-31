@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "mk_staff")
@@ -29,6 +31,28 @@ public class Mk_Staff {
     private Integer mksposid;
     private Integer mksfollowcount;
 
+    public Integer getMksfollowcount() {
+        return mksfollowcount;
+    }
+
+    public void setMksfollowcount(Integer mksfollowcount) {
+        this.mksfollowcount = mksfollowcount;
+    }
+
+    //角色的名称
+    @Transient
+    private String mksrname;
+    @Transient
+    private Integer notmoney;
+    @Transient
+    private Integer yesmoney;
+
+    //实战的课程
+    @Transient
+    private List<mk_course> Shizhan;
+    //免费的课程
+    @Transient
+    private List<mk_course> Mianfei;
 
     @Override
     public String toString() {
@@ -49,16 +73,55 @@ public class Mk_Staff {
                 ", mksquit=" + mksquit +
                 ", mksposid=" + mksposid +
                 ", mksfollowcount=" + mksfollowcount +
+                ", mksrname='" + mksrname + '\'' +
+                ", notmoney=" + notmoney +
+                ", yesmoney=" + yesmoney +
+                ", Shizhan=" + Shizhan +
+                ", Mianfei=" + Mianfei +
                 '}';
     }
 
-    public Integer getMksfollowcount() {
-        return mksfollowcount;
+    public List<mk_course> getShizhan() {
+        return Shizhan;
     }
 
-    public void setMksfollowcount(Integer mksfollowcount) {
-        this.mksfollowcount = mksfollowcount;
+    public void setShizhan(List<mk_course> shizhan) {
+        Shizhan = shizhan;
     }
+
+    public List<mk_course> getMianfei() {
+        return Mianfei;
+    }
+
+    public void setMianfei(List<mk_course> mianfei) {
+        Mianfei = mianfei;
+    }
+
+    public Integer getNotmoney() {
+        return notmoney;
+    }
+
+    public void setNotmoney(Integer notmoney) {
+        this.notmoney = notmoney;
+    }
+
+    public Integer getYesmoney() {
+        return yesmoney;
+    }
+
+    public void setYesmoney(Integer yesmoney) {
+        this.yesmoney = yesmoney;
+    }
+
+    public String getMksrname() {
+        return mksrname;
+    }
+
+    public void setMksrname(String mksrname) {
+        this.mksrname = mksrname;
+    }
+
+
 
     public String getMksimg() {
         return mksimg;

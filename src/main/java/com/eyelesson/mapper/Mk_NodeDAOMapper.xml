@@ -11,14 +11,13 @@
 
 
     <select id="NoteAll" resultType="java.util.Map">
-
         select mn.mknid,mn.mknotecontent,mn.mkuid,mn.mknctime,mkss.mkcsid,mkss.mkcstid,mkss.mkcsname,count(mf.mknid) count from mk_note mn
         left join mk_soncourse_section mkss
         on mn.mkcstid=mkss.mkcstid
         left join mk_Fabulous mf on mn.mknid=mf.mknid
         where mn.mkuid=#{param1} and mn.mkcstid=#{param2}
         group by mn.mknid
-
+        order by mn.mknctime desc
     </select>
 
 

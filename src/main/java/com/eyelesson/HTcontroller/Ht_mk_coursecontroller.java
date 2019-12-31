@@ -22,15 +22,6 @@ public class Ht_mk_coursecontroller {
     @Resource
     mk_courseservice courseservice;
 
-    //显示 视频管理 显示讲师员视频
-    @RequestMapping("UseCourse")
-    @ResponseBody
-    public String pageQuery(int page, int limit){
-        PageData pageData = courseservice.UseCourse(page,limit);
-        String jsonStr = JSONArray.toJSONStringWithDateFormat(pageData,"yyyy-MM-dd HH:mm:ss");
-        System.out.println("jsonStr = " + jsonStr);
-        return jsonStr;
-    }
    
 
 }

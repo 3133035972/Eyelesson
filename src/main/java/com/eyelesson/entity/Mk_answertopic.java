@@ -1,6 +1,7 @@
 package com.eyelesson.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -19,7 +20,7 @@ public class Mk_answertopic {
     private String mkatpcontent;
     private Integer mkuid;
     private Integer mkaid;
-    private Date mkantptime;
+    private String mkantptime;
     private Integer mkanum;
 
     @Transient
@@ -212,11 +213,11 @@ public class Mk_answertopic {
         this.mkaid = mkaid;
     }
 
-    public Date getMkantptime() {
+    public String getMkantptime() {
         return mkantptime;
     }
 
-    public void setMkantptime(Date mkantptime) {
+    public void setMkantptime(String mkantptime) {
         this.mkantptime = mkantptime;
     }
 }

@@ -2,9 +2,7 @@ package com.eyelesson.dao;
 
 import com.eyelesson.entity.*;
 import org.apache.ibatis.annotations.*;
-import org.apache.ibatis.mapping.FetchType;
 import org.omg.CORBA.OBJECT_NOT_EXIST;
-import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
@@ -49,14 +47,11 @@ public interface Mk_UseDAO extends Mapper<Mk_Use> {
     int UpdateMnid(String content, int mknid);
     //查询当前用户所在课程所提问的问题和回答的问题
     mk_course usercouseall(int mkcsid, int mkuid);
-
     //如果没有回答和问题
     mk_course usercall(int mkcsid);
-
     //获取所有子节点
     @Select("select *from mk_soncourse_section where mkcsid=#{param1}")
     List<Mk_soncourse_section> mks(int mkcsid);
-
     //获取问节点
     @Select("select mkask.*,mkss.mkcsname,count(mkawc.mkatpid) answer from mk_asktopic mkask\n" +
             "left join mk_soncourse_section mkss on mkask.mkcstid=mkss.mkcstid\n" +
@@ -64,7 +59,6 @@ public interface Mk_UseDAO extends Mapper<Mk_Use> {
             "where mkask.mkcstid=#{param1} and mkask.mkuid=#{param2} \n" +
             "group by mkask.mkatpid")
     List<Mk_asktopic> findHui(int mkcstid, int mkuid);
-
     //获取答节点
     @Select("select mkask.mkatitle,mkawc.*,mkss.mkcsname,mkss.mkcstid,count(mkawc.mkaid) tanswer from \n" +
             "mk_answertopic mkawc \n" +
@@ -73,21 +67,47 @@ public interface Mk_UseDAO extends Mapper<Mk_Use> {
             "where mkask.mkcstid=#{param1} and mkawc.mkuid=#{param2}\n" +
             "group by mkawc.mkaid")
     List<Mk_answertopic> findAnswer(int mkcstid, int mkuid);
-
     //用户点到个人设置
     @Select("select *from mk_use where mkuid=#{param1}")
     Mk_Use usersetup(int mkuid);
-
     //修改用户的密码
-    @Update("update mk_use set mkupassword =#{param2} where mkuid=#{param1} and mkupassword=#{param3}")
-    int UpdatePwd(int mkuid, String newpwd, String pwd);
-
+    @Update("update mk_use set mkupassword =#{param2} where mkuid=#{param1}")
+    int UpdatePwd(int mkuid, String newpwd);
     //查询微博账号
     @Select("select * from mk_use where mkuweibo=#{param1}")
     Mk_Use selectWeibo(String mkuweibo);
-
-    //根据手机号查找用户
-
+    //根据用户的id来查询出来用户的密码
+    @Select("select mkupassword from mk_use where mkuid=#{param1}")
+    String findpassword(int mkuid);
+    //修改微博账号
+    @Update("update mk_use set mkuweibo=null where mkuid=#{param1}")
+    int UpdateWeibo(int mkuid);
+    //修改这个人的个人信息
+    @Update("update mk_use set mkuname=#{mkuname},mkusex=#{mkusex},mkusign=#{mkusign} where mkuid=#{mkuid}")
+    int UpdateUseInfo(Mk_Use mkUse);
+    //获取当前用户的消息
+    @Select("select count(mknid) from mk_news where mkcollectuid=#{param1} and mknstatus=0")
+    int UserNews(int mkuid);
+    //查询当前点击作者的个人信息
+    Mk_Staff staff(int mksid);
+    //显示作者的实战课程
+    @Select("select mkc.* from mk_staff mks\n" +
+            "left join mk_staffrole mksr\n" +
+            "on mks.mksrid=mksr.mksrid\n" +
+            "left join mk_course mkc on mkc.mksid=mks.mksid\n" +
+            "where mks.mksid=#{param1} and mkc.mkcmoney!=0 ")
+    List<mk_course> Shizhan(int mksid);
+    //显示作者的免费课程
+    @Select("select mkc.* from mk_staff mks\n" +
+            "left join mk_staffrole mksr\n" +
+            "on mks.mksrid=mksr.mksrid\n" +
+            "left join mk_course mkc on mkc.mksid=mks.mksid\n" +
+            "where mks.mksid=#{param1} and mkc.mkcmoney=0")
+    List<mk_course> mianfei(int mksid);
+    //查询当前用户关注的人
+    List<Map<String,Object>> folweruse(int mkuid);
+    //查看我的粉丝
+    List<Map<String,Object>> myfans(int mkuid);
 
     @Select("select * from mk_use where mkuphone = #{param1} and mkposid = 4")
     @Results({

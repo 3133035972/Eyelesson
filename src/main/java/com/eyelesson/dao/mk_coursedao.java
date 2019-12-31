@@ -108,7 +108,6 @@ public interface mk_coursedao  extends Mapper<mk_course> {
     })
     List<mk_course> qtszFour();
 
-    /* 免费课程 */
     @Select("select * from mk_course mkcr \n" +
             "join mk_difficulty mkdf on\n" +
             "mkcr.mkdfid = mkdf.mkdfid\n" +
@@ -128,7 +127,6 @@ public interface mk_coursedao  extends Mapper<mk_course> {
             "mkcrtype.mkctid like '%${param3}%' " )
     List<Map<String,Object>> flselect(Integer mkdfid, Integer mkcid, Integer mkctid);
 
-
     /* 实战课程 */
     @Select("select * from mk_course mkcr \n" +
             "join mk_difficulty mkdf on\n" +
@@ -146,22 +144,5 @@ public interface mk_coursedao  extends Mapper<mk_course> {
             "and \n" +
             "mkcrtype.mkctid like '%${param2}%' " )
     List<Map<String,Object>> szflselect(Integer mkcid, Integer mkctid);
-
-
-
-
-    //视频管理 讲师员视频
-    @Select("select course.mkcsid,course.mkctitle,course.mkcontent,culum.mkcname,\n" +
-            "culty.mkdfname,u.mkuname,course.mkcimg,course.mkctime,\n" +
-            "course.mkcmoney,course.mkclearned,course.mkcnote,course.mkcscore,\n" +
-            "course.mkcstate,course.mkcourseknow,course.mkteacherlearwhat\n" +
-            "from mk_course course join mk_use u on course.mkuid=u.mkuid\n" +
-            "join mk_curriculum culum on course.mkcid = culum.mkcid\n" +
-            "join mk_difficulty culty on course.mkdfid = culty.mkdfid")
-    List<Map<String,Object>> UseCourse();
-
-
-
-
 
 }

@@ -17,7 +17,7 @@ public interface ModulesDAO extends Mapper<Modules> {
 
 
 
-  /* List<Modules> findByParentCode(String parentCode,Integer posId);*/
+   /* List<Modules> findByParentCode(String parentCode,Integer posId);*/
 
 
    // 权限分配
@@ -39,7 +39,6 @@ public interface ModulesDAO extends Mapper<Modules> {
    @Insert("insert into posmodules(posId,moduleCode) \n" +
            "        values(#{param1},#{param2})" )
    int addByPosIdModules(Integer posId, String modules);
-
 
 
 }

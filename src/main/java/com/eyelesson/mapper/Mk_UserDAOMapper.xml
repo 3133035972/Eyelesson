@@ -211,4 +211,63 @@
         where mkc.mkcsid=#{param1}
         group by mkc.mkcsid
     </select>
+    <!--点击作者的信息-->
+    <select id="staff" resultType="com.eyelesson.entity.Mk_Staff">
+
+        with a as
+        (
+        select mks.*,mksr.mksrname from mk_staff mks
+        left join mk_staffrole mksr
+        on mks.mksrid=mksr.mksrid
+        where mks.mksid=#{param1}
+        ),
+        b as
+        (
+        select mks.mksid,count(mkc.mkcsid) notmoney from mk_staff mks
+        left join mk_staffrole mksr
+        on mks.mksrid=mksr.mksrid
+        left join mk_course mkc on mkc.mksid=mks.mksid
+        where mks.mksid=#{param1} and mkc.mkcmoney=0
+        group by mks.mksid
+        ),
+        c as
+        (
+        select mks.mksid,count(mkc.mkcsid) yesmoney from mk_staff mks
+        left join mk_staffrole mksr
+        on mks.mksrid=mksr.mksrid
+        left join mk_course mkc on mkc.mksid=mks.mksid
+        where mks.mksid=#{param1} and mkc.mkcmoney!=0
+        group by mks.mksid
+        )
+        select a.*,b.notmoney,c.yesmoney from a
+        inner join b on a.mksid=b.mksid
+        inner join c on a.mksid=c.mksid
+    </select>
+    <!--查看用户当前的关注-->
+    <select id="folweruse" resultType="java.util.Map">
+        with a as(
+        select mku.mkuid,mku.mkuname,mku.mkuimg,mku.mkfollowcount,
+        mks.mksid,mks.mksname,mks.mksimg,mks.mksfollowcount
+        from mk_userconcerns mkusc
+        left join mk_use mku on mkusc.mkusid=mku.mkunum
+        left join mk_staff mks on mkusc.mkusid=mks.mksnum
+        where mkusc.mkucid=#{param1}
+        group by mkusc.mkusid
+        )
+        select a.*,count(mkus.mkusid) folwer from a left join mk_userconcerns mkus
+        on mkus.mkucid=a.mkuid
+        group by a.mkuid
+    </select>
+    <!--我的粉丝-->
+    <select id="myfans" resultType="java.util.Map">
+        with a as(
+        select mku.mkuid,mku.mkuname,mku.mkuimg,mku.mkfollowcount from mk_userconcerns mkusc
+        left join mk_use mku on mkusc.mkucid=mku.mkuid
+        where mkusc.mkusid=#{param1}
+        group by mkusc.mkusid
+        )
+        select a.*,count(mkus.mkusid) folwer from a left join mk_userconcerns mkus
+        on mkus.mkucid=a.mkuid
+        group by a.mkuid
+    </select>
 </mapper>

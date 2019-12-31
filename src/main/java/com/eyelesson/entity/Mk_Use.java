@@ -33,10 +33,30 @@ public class Mk_Use {
     private Integer mkustate;
     private Integer mkfollowcount;
     private Integer mkuintegral;
+
     private Integer mkposid;
 
     @Transient
+    private Integer folwer;
+
+    @Transient
     private Mk_position mk_positions;
+
+    public Mk_position getMk_positions() {
+        return mk_positions;
+    }
+
+    public void setMk_positions(Mk_position mk_positions) {
+        this.mk_positions = mk_positions;
+    }
+
+    public Integer getFolwer() {
+        return folwer;
+    }
+
+    public void setFolwer(Integer folwer) {
+        this.folwer = folwer;
+    }
 
     @Override
     public String toString() {
@@ -62,16 +82,7 @@ public class Mk_Use {
                 ", mkfollowcount=" + mkfollowcount +
                 ", mkuintegral=" + mkuintegral +
                 ", mkposid=" + mkposid +
-                ", mk_positions=" + mk_positions +
                 '}';
-    }
-
-    public Mk_position getMk_positions() {
-        return mk_positions;
-    }
-
-    public void setMk_positions(Mk_position mk_positions) {
-        this.mk_positions = mk_positions;
     }
 
     public Integer getMkuid() {

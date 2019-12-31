@@ -11,12 +11,10 @@ import java.util.Map;
 @Mapper
 public interface Mk_WheelplantingDao extends tk.mybatis.mapper.common.Mapper<Mk_Wheelplanting> {
 
-
     @Select("select w.mkwpid,c.mkctitle,w.mkwpurl from mk_wheelplanting  w join mk_course c on w.mkcsid =c.mkcsid ")
     List<Map<String,Object>> queryAll();
 
     @Select("select * from mk_course")
     List<Map<String,Object>> findA();
-
 
 }

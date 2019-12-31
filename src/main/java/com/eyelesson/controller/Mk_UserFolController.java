@@ -21,7 +21,7 @@ public class Mk_UserFolController {
     //关注作者
     @RequestMapping("InsertAuth")
     @ResponseBody
-    public int InsertAuth(Integer mkusid,Integer mkuid)
+    public int InsertAuth(String mkusid,Integer mkuid)
     {
         return mkUserFllowService.InsertAuth(mkusid, mkuid);
     }

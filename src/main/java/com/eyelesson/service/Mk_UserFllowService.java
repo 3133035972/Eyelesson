@@ -18,7 +18,7 @@ public class Mk_UserFllowService {
     Mk_UseDAO mkUseDAO;
 
     //关注用户
-    public int InsertAuth(int mkusid,int mkucid)
+    public int InsertAuth(String mkusid,int mkucid)
     {
         Mk_Userconcerns mks=mkUserFlower.findAuth(mkusid,mkucid);
         if(mks==null)

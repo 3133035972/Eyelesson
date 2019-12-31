@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>员工</title>
+
+    <link rel="stylesheet" href="/hts/layuiadmin/layui/css/layui.css" media="all">
+    <script src="/hts/layuiadmin/layui/layui.js"></script>
+
+    <script src="/hts/js/jquery-3.1.1.js"></script>
+
+
+    <script type="text/javascript">
+        //使用表格
+        layui.use(['table', 'util','laydate','form'], function () {
+            var form = layui.form
+            var table = layui.table;
+            var util = layui.util;
+            var laydate = layui.laydate;
+            //日期时间选择器
+            laydate.render({
+                elem: '#searchStartTxt'
+            });
+            laydate.render({
+                elem: '#searchEndTxt'
+            });
+
+            table.render({
+                elem: '#empInfo' //根基id获取元素
+                ,id:"empInfoReload" //给该表格命名id
+                , url: '/Mk_Staff/pageQuery' //路径
+                , height: 550
+                , cellMinWidth: 80   //定义全局最小宽度
+                , toolbar: '#toolbarDemo'
+                , cols: [[ //列
+                    {field: 'mksid', title: '员工编号', width: 90, align: 'center'}
+                    , {field: 'mksname', title: '员工名称', width: 100, align: 'center'}
+                    , {field: 'mksex', title: '性别', width: 65, align: 'center'}
+                    , {
+                        field: 'mksbirthday', title: '入职时间', width: 120, align: 'center',
+                        templet: function (d) {
+                            return util.toDateString(d.mksbirthday, "yyyy-MM-dd");
+                        }
+                    }
+                    , {field: 'mksidcard', title: '身份证号', width: 175, align: 'center'}
+                    , {
+                        field: 'mkstate', title: '状态', width: 95, align: 'center', templet: function (d) {
+                            if (d.mkstate == '0') {
+                                return '在职'
+                            } else if (d.state == '1') {
+                                return '离职'
+                            }
+                        }
+                    }
+                    , {field: 'mksphone', title: '手机号', width: 120, align: 'center'}
+                    , {field: 'mkpname', title: '职务', width: 100, align: 'center'}
+                    , {field: 'mkusername', title: '操作人账号', width: 110, align: 'center'}
+                    , {field: 'mksctime', title: '离职时间', width: 168, align: 'center'}
+                    , {fixed: 'right', title: '操作', width: 160, align: 'center', toolbar: '#barDemo'}
+                ]]
+                , page: true//开启分页
+                , dataType: "json"
+            });
+
+            //头部工具栏的监听事件
+            table.on('toolbar(Mk_Staff)', function (obj) {
+                var checkStatus = table.checkStatus(obj.config.id);
+                switch (obj.event) {
+                    case 'addEmp':
+                        layer.open({
+                            title: '添加员工'
+                            , id: 'add'
+                            , type: 2
+                            , content: '/Mk_Staff/addShow'
+                            , offset: '10px'//居上10左右居中
+                            , resize: false//不可改变大小
+                            , fixed: false//鼠标滚动时，固定在可视区域
+                            , btn: '关闭'
+                            , btnAlign: 'c' //按钮居中
+                            , shade: 0.3 //遮罩
+                            , area: ['450px', '500px']
+                        });
+                        break;
+
+                }
+                ;
+            });
+
+            //监听行工具事件
+            table.on('tool(Mk_Staff)', function (obj) {
+                var data = obj.data;
+                if (obj.event == 'del') {
+                    layer.confirm('真的要离职该员工吗？', function (index) {
+                        layer.close(index);
+                        $.ajax({
+                            type: 'post',
+                            url: '/Mk_Staff/delEmp',
+                            dataType: 'json',
+                            data: {empId: data.empId},
+                            success: function (res) {
+                                if (res == 1) {
+                                    layer.msg('离职成功', {icon: 1, time: 5000});
+                                    table.reload("empInfo")
+                                }
+                            }
+                        });
+                    });
+                } else if (obj.event == 'update') {
+                    layer.open({
+                        title: '修改员工'
+                        , id: 'upd'
+                        , type: 2
+                        , content: '/Mk_Staff/updateShowEmp?empId=' + data.posId
+                        , offset: '10px'//居上100左右居中
+                        , resize: false//不可改变大小
+                        , fixed: false//鼠标滚动时，固定在可视区域
+                        , btn: '关闭'
+                        , btnAlign: 'c' //按钮居中
+                        , shade: 0.3 //遮罩
+                        , area: ['450px', '500px']
+                    });
+                }
+
+            });
+
+            //表格重载
+            var $ = layui.$, active = {
+                reload: function(){
+                    var param = $('#searchParamTxt').val();
+                    var posId = $('#posId').val();
+                    var startTime = $('#searchStartTxt').val();
+                    var endTime = $('#searchEndTxt').val();
+                    //执行重载
+                    table.reload('empInfoReload', {
+                        method: 'post',
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                        ,where: {
+                            param : param,//文本框参数
+                            posId:posId,//职务
+                            startTime:startTime,//开始日期
+                            endTime:endTime//结束日期
+                        }
+                    });
+                }
+            };
+            // 搜索按钮点击
+            $('#searchBtn').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+
+        });
+
+        //窗体加载显示职务
+        $(function() {
+            //显示职务
+            $.ajax({
+                url: '/pos/query',
+                type: "post",
+                success: function (res) {
+                    for (var i = 0; i < res.data.length; i++) {
+                        $("#posId").append("<option value='" + res.data[i].posId + "'>" + res.data[i].posName + "</option>")
+                    }
+                },
+                error: function (xhr, msg) {
+                    alert("出错了:" + msg);
+                },
+                dataType: "json" //将服务器返回的字符串转为json对象
+            });
+        })
+    </script>
+</head>
+<body>
+
+<div class="demoTable" style="margin-top: 15px;margin-left:30px;">
+    搜索条件（名称/性别/手机号/身份证）
+    <div class="layui-input-inline">
+        <input class="layui-input" name="param" id="searchParamTxt"
+               autocomplete="off">
+    </div>
+
+    职务
+    <div class="layui-input-inline">
+        <select name="posId" id="posId" lay-verify="required" class="layui-input" style="width: 100px">
+            <option value="">请选择</option>
+        </select>
+    </div>
+
+    入职日期：
+    <div class="layui-inline">
+        <input class="layui-input" type="text" name="startTime"  placeholder="yyyy-MM-dd" id="searchStartTxt" autocomplete="off">
+    </div>
+    -
+    <div class="layui-inline">
+        <input class="layui-input" type="text" name="endTime"   placeholder="yyyy-MM-dd" id="searchEndTxt" autocomplete="off">
+    </div>
+
+    <button class="layui-btn layui-btn" id="searchBtn" data-type="reload">搜索</button>
+
+</div>
+
+<!-- 信息数据表格 -->
+<table class="layui-hide" lay-filter="Mk_Staff" id="empInfo"></table>
+
+<!-- 行按钮组件 -->
+<script type="text/html" id="barDemo">
+
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon"></i> 离职</a>
+    <a class="layui-btn layui-btn-xs" lay-event="update"><i class="layui-icon">&#xe642;</i>修改</a>
+</script>
+
+<!-- 头部按钮组件 -->
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="addEmp"><i class="layui-icon">&#xe654;</i>添加员工</button>
+    </div>
+</script>
+
+</body>
+</html>

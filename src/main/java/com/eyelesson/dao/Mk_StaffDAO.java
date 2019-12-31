@@ -31,4 +31,6 @@ public interface Mk_StaffDAO extends tk.mybatis.mapper.common.Mapper<Mk_Staff> {
     @Select("select * from mk_staff order by mksfollowcount desc limit 0,5")
     List<Mk_Staff> findfive();
 
+
+
 }

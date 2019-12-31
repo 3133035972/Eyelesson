@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="/res/css/a.css" />
+		<link rel="stylesheet" href="/res/css/c.css" />
+		<link rel="stylesheet" type="text/css" href="/res/font-awesome/css/font-awesome.min.css">
+	</head>
+	<body>
+<div id="main">
+	<div class="big-wrap">
+		<div class="top-box">
+			<div class="top-bg-mask">
+				<div class="top-content-wrap">
+						<div class="clearfix">
+							<div class="share-box r">
+								<div class="bdsharebuttonbox bdshare-button-style0-16" data-tag="" data-bd-bind="1577427037248">
+									<a href="javascript:;" class="share wx icon-share-weichat" data-cmd="weixin" title="分享到微信"></a>
+									<a href="javascript:;" class="share qq icon-share-qq" data-cmd="qzone" title="分享到QQ空间"></a>
+									<a href="javascript:;" class="share sina icon-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+								</div>
+							</div>
+						</div>
+						<div class="teacher-box">
+
+							<img class="tea-header" th:src="@{'/img/'+${staff.mksimg}}" alt="">
+							<div class="tea-title">
+								<p>慕课网官方认证</p>
+								<h3>精英讲师</h3>
+							</div>
+							<p class="tea-nickname" th:text="${staff.mksname}">廖师兄</p>
+							<p class="tea-professional" th:text="${staff.mksrname}">JAVA开发工程师</p>
+								<a href="javascript:void(0);" class="moco-btn payattention-btn js-payattention-btn js-add-attention" data-id="4559066">
+								<i class="icon-group_add"></i>
+								关注Ta
+							</a>
+								<p class="tea-desc" th:text="${staff.mkskill}">载着干货的老司机。微服务，分布式架构方面经验丰富。</p>
+									<div class="tea-detail-box">
+										<ul class="clearfix">
+											<li>
+												<a href="#Shizhan">
+													<p class="num" th:text="${staff.yesmoney}">4</p>
+													<p class="text">实战</p>
+												</a>
+											</li>
+											<li>
+												<a href="#Course">
+													<p class="num" th:text="${staff.notmoney}">2</p>
+													<p class="text">课程</p>
+												</a>
+											</li>
+											<li>
+												<p class="num" id="js-tea-fan-num"  th:text="${staff.mksfollowcount}" >21039</p>
+												<p class="text" >粉丝</p>
+											</li>
+										</ul>
+									</div>
+						</div>
+				</div>
+			</div>
+			<div class="bottom-trangle"></div>
+		</div>
+		<div class="bottom-box">
+				<div class="shizhan-box" th:if="${staff.Shizhan.size()!=0}">
+					<h2 id="Shizhan">实战</h2>
+					<p class="cato-desc">上进唯实战可得，突破绝技成长瓶颈</p>
+					<div class="shizhan-del-box">
+						<ul>
+							<!-- style="background-image: url('/res/img/5dce41e70819b56b06000338-500-284.jpg');" -->
+							<li th:each="shizhan:${staff.Shizhan}"  th:style="'background-image: url('+@{'/img/'+${shizhan.mkcimg}}+');'">
+								<div class="shizhan-mask">
+									<a href="//coding.imooc.com/class/392.html" target="_blank">
+										<p class="shizhan-title"  th:text="${shizhan.mkctitle}" >Java通用型支付+电商平台双系统实战</p>
+										<p class="shizhan-desc" th:text="${shizhan.mkcontent}">花一份课的价，收获：双系统实战+坐拥20K+粉的师兄指导，值~</p>
+										<div class="bottom-box clearfix">
+											<p class="shizhan-price l" th:text="'￥'+${shizhan.mkcmoney}">￥348.00</p>
+											<p class="icon icon-right r"></p>
+										</div>
+									</a>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<di class="course-box" th:if="${staff.Mianfei.size()!=0}">
+					<h2 id="Course">课程</h2>
+					<p class="cato-desc">精品课程应有尽有，快速入门助力成长</p>
+					<div class="course-del-box">
+						<ul>
+							<li class="moco-course-wrap" th:each="mianfei:${staff.Mianfei}">
+								<a href="/learn/1192" target="_target">
+									<div class="moco-course-box">
+										<img alt="测试克隆慕课网" th:src="@{'/img/'+${mianfei.mkcimg}}" width="100%" height="124">
+										<div class="moco-course-intro">
+											<h3 th:text="${mianfei.mkctitle}"><i >初级</i>2小时上手SpringBoot</h3>
+											<p th:text="${mianfei.mkcontent}">信息时代最重视的是什么？是效率！企业最重视的人才是什么？是高效能人士！所谓“天下武功唯快不破 ” ，为此专门设计本课程，慕课网重磅推出的首门微课，让你快速Get到SpringBoot实际应用技能。课程由慕课网口碑讲师-廖师兄亲自上阵，遵循”学习其实可以很快乐“的原则，以极客浪漫情怀的”红包表白程序“为场景，贯穿微服务必学框架-SpringBoot相关内容，将初学SpringBoot的踩坑点进行指点，为同学打造麻雀虽小五脏俱全的课程。讲师风趣幽默的讲解，必然让你本次的学习之旅尽兴而归。载着干货的老司机，在召唤你~</p>
+										</div>
+										<div class="moco-course-bottom"><span class="l" th:text="${mianfei.mkclearned}+'人在学'"> 3011人在学</span></div>
+									</div>
+								</a>
+							</li>
+
+						</ul>
+					</div>
+				</di>
+
+
+			</div>
+	</div>
+</div>
+
+	</body>
+</html>

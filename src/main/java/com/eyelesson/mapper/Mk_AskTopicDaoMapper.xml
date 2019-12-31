@@ -4,7 +4,7 @@
 
     <select id="notes" resultType="java.util.Map">
         select mkas.mkatpid,mkas.mkatitle,mkas.mkatpcontent,mkas.mkapreview,
-        mkas.mkatptime,mkus.mkuid,mkus.mkuname,mkus.mkuimg,mkss.mkfcsid,mkss.mkcstid,mkss.mkcsname,mkco.mkcsid,
+        mkas.mkatptime,mkus.mkuid,mkus.mkuname,mkus.mkunum,mkus.mkuimg,mkss.mkfcsid,mkss.mkcstid,mkss.mkcsname,mkco.mkcsid,
         mkco.mkctitle,mkco.mkcontent,mkcc.mkcname,mkct.mkctname,
         count(mkawc.mkatpid)count from mk_asktopic mkas
         left join mk_soncourse_section mkss
