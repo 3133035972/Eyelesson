@@ -11,4 +11,8 @@ public interface Mk_CurriculumDao extends tk.mybatis.mapper.common.Mapper<Mk_Cur
 
     @Select("select * from mk_curriculum where mkctid=#{mkctid} ")
     List<Mk_Curriculum> findAll();
+
+    @Select("select * from mk_curriculum where mkctid=#{param1} ")
+    List<Mk_Curriculum> findct(Integer mkctid);
+
 }

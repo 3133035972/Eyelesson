@@ -29,7 +29,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
         //设置权限 只在这些路径下面进行权限的设置和访问
         http.authorizeRequests()//只设置后台请求才能触发认证
-                .antMatchers("/hou/**","/modules/**","/ht_mk_course/**","/ht_mk_wheelplanting/**","/ht_mk_position/**").access("@permissionConfig.hasPermission(request,authentication)").and().csrf().disable();
+                .antMatchers("/hou/**","/modules/**","/ht_mk_wheelplanting/**","/ht_mk_position/**").access("@permissionConfig.hasPermission(request,authentication)").and().csrf().disable();
 
         //先认证再授权
         // 认证请求  对于请求要进行身份认证
@@ -157,7 +157,8 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 // Mk_NodeController 笔记表
                 "/InsertNode","/CourseNodeAll","/updatenode",
                 // Mk_UserFolController 用户关注表
-                "/InsertAuth","/DeleteMkcsid","/*"
+                "/InsertAuth","/DeleteMkcsid","/*",
+                "/upload/**"
         );
 
     }

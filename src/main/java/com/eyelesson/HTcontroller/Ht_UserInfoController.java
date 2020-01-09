@@ -1,5 +1,6 @@
 package com.eyelesson.HTcontroller;
 
+import com.sun.xml.internal.ws.client.sei.SEIStub;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,8 +28,9 @@ public class Ht_UserInfoController {
 
     //显示登录失败页面
     @RequestMapping("loginError")
-    public String loginError(Model model)
+    public String loginError(Model model,HttpSession session)
     {
+        // 要用 System.out.println("posId======:"+ session.getAttribute("posid"));
         model.addAttribute("msg","用户名密码错误");
         return "hts/login";
     }
@@ -37,7 +39,8 @@ public class Ht_UserInfoController {
     @RequestMapping("loginOut")
     public String loginOut(HttpSession session)
     {
-
+        System.out.println("posId======:"+ session.getAttribute("posId"));
+        System.out.println("posId======:"+ session.getAttribute("posid"));
         session.removeAttribute("infos");
 
         return "hts/login";

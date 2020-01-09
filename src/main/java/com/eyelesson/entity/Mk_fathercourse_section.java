@@ -1,17 +1,19 @@
 package com.eyelesson.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "mk_fathercourse_section")
 public class Mk_fathercourse_section {
-
+    @Id
+    @Column
     private Integer mkfcsid;
+    @Column
     private Integer mkcourseid;
+    @Column
     private String mkfstitle;
+    @Column
     private String mkfscontent;
 
     //一对多个子级节点

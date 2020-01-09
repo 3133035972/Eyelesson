@@ -19,4 +19,9 @@ public class Mk_CurriculumService {
         return mk_curriculumDao.selectAll();
     }
 
+    /* 查询全部二级课程分类 */
+    public List<Mk_Curriculum> selectct(Integer mkctid){
+        return mk_curriculumDao.findct(mkctid);
+    }
+
 }

@@ -22,7 +22,7 @@ public class mk_course {
     private Integer mkuid;
     private Integer mksid;
     private String mkcimg;
-    private Integer mkctime;
+    private String mkctime;
     private Double mkcmoney;
     private Integer mkclearned;
     private String mkcnote;
@@ -42,37 +42,6 @@ public class mk_course {
     @Transient
     private List<Mk_answertopic> answerchildren;
 
-    public Integer getAsktopic() {
-        return asktopic;
-    }
-
-    public void setAsktopic(Integer asktopic) {
-        this.asktopic = asktopic;
-    }
-
-    public Integer getAnswtop() {
-        return answtop;
-    }
-
-    public void setAnswtop(Integer answtop) {
-        this.answtop = answtop;
-    }
-
-    public List<Mk_asktopic> getTopchildren() {
-        return topchildren;
-    }
-
-    public void setTopchildren(List<Mk_asktopic> topchildren) {
-        this.topchildren = topchildren;
-    }
-
-    public List<Mk_answertopic> getAnswerchildren() {
-        return answerchildren;
-    }
-
-    public void setAnswerchildren(List<Mk_answertopic> answerchildren) {
-        this.answerchildren = answerchildren;
-    }
 
     @Override
     public String toString() {
@@ -85,7 +54,7 @@ public class mk_course {
                 ", mkuid=" + mkuid +
                 ", mksid=" + mksid +
                 ", mkcimg='" + mkcimg + '\'' +
-                ", mkctime=" + mkctime +
+                ", mkctime='" + mkctime + '\'' +
                 ", mkcmoney=" + mkcmoney +
                 ", mkclearned=" + mkclearned +
                 ", mkcnote='" + mkcnote + '\'' +
@@ -165,11 +134,11 @@ public class mk_course {
         this.mkcimg = mkcimg;
     }
 
-    public Integer getMkctime() {
+    public String getMkctime() {
         return mkctime;
     }
 
-    public void setMkctime(Integer mkctime) {
+    public void setMkctime(String mkctime) {
         this.mkctime = mkctime;
     }
 
@@ -235,5 +204,37 @@ public class mk_course {
 
     public void setMk_difficultys(Mk_difficulty mk_difficultys) {
         this.mk_difficultys = mk_difficultys;
+    }
+
+    public Integer getAsktopic() {
+        return asktopic;
+    }
+
+    public void setAsktopic(Integer asktopic) {
+        this.asktopic = asktopic;
+    }
+
+    public Integer getAnswtop() {
+        return answtop;
+    }
+
+    public void setAnswtop(Integer answtop) {
+        this.answtop = answtop;
+    }
+
+    public List<Mk_asktopic> getTopchildren() {
+        return topchildren;
+    }
+
+    public void setTopchildren(List<Mk_asktopic> topchildren) {
+        this.topchildren = topchildren;
+    }
+
+    public List<Mk_answertopic> getAnswerchildren() {
+        return answerchildren;
+    }
+
+    public void setAnswerchildren(List<Mk_answertopic> answerchildren) {
+        this.answerchildren = answerchildren;
     }
 }

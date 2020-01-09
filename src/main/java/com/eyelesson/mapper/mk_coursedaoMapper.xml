@@ -8,7 +8,7 @@
         =mkd.mkdfid left join mk_fathercourse_section mkfs on mkc.mkcsid=mkfs.mkcourseid
         right join mk_soncourse_section mkss on mkfs.mkfcsid
         =mkss.mkfcsid and mkfs.mkcourseid=mkss.mkcsid
-        right join mk_process  mkpr on mkss.mkcstid=mkpr.mkcstid
+        right join mk_process mkpr on mkss.mkcstid=mkpr.mkcstid
         where mkc.mkcsid=#{param1} and mkpr.mkuid=#{param2}
         order by mkpr.mkprid desc limit 1
     </select>
@@ -25,7 +25,8 @@
     <select id="findPingAll" resultType="java.util.Map">
         with
         c as (
-        select mkco.mkcmid,mkss.mkcsid,mkus.mkuimg,mkus.mkuid,mkus.mkuname,mkco.mkcmcontent,mkss.mkcsname,mkco.mkcmcreatetime
+        select
+        mkco.mkcmid,mkss.mkcsid,mkus.mkuimg,mkus.mkuid,mkus.mkuname,mkco.mkcmcontent,mkss.mkcsname,mkco.mkcmcreatetime
         from mk_comment mkco left join mk_soncourse_section mkss
         on mkco.mkcstid=mkss.mkcstid inner join mk_use mkus on mkco.mkuid=mkus.mkuid
         where mkcsid = #{param1}
@@ -36,9 +37,10 @@
         f on c.mkcmid=f.mkcmid group by c.mkcmid
         order by c.mkcmcreatetime desc
     </select>
-<!-- 查询某个章节的所有评论-->
+    <!-- 查询某个章节的所有评论-->
     <select id="findZhangAll" resultType="java.util.Map">
-        select mkcm.mkcmid,mkus.mkuid,mkus.mkuname,mkus.mkuimg,mkss.mkcsid,mkcm.mkcmcreatetime,mkcm.mkcmcontent,mkss.mkcsname,
+        select
+        mkcm.mkcmid,mkus.mkuid,mkus.mkuname,mkus.mkuimg,mkss.mkcsid,mkcm.mkcmcreatetime,mkcm.mkcmcontent,mkss.mkcsname,
         count(mkf.mkcmid) count,mkss.mkcstid
         from mk_comment mkcm left join mk_soncourse_section mkss
         on mkcm.mkcstid=mkss.mkcstid
@@ -51,7 +53,9 @@
     <!--查询出这个科目下所有的问答-->
     <select id="findaskAll" resultType="java.util.Map">
 
-        select mkas.mkatpid,mkas.mkuid,mku.mkuname,mku.mkuimg,mkas.mkatitle,mkas.mkatpcontent,mkas.mkatptime,mkas.mkapreview,mkss.mkcsname,mkss.mkcsurl,mkss.mkcstid,count(mkas.mkatpid) count from mk_asktopic mkas
+        select
+        mkas.mkatpid,mkas.mkuid,mku.mkuname,mku.mkuimg,mkas.mkatitle,mkas.mkatpcontent,mkas.mkatptime,mkas.mkapreview,mkss.mkcsname,mkss.mkcsurl,mkss.mkcstid,count(mkas.mkatpid)
+        count from mk_asktopic mkas
         left join mk_soncourse_section mkss
         on mkas.mkcstid=mkss.mkcstid
         left join mk_answertopic mkan
@@ -60,7 +64,7 @@
         where mkss.mkcsid=#{param1}
         group by mkas.mkatpid
     </select>
-<!--    查询出这个类型课程-->
+    <!--    查询出这个类型课程-->
     <select id="findTypeAll" resultType="java.util.Map">
         select mkc.mkcsid,mkc.mkctitle,mkc.mkclearned,mkdf.mkdfname,mkc.mkcmoney,mkc.mkcimg from mk_course
         mkc inner join mk_difficulty mkdf
@@ -74,7 +78,7 @@
         with a as(select mku.mkuid,mku.mkuimg,mku.mkuname,mkn.mknid,
         mkn.mknotecontent,mkn.mknctime,mkn.mknlink,
         mkc.mkcsid,count(mkf.mknid) count
-        from mk_note mkn inner join  mk_use mku
+        from mk_note mkn inner join mk_use mku
         on mkn.mkuid=mku.mkuid
         inner join mk_soncourse_section mkss
         on mkn.mkcstid=mkss.mkcstid inner join
@@ -90,7 +94,7 @@
         select mku.mkuid,mku.mkuimg,mku.mkuname,mkn.mknid,
         mkn.mknotecontent,mkn.mknctime,mkn.mknlink,
         mkc.mkcsid,count(mkf.mknid) count
-        from mk_note mkn inner join  mk_use mku
+        from mk_note mkn inner join mk_use mku
         on mkn.mkuid=mku.mkuid
         inner join mk_soncourse_section mkss
         on mkn.mkcstid=mkss.mkcstid inner join
@@ -99,9 +103,10 @@
         where mkc.mkcsid=#{param1}
         group by mkn.mknid
     </select>
-<!--    这个章节下面的所有问答-->
+    <!--    这个章节下面的所有问答-->
     <select id="findZWen" resultType="java.util.Map">
-        select mkas.mkatpid,mkas.mkuid,mku.mkuname,mku.mkuimg,mkas.mkatitle,mkas.mkatpcontent,mkas.mkatptime,mkas.mkapreview,mkss.mkcsname,mkss.mkcsurl,mkss.mkcstid,count(mkan.mkatpid)
+        select
+        mkas.mkatpid,mkas.mkuid,mku.mkuname,mku.mkuimg,mkas.mkatitle,mkas.mkatpcontent,mkas.mkatptime,mkas.mkapreview,mkss.mkcsname,mkss.mkcsurl,mkss.mkcstid,count(mkan.mkatpid)
         count,mkua.mkuname as uname,mkan.mkuid as uid from mk_asktopic mkas
         left join mk_soncourse_section mkss
         on mkas.mkcstid=mkss.mkcstid
@@ -112,4 +117,43 @@
         where mkss.mkcstid=#{param1}
         group by mkas.mkatpid
     </select>
+
+
+    <!--后台课程查询-->
+    <select id="findcourse" resultType="java.util.Map">
+        select * from mk_course mkcu
+        left join mk_curriculum mkcr on mkcu.mkcid=mkcr.mkcid
+        left join mk_curriculumtype mkct on mkcr.mkctid=mkct.mkctid
+        left join mk_fathercourse_section mkfs on mkcu.mkcsid=mkfs.mkcourseid
+        left join mk_difficulty mkdf on mkcu.mkdfid=mkdf.mkdfid
+        <where>
+            <if test=" param1 != null and param1 != ''">
+                and mkcu.mksid=#{param1}
+            </if>
+            <if test=" param2 != null and param2 != '' ">
+                and mkcu.mkuid=#{param2}
+            </if>
+            and mkcu.mkcsid like concat('%',#{param3},'%') and mkdf.mkdfid like concat('%',#{param4},'%')
+
+        </where>
+    </select>
+
+
+    <!--后台课程查询-->
+    <select id="findsu" resultType="mk_course">
+        select * from mk_course
+        <where>
+            <if test=" param1 != null and param1 != '' ">
+                and mksid = #{param1}
+            </if>
+
+            <if test=" param2 != null and param2 != '' ">
+                and mkuid = #{param2}
+            </if>
+
+        </where>
+
+    </select>
+
+
 </mapper>

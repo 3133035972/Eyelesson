@@ -15,7 +15,7 @@ public interface mk_coursedao  extends Mapper<mk_course> {
     //如果没有学习这个课程就让他学习
     Map<String,Object> findCourid(int courseid, String uid);
     //获取章节的评论
-    List<Map<String,Object>> findPingAll(int courseid);
+        List<Map<String,Object>> findPingAll(int courseid);
     //获取作者是谁
     @Select("select *from mk_use where mkuid=#{param1}")
     Mk_Use findById(int mkuid);
@@ -144,5 +144,51 @@ public interface mk_coursedao  extends Mapper<mk_course> {
             "and \n" +
             "mkcrtype.mkctid like '%${param2}%' " )
     List<Map<String,Object>> szflselect(Integer mkcid, Integer mkctid);
+
+    /* 后台部分 */
+
+    /* 后台课程查询 */
+    List<Map<String,Object>> findcourse(Integer mksid,Integer mkuid,String mkcsid,String mkdfid);
+
+    /* 后台课程模糊查询 标题 */
+    List<mk_course> findsu(Integer mksid,Integer mkuid);
+
+    /* 后台根据课程标题和讲师编号查询唯一编号 */
+   /* @Select("select * from mk_course where mkctitle=#{param1} and mksid=#{param2}")
+    Integer findmkcsid(String mkctitle,Integer mksid);*/
+   @Select("<script>" +
+           "select mkcsid from mk_course\n" +
+           "        <where>\n" +
+           "            <if test=\" mksid != null and mksid != '' \">\n" +
+           "                and mksid=#{mksid}\n" +
+           "            </if>\n" +
+           "            <if test=\" mkuid != null and mkuid != '' \">\n" +
+           "                and mkuid=#{mkuid}\n" +
+           "            </if>\n" +
+           "            and mkctitle=#{mkctitle}\n" +
+           "        </where>" +
+           "</script>")
+   Integer findmkcsid(mk_course m);
+
+   @Update("update mk_course set mkctime=#{param1} where mkcsid=#{param2}")
+   Integer updateTile(String mkctime,Integer mkcsid);
+
+   @Delete("delete from mk_course where mkcsid=#{param1}")
+   int deletecsid(Integer mkcsid);
+
+
+   @Select("<script>" +
+           "select count(*) from mk_course\n" +
+           "        <where>\n" +
+           "            and mkctitle=#{param1}\n" +
+           "            <if test=\" param2 != null and param2 != '' \">\n" +
+           "                and mkuid=#{param2}\n" +
+           "            </if>\n" +
+           "            <if test=\" param3 != null and param3 != '' \">\n" +
+           "                and mksid=#{param3}\n" +
+           "            </if>\n" +
+           "        </where>" +
+           "</script>")
+   int selectmkcsid(String mkctitle,Integer mkuid,Integer mksid);
 
 }
